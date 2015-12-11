@@ -310,7 +310,7 @@ void ribi::maziak::Maze::Test() noexcept
     IntMaze(7);
   }
   const TestTimer test_timer(__func__,__FILE__,1.0);
-  #ifdef FIX_ISSUE_280
+  #ifdef FIX_MAZIAK_ISSUE_1
   {
     Maze maze(11);
   }

@@ -1,14 +1,14 @@
-include(../Maziak/GameMaziakConsole.pri)
+include(../Maziak/MaziakConsole.pri)
 
 SOURCES += \
-    ../Maziak/qtmaziakmenudialog2.cpp \
+    ../Maziak/qtmaziakmenudialog.cpp \
     ../Maziak/qtmaziakdisplay.cpp \
     ../Maziak/qtmaziakinstructionsdialog.cpp \
     ../Maziak/qtmaziakgamewondialog.cpp \
     ../Maziak/qtmaziakgameoverdialog.cpp
 
 HEADERS  += \
-    ../Maziak/qtmaziakmenudialog2.h \
+    ../Maziak/qtmaziakmenudialog.h \
     ../Maziak/qtmaziakdisplay.h \
     ../Maziak/qtmaziakinstructionsdialog.h \
     ../Maziak/qtmaziakgamewondialog.h \
@@ -16,7 +16,7 @@ HEADERS  += \
 
 
 FORMS += \
-    ../Maziak/qtmaziakmenudialog2.ui \
+    ../Maziak/qtmaziakmenudialog.ui \
     ../Maziak/qtmaziakinstructionsdialog.ui \
     ../Maziak/qtmaziakgamewondialog.ui \
     ../Maziak/qtmaziakgameoverdialog.ui

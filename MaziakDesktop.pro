@@ -1,4 +1,4 @@
-include(../RibiLibraries/DesktopApplication.pri)
+include(../RibiLibraries/DesktopApplicationNoWeffcpp.pri)
 include(../RibiLibraries/Apfloat.pri)
 include(../RibiLibraries/Boost.pri)
 include(../RibiLibraries/GeneralConsole.pri)
@@ -19,6 +19,6 @@ include(../RibiClasses/CppWidget/CppWidget.pri)
 
 #Specific, desktop
 include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
-include(GameMaziakDesktop.pri)
+include(MaziakDesktop.pri)
 
 SOURCES += qtmain.cpp

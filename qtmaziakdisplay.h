@@ -35,6 +35,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "maziakdisplay.h"
 #include "maziakfwd.h"
 #include "maziakkey.h"
+#include "maziaksprites.h"
 #include "maziakplayerdirection.h"
 #include "maziakplayermove.h"
 #include "stopwatch.h"
@@ -75,7 +76,7 @@ private:
 
   std::set<Key> m_keys;
 
-  const boost::shared_ptr<const Sprites> m_sprites;
+  const Sprites m_sprites;
   Stopwatch m_timer_animate_enemies_and_prisoners;
   Stopwatch m_timer_show_solution;
 

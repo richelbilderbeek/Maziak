@@ -20,7 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
-#include "qtmaziakmenudialog2.h"
+#include "qtmaziakmenudialog.h"
 
 #include <cassert>
 #include <iostream>
@@ -42,13 +42,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "maziakmaindialog.h"
 #include "qtmaziakdisplay.h"
 #include "trace.h"
-#include "ui_qtmaziakmenudialog2.h"
+#include "ui_qtmaziakmenudialog.h"
 
 #pragma GCC diagnostic pop
 
-ribi::maziak::QtMaziakMenuDialog2::QtMaziakMenuDialog2(QWidget *parent) :
+ribi::maziak::QtMaziakMenuDialog::QtMaziakMenuDialog(QWidget *parent) :
     QtHideAndShowDialog(parent),
-    ui(new Ui::QtMaziakMenuDialog2),
+    ui(new Ui::QtMaziakMenuDialog),
     m_difficulty(Difficulty::easy)
 {
   #ifndef NDEBUG
@@ -61,12 +61,12 @@ ribi::maziak::QtMaziakMenuDialog2::QtMaziakMenuDialog2(QWidget *parent) :
   this->move( screen.center() - this->rect().center() );
 }
 
-ribi::maziak::QtMaziakMenuDialog2::~QtMaziakMenuDialog2() noexcept
+ribi::maziak::QtMaziakMenuDialog::~QtMaziakMenuDialog() noexcept
 {
   delete ui;
 }
 
-void ribi::maziak::QtMaziakMenuDialog2::mousePressEvent(QMouseEvent * event)
+void ribi::maziak::QtMaziakMenuDialog::mousePressEvent(QMouseEvent * event)
 {
   if (ui->widget_easy->geometry().contains(
     event->x(), event->y()))
@@ -113,7 +113,7 @@ void ribi::maziak::QtMaziakMenuDialog2::mousePressEvent(QMouseEvent * event)
   }
 }
 
-void ribi::maziak::QtMaziakMenuDialog2::keyPressEvent(QKeyEvent * event)
+void ribi::maziak::QtMaziakMenuDialog::keyPressEvent(QKeyEvent * event)
 {
   switch (event->key())
   {
@@ -148,7 +148,7 @@ void ribi::maziak::QtMaziakMenuDialog2::keyPressEvent(QKeyEvent * event)
   }
 }
 
-void ribi::maziak::QtMaziakMenuDialog2::paintEvent(QPaintEvent*)
+void ribi::maziak::QtMaziakMenuDialog::paintEvent(QPaintEvent*)
 {
   QPainter painter(this);
   {
@@ -249,7 +249,7 @@ void ribi::maziak::QtMaziakMenuDialog2::paintEvent(QPaintEvent*)
 
 }
 
-int ribi::maziak::QtMaziakMenuDialog2::GetMazeSize() const
+int ribi::maziak::QtMaziakMenuDialog::GetMazeSize() const
 {
   switch (m_difficulty)
   {
@@ -261,20 +261,20 @@ int ribi::maziak::QtMaziakMenuDialog2::GetMazeSize() const
   throw std::logic_error("Unsupported value of mDifficulty");
 }
 
-void ribi::maziak::QtMaziakMenuDialog2::OnAbout()
+void ribi::maziak::QtMaziakMenuDialog::OnAbout()
 {
   About a = MenuDialog().GetAbout();
   boost::scoped_ptr<QtAboutDialog> d(new QtAboutDialog(a));
   this->ShowChild(d.get());
 }
 
-void ribi::maziak::QtMaziakMenuDialog2::OnInstructions()
+void ribi::maziak::QtMaziakMenuDialog::OnInstructions()
 {
   boost::scoped_ptr<QtMaziakInstructionsDialog> d(new QtMaziakInstructionsDialog);
   this->ShowChild(d.get());
 }
 
-void ribi::maziak::QtMaziakMenuDialog2::OnStart()
+void ribi::maziak::QtMaziakMenuDialog::OnStart()
 {
   QtDisplay d;
   MainDialog w(GetMazeSize());
@@ -289,7 +289,7 @@ void ribi::maziak::QtMaziakMenuDialog2::OnStart()
 }
 
 #ifndef NDEBUG
-void ribi::maziak::QtMaziakMenuDialog2::Test() noexcept
+void ribi::maziak::QtMaziakMenuDialog::Test() noexcept
 {
   {
     static bool is_tested{false};

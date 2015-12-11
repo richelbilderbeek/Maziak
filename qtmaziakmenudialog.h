@@ -34,24 +34,24 @@ struct QMouseEvent;
 struct QPaintEvent;
 
 namespace Ui {
-  class QtMaziakMenuDialog2;
+  class QtMaziakMenuDialog;
 }
 
 namespace ribi {
 namespace maziak {
 
-class QtMaziakMenuDialog2 : public QtHideAndShowDialog
+class QtMaziakMenuDialog : public QtHideAndShowDialog
 {
   Q_OBJECT
 
 public:
-  explicit QtMaziakMenuDialog2(QWidget *parent = 0);
-  QtMaziakMenuDialog2(const QtMaziakMenuDialog2&) = delete;
-  QtMaziakMenuDialog2& operator=(const QtMaziakMenuDialog2&) = delete;
-  ~QtMaziakMenuDialog2() noexcept;
+  explicit QtMaziakMenuDialog(QWidget *parent = 0);
+  QtMaziakMenuDialog(const QtMaziakMenuDialog&) = delete;
+  QtMaziakMenuDialog& operator=(const QtMaziakMenuDialog&) = delete;
+  ~QtMaziakMenuDialog() noexcept;
 
 private:
-  Ui::QtMaziakMenuDialog2 *ui;
+  Ui::QtMaziakMenuDialog *ui;
   int GetMazeSize() const;
   Difficulty m_difficulty;
   void keyPressEvent(QKeyEvent * event);

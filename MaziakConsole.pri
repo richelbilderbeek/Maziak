@@ -1,5 +1,5 @@
 INCLUDEPATH += \
-    ../../Games/GameMaziak
+    ../Maziak
 
 SOURCES += \
     ../Maziak/maziakmenudialog.cpp \
@@ -42,8 +42,5 @@ HEADERS  += \
     ../Maziak/maziakgamestate.h \
     ../Maziak/maziakterminal.h
 
-OTHER_FILES += \
-    ../Maziak/Licence.txt
-
 RESOURCES += \
-    ../Maziak/GameMaziak.qrc
+    ../Maziak/Maziak.qrc

@@ -57,7 +57,7 @@ ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
   : QWidget(parent),
     m_image{QtGraphics().CreateImage(22 * ((9 * 2) + 1), 22 * ((9 * 2) + 1))},
     m_keys{},
-    m_sprites(new Sprites),
+    m_sprites{},
     m_timer_animate_enemies_and_prisoners{},
     m_timer_show_solution{}
 {
@@ -83,6 +83,8 @@ std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key> ribi::maziak::QtDispla
 
 void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 {
+  //std::clog << "."; //DEBUG
+
   const int block_width  = 22;
   const int block_height = 22;
   const int view_height{GetViewHeight()};
@@ -97,35 +99,30 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
         const int xVector = main_dialog.GetX() - (view_width  / 2) + x;
         const int yVector = main_dialog.GetY() - (view_height / 2) + y;
         //Draw the floor tile
-        const boost::shared_ptr<const QPixmap> pixmap_floor {
-          m_sprites->Get(
-            main_dialog.GetSpriteFloor(
-              xVector,
-              yVector
-            )
+        const auto pixmap_floor = m_sprites.Get(
+          main_dialog.GetSpriteFloor(
+            xVector,
+            yVector
           )
-        };
+        );
 
-        assert(pixmap_floor);
         QtGraphics().DrawImage(
           m_image,
-          pixmap_floor->toImage(),
+          pixmap_floor.toImage(),
           (x * block_width )+0,
           (y * block_height)+0
         );
         //Draw what's moving or standing on the floor
-        const auto pixmap_above_floor(
-          m_sprites->Get(
-            main_dialog.GetSpriteAboveFloor(
-              xVector,
-              yVector
-            )
+        const auto pixmap_above_floor = m_sprites.Get(
+          main_dialog.GetSpriteAboveFloor(
+            xVector,
+            yVector
           )
         );
-        assert(pixmap_above_floor);
+
         QtGraphics().DrawImage(
           m_image,
-          pixmap_above_floor->toImage(),
+          pixmap_above_floor.toImage(),
           (x * block_width )+0,
           (y * block_height)+0
         );
@@ -135,20 +132,18 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 
   //Draw player
   {
-    const boost::shared_ptr<const QPixmap> player {
-      m_sprites->Get(
-        main_dialog.GetSpritePlayer()
-      )
-    };
-    assert(player);
+    const auto player = m_sprites.Get(
+      main_dialog.GetSpritePlayer()
+    );
     QtGraphics().DrawImage(
       m_image,
-      player->toImage(),
+      player.toImage(),
       ((view_width  / 2) * block_width ) + 0,
       ((view_height / 2) * block_height) + 0
-     );
+    );
   }
   this->repaint();
+  qApp->processEvents();
 }
 
 bool ribi::maziak::QtDisplay::GetDoShowSolution()

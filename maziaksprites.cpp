@@ -6,6 +6,10 @@
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <QPixmap>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
+#include <QImage>
+#endif
+
 #include "testtimer.h"
 #include "trace.h"
 #pragma GCC diagnostic pop
@@ -40,9 +44,9 @@ std::string ribi::maziak::Sprites::CamelCasify(const std::string& s) noexcept
   return t;
 }
 
-const std::map<ribi::maziak::Sprite,boost::shared_ptr<const QPixmap>> ribi::maziak::Sprites::CreateSprites()
+std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::Sprites::CreateSprites() noexcept
 {
-  std::map<ribi::maziak::Sprite,boost::shared_ptr<const QPixmap>> m;
+  std::map<ribi::maziak::Sprite,QPixmap> m;
   const std::vector<Sprite> v { GetAllSprites() };
   for (const Sprite sprite: v)
   {
@@ -53,34 +57,45 @@ const std::map<ribi::maziak::Sprite,boost::shared_ptr<const QPixmap>> ribi::mazi
     const std::string filename {
       ":/images/" + spritename + ".png"
     };
-
-    const boost::shared_ptr<const QPixmap> pixmap {
-      new QPixmap(filename.c_str())
-    };
-    if (pixmap->width() == 0)
+    const QPixmap pixmap{filename.c_str()};
+    if (pixmap.width() == 0)
     {
       TRACE("Pixmap not found");
       TRACE(filename);
     }
-    assert(pixmap);
-    assert(pixmap->width() > 0);
-    assert(pixmap->height() > 0);
+    assert(pixmap.width() > 0);
+    assert(pixmap.height() > 0);
+    #ifdef FIX_MAZIAK_ISSUE_2
+    #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
+    if (!
+      (pixmap.toImage().format() == QImage::Format::Format_RGB32
+        || pixmap.toImage().format() == QImage::Format::Format_ARGB32
+      )
+    ) {
+      TRACE("Incorrect pixmap format");
+      TRACE(pixmap.toImage().format());
+      TRACE(filename);
+    }
+    assert(pixmap.toImage().format() == QImage::Format::Format_RGB32
+        || pixmap.toImage().format() == QImage::Format::Format_ARGB32
+    );
+    #endif
+    #endif // FIX_MAZIAK_ISSUE_2
     m.insert(std::make_pair(sprite,pixmap));
   }
   return m;
 }
 
-const boost::shared_ptr<const QPixmap> ribi::maziak::Sprites::Get(const Sprite sprite) const noexcept
+const QPixmap& ribi::maziak::Sprites::Get(const Sprite sprite) const noexcept
 {
   assert(m_sprites.find(sprite) != m_sprites.end());
-  const boost::shared_ptr<const QPixmap> pixmap {
+  const QPixmap& pixmap {
     m_sprites.find(sprite)->second
   };
-  assert(pixmap);
   return pixmap;
 }
 
-const std::vector<ribi::maziak::Sprite> ribi::maziak::Sprites::GetAllSprites() noexcept
+std::vector<ribi::maziak::Sprite> ribi::maziak::Sprites::GetAllSprites() noexcept
 {
   const std::vector<Sprite> v {
     Sprite::empty,

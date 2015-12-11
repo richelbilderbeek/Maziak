@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QtMaziakMenuDialog2</class>
- <widget class="QWidget" name="QtMaziakMenuDialog2">
+ <class>QtMaziakMenuDialog</class>
+ <widget class="QWidget" name="QtMaziakMenuDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,7 +14,7 @@
    <string>Maziak</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="GameMaziak.qrc">
+   <iconset resource="Maziak.qrc">
     <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
   </property>
   <property name="styleSheet">
@@ -102,7 +102,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="GameMaziak.qrc"/>
+  <include location="Maziak.qrc"/>
  </resources>
  <connections/>
 </ui>

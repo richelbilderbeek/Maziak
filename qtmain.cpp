@@ -4,13 +4,13 @@
 #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include <QApplication>
 
-#include "qtmaziakmenudialog2.h"
+#include "qtmaziakmenudialog.h"
 #pragma GCC diagnostic pop
 
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
-  ribi::maziak::QtMaziakMenuDialog2 w;
+  ribi::maziak::QtMaziakMenuDialog w;
   w.show();
   return a.exec();
 }

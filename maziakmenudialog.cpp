@@ -33,7 +33,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "maziakterminal.h"
 #include "testtimer.h"
  
-#include "richelbilderbeekprogram.h"
 #include "trace.h"
 #pragma GCC diagnostic pop
 
@@ -93,18 +92,9 @@ ribi::Help ribi::maziak::MenuDialog::GetHelp() const noexcept
   );
 }
 
-boost::shared_ptr<const ribi::Program> ribi::maziak::MenuDialog::GetProgram() const noexcept
-{
-  const boost::shared_ptr<const ribi::Program> p {
-    new ProgramMaziak
-  };
-  assert(p);
-  return p;
-}
-
 std::string ribi::maziak::MenuDialog::GetVersion() const noexcept
 {
-  return "3.0";
+  return "3.1";
 }
 
 std::vector<std::string> ribi::maziak::MenuDialog::GetVersionHistory() const noexcept
@@ -116,8 +106,9 @@ std::vector<std::string> ribi::maziak::MenuDialog::GetVersionHistory() const noe
     "2010-02-18: version 1.3: Animated fights. Prevent overlapping sprites. Add 'Instructions' screen in menu. Improved 'Menu' screen",
     "2010-02-25: version 1.4: Improved 'Game Over' screen. Added animation in 'Congratulations' screen. Improved enemies' intelligence. Improved maze creation algorithm. Ensured the player is not placed too close to the exit.",
     "2010-07-31: version 2.0: Reprogrammed in Qt Creator, so Maziak is now cross-platform!",
-    "2012-03-06: version 2.1: Conformized architecture and naming for ProjectRichelBilderbeek."
-    "2014-01-06: version 3.0: Seperated GUI from game logic, allow console gaming"
+    "2012-03-06: version 2.1: Conformized architecture and naming for ProjectRichelBilderbeek.",
+    "2014-01-06: version 3.0: Seperated GUI from game logic, allow console gaming",
+    "2015-12-11: version 3.1: Minor update",
   };
 }
 
