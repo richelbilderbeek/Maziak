@@ -7,10 +7,10 @@ include(../RibiLibraries/GeneralDesktop.pri)
 #Specific, console
 include(../RibiClasses/CppCanvas/CppCanvas.pri)
 include(../RibiClasses/CppContainer/CppContainer.pri)
-include(../RibiClasses/CppDotMatrix/CppDotMatrix.pri)
+include(../DotMatrix/DotMatrix.pri)
 include(../RibiClasses/CppGeometry/CppGeometry.pri)
 include(../RibiClasses/CppFuzzy_equal_to/CppFuzzy_equal_to.pri)
-include(../RibiClasses/CppPlane/CppPlane.pri)
+include(../plane/plane.pri)
 include(../RibiClasses/CppRibiRandom/CppRibiRandom.pri)
 include(../RibiClasses/CppRibiRegex/CppRibiRegex.pri)
 include(../RibiClasses/CppStopwatch/CppStopwatch.pri)
@@ -22,3 +22,9 @@ include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
 include(MaziakDesktop.pri)
 
 SOURCES += qtmain.cpp
+
+# Prevents this error:
+#/usr/include/boost/math/constants/constants.hpp:277: error: unable to find numeric literal operator 'operator""Q'
+#   BOOST_DEFINE_MATH_CONSTANT(half, 5.000000000000000000000000000000000000e-01, "5.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e-01")
+#   ^
+QMAKE_CXXFLAGS += -fext-numeric-literals

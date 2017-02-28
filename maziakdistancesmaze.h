@@ -47,10 +47,6 @@ struct DistancesMaze
     const int x,
     const int y
   ) noexcept;
-
-  #ifndef NDEBUG
-  static void Test() noexcept;
-  #endif
 };
 
 } //~namespace maziak

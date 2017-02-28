@@ -1,5 +1,6 @@
 #include "maziakterminal.h"
 
+#include <iostream>
 #include "textcanvas.h"
 #include "maziakmaindialog.h"
 #include "maziaksprites.h"

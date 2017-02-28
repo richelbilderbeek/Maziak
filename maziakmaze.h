@@ -61,11 +61,6 @@ struct Maze
   std::vector<std::vector<MazeSquare>> CreateMaze(
     const IntMaze& int_maze
   ) noexcept;
-
-  #ifndef NDEBUG
-  static void Test() noexcept;
-  #endif
-
 };
 
 } //~namespace maziak

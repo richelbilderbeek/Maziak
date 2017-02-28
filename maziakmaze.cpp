@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include "ribi_random.h"
-#include "testtimer.h"
+
 #include "maziakintmaze.h"
 #include "trace.h"
 
@@ -30,9 +30,6 @@ ribi::maziak::Maze::Maze(const int size,const int rng_seed)
     m_maze{},
     m_rng_engine(rng_seed)
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
   m_maze = CreateMaze(m_int_maze);
   assert(IsSquare());
   assert(FindExit().first  >= 0);
@@ -296,25 +293,3 @@ void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexc
   m_maze[y][x] = s;
   assert(Get(x,y) == s);
 }
-
-#ifndef NDEBUG
-void ribi::maziak::Maze::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  {
-    Random();
-    IntMaze(7);
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-  #ifdef FIX_MAZIAK_ISSUE_1
-  {
-    Maze maze(11);
-  }
-  #endif
-
-}
-#endif

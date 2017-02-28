@@ -15,7 +15,7 @@
 #include "maziakreceiver.h"
 #include "maziaksolutionmaze.h"
 #include "maziaksprites.h"
-#include "testtimer.h"
+
 #include "trace.h"
 #pragma GCC diagnostic pop
 
@@ -33,10 +33,6 @@ ribi::maziak::MainDialog::MainDialog(const int maze_size)
     m_x(-1),
     m_y(-1)
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
-
   {
     const std::pair<int,int> exit = m_maze.FindExit();
     m_distances = m_maze.GetIntMaze().GetDistancesMaze(exit.first,exit.second);
@@ -354,15 +350,3 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare() noexcept
       break;
   }
 }
-
-#ifndef NDEBUG
-void ribi::maziak::MainDialog::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-}
-#endif

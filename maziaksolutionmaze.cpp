@@ -4,15 +4,13 @@
 
 #include "maziakdistancesmaze.h"
 #include "maziakintmaze.h"
-#include "testtimer.h"
+
 #include "trace.h"
 
 ribi::maziak::SolutionMaze::SolutionMaze()
   : m_maze{}
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
+
 }
 
 ribi::maziak::SolutionMaze::SolutionMaze(
@@ -21,9 +19,6 @@ ribi::maziak::SolutionMaze::SolutionMaze(
   const int y
 ) : m_maze(CreateSolution(maze,x,y))
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
 
 }
 
@@ -70,15 +65,3 @@ bool ribi::maziak::SolutionMaze::IsSquare() const noexcept
 {
   return m_maze.IsSquare();
 }
-
-#ifndef NDEBUG
-void ribi::maziak::SolutionMaze::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-}
-#endif

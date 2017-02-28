@@ -10,20 +10,19 @@
 #include <QImage>
 #endif
 
-#include "testtimer.h"
+
 #include "trace.h"
 #pragma GCC diagnostic pop
 
 ribi::maziak::Sprites::Sprites()
   : m_sprites(CreateSprites())
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
+
 }
 
 std::string ribi::maziak::Sprites::CamelCasify(const std::string& s) noexcept
 {
+  //assert(CamelCasify("player_look_down_sword") == "playerLookDownSword");
   std::string t;
   const std::size_t sz = s.size();
   for(std::size_t i = 0;i!=sz;++i)
@@ -149,19 +148,6 @@ std::vector<ribi::maziak::Sprite> ribi::maziak::Sprites::GetAllSprites() noexcep
 
   return v;
 }
-
-#ifndef NDEBUG
-void ribi::maziak::Sprites::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-  assert(CamelCasify("player_look_down_sword") == "playerLookDownSword");
-}
-#endif
 
 char ribi::maziak::Sprites::ToChar(const ribi::maziak::Sprite sprite) noexcept
 {

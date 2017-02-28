@@ -3,15 +3,13 @@
 #include <cassert>
 
 #include "maziakintmaze.h"
-#include "testtimer.h"
+
 #include "trace.h"
 
 ribi::maziak::DistancesMaze::DistancesMaze()
   : m_distances{}
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
+
 }
 
 ribi::maziak::DistancesMaze::DistancesMaze(
@@ -21,9 +19,7 @@ ribi::maziak::DistancesMaze::DistancesMaze(
   )
   : m_distances(CalculateDistances(maze,x,y))
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
+
 }
 
 std::vector<std::vector<int>> ribi::maziak::DistancesMaze::CalculateDistances(
@@ -102,14 +98,3 @@ int ribi::maziak::DistancesMaze::Get(const int x, const int y) const noexcept
   return m_distances[y][x];
 }
 
-#ifndef NDEBUG
-void ribi::maziak::DistancesMaze::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-}
-#endif

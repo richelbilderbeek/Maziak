@@ -1,23 +1,3 @@
-//---------------------------------------------------------------------------
-/*
-Maziak, a simple maze game
-Copyright (C) 2007-2015 Richel Bilderbeek
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-//---------------------------------------------------------------------------
-//From http://www.richelbilderbeek.nl/GameMaziak.htm
-//---------------------------------------------------------------------------
 #include "maziakmenudialog.h"
 
 #include <cassert>
@@ -31,16 +11,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include "maziakmaindialog.h"
 #include "maziakterminal.h"
-#include "testtimer.h"
+
  
 #include "trace.h"
 #pragma GCC diagnostic pop
 
 ribi::maziak::MenuDialog::MenuDialog()
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
+
 }
 
 int ribi::maziak::MenuDialog::ExecuteSpecific(const std::vector<std::string>& argv) noexcept
@@ -74,7 +52,6 @@ ribi::About ribi::maziak::MenuDialog::GetAbout() const noexcept
     GetVersion(),
     GetVersionHistory()
   );
-  a.AddLibrary("TestTimer version: " + TestTimer::GetVersion());
   return a;
 }
 
@@ -111,15 +88,3 @@ std::vector<std::string> ribi::maziak::MenuDialog::GetVersionHistory() const noe
     "2015-12-11: version 3.1: Minor update",
   };
 }
-
-#ifndef NDEBUG
-void ribi::maziak::MenuDialog::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-}
-#endif

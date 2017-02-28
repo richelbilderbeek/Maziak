@@ -6,7 +6,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/shared_ptr.hpp>
-
+#include <random>
 #include "maziakfwd.h"
 #pragma GCC diagnostic pop
 
@@ -59,10 +59,6 @@ struct IntMaze
   // 1 : wall
   ///From http://www.richelbilderbeek.nl/CppCreateMaze.htm
   IntGrid CreateIntGrid(const int sz) noexcept;
-
-  #ifndef NDEBUG
-  static void Test() noexcept;
-  #endif
 };
 
 } //~namespace maziak

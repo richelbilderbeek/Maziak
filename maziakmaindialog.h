@@ -111,10 +111,6 @@ struct MainDialog
   int m_y;
 
   SolutionMaze CreateNewSolution() noexcept;
-
-  #ifndef NDEBUG
-  static void Test() noexcept;
-  #endif
 };
 
 } //namespace maziak

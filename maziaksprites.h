@@ -25,13 +25,10 @@ struct Sprites
   private:
   const std::map<Sprite,QPixmap> m_sprites;
 
+  //assert(CamelCasify("player_look_down_sword") == "playerLookDownSword");
   static std::string CamelCasify(const std::string& s) noexcept;
   std::map<Sprite,QPixmap> CreateSprites() noexcept;
   static std::vector<Sprite> GetAllSprites() noexcept;
-
-  #ifndef NDEBUG
-  static void Test() noexcept;
-  #endif
 
   static std::string ToStr(const Sprite) noexcept;
 };

@@ -6,23 +6,18 @@
 
 #include "maziakdistancesmaze.h"
 #include "maziakhelper.h"
-#include "testtimer.h"
+
 #include "trace.h"
 
 ribi::maziak::IntMaze::IntMaze()
   : m_dead_ends{}, m_int_grid{}, m_rng_engine(0)
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
+
 }
 
 ribi::maziak::IntMaze::IntMaze(const int sz, const int rng_seed)
   : m_dead_ends{}, m_int_grid{}, m_rng_engine(rng_seed)
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
   m_int_grid = CreateIntGrid(sz);
   m_dead_ends = CreateDeadEnds(m_int_grid);
 }
@@ -33,9 +28,6 @@ ribi::maziak::IntMaze::IntMaze(
 )
   : m_dead_ends{}, m_int_grid{int_grid}, m_rng_engine(rng_seed)
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
   m_dead_ends = CreateDeadEnds(m_int_grid);
 }
 
@@ -166,14 +158,3 @@ bool ribi::maziak::IntMaze::IsSquare() const noexcept
   return true;
 }
 
-#ifndef NDEBUG
-void ribi::maziak::IntMaze::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-}
-#endif
