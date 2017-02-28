@@ -11,7 +11,7 @@
 #endif
 
 
-#include "trace.h"
+
 #pragma GCC diagnostic pop
 
 ribi::maziak::Sprites::Sprites()
@@ -57,24 +57,10 @@ std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::Sprites::CreateSprites() no
       ":/images/" + spritename + ".png"
     };
     const QPixmap pixmap{filename.c_str()};
-    if (pixmap.width() == 0)
-    {
-      TRACE("Pixmap not found");
-      TRACE(filename);
-    }
     assert(pixmap.width() > 0);
     assert(pixmap.height() > 0);
     #ifdef FIX_MAZIAK_ISSUE_2
     #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
-    if (!
-      (pixmap.toImage().format() == QImage::Format::Format_RGB32
-        || pixmap.toImage().format() == QImage::Format::Format_ARGB32
-      )
-    ) {
-      TRACE("Incorrect pixmap format");
-      TRACE(pixmap.toImage().format());
-      TRACE(filename);
-    }
     assert(pixmap.toImage().format() == QImage::Format::Format_RGB32
         || pixmap.toImage().format() == QImage::Format::Format_ARGB32
     );

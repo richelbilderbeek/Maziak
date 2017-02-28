@@ -16,7 +16,7 @@
 #include "maziaksolutionmaze.h"
 #include "maziaksprites.h"
 
-#include "trace.h"
+
 #pragma GCC diagnostic pop
 
 ribi::maziak::MainDialog::MainDialog(const int maze_size)

@@ -5,7 +5,7 @@
 #include "ribi_random.h"
 
 #include "maziakintmaze.h"
-#include "trace.h"
+
 
 template <class Source, class Target>
     const std::vector<std::vector<Target> > ConvertMatrix(
@@ -153,7 +153,6 @@ ribi::maziak::IntMaze ribi::maziak::Maze::CreateIntMaze(const int size) noexcept
 std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMaze(
   const IntMaze& int_maze) noexcept
 {
-  const bool verbose{true};
   const int sz = int_maze.GetSize();
   std::vector<std::vector<ribi::maziak::MazeSquare> > maze {
     ConvertMatrix<int,MazeSquare>(int_maze.GetMaze())
@@ -171,10 +170,6 @@ std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMa
     //while (1)
     for (int i=0; ;++i)
     {
-      if (static_cast<int>(std::log10(i)) != static_cast<int>(std::log10(i + 1)))
-      {
-        if (verbose) { TRACE(i + 1); }
-      }
       const double x1 = static_cast<double>(dead_ends[0].first );
       const double y1 = static_cast<double>(dead_ends[0].second);
       const double x2 = static_cast<double>(dead_ends[1].first );

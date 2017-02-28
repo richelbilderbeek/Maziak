@@ -13,7 +13,7 @@
 #include "maziakterminal.h"
 
  
-#include "trace.h"
+
 #pragma GCC diagnostic pop
 
 ribi::maziak::MenuDialog::MenuDialog()

@@ -4,8 +4,6 @@
 
 #include "maziakintmaze.h"
 
-#include "trace.h"
-
 ribi::maziak::DistancesMaze::DistancesMaze()
   : m_distances{}
 {

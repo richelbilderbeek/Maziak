@@ -1,23 +1,3 @@
-//---------------------------------------------------------------------------
-/*
-Maziak, a simple maze game
-Copyright (C) 2007-2015 Richel Bilderbeek
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-//---------------------------------------------------------------------------
-//From http://www.richelbilderbeek.nl/GameMaziak.htm
-//---------------------------------------------------------------------------
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #include "qtmaziakmenudialog.h"
@@ -36,12 +16,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "about.h"
 #include "maziakmenudialog.h"
 #include "qtaboutdialog.h"
-#include "testtimer.h"
 #include "qtmaziakcanvas.h"
 #include "qtmaziakinstructionsdialog.h"
 #include "maziakmaindialog.h"
 #include "qtmaziakdisplay.h"
-#include "trace.h"
+
 #include "ui_qtmaziakmenudialog.h"
 
 #pragma GCC diagnostic pop
@@ -51,9 +30,6 @@ ribi::maziak::QtMaziakMenuDialog::QtMaziakMenuDialog(QWidget *parent) :
     ui(new Ui::QtMaziakMenuDialog),
     m_difficulty(Difficulty::easy)
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
   ui->setupUi(this);
 
   //Put the dialog in the screen's center
@@ -287,20 +263,3 @@ void ribi::maziak::QtMaziakMenuDialog::OnStart()
   d.show();
   w.Execute();
 }
-
-#ifndef NDEBUG
-void ribi::maziak::QtMaziakMenuDialog::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  {
-    MenuDialog();
-    QtDisplay();
-    QtMaziakInstructionsDialog();
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-}
-#endif

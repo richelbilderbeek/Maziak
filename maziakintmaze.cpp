@@ -7,7 +7,7 @@
 #include "maziakdistancesmaze.h"
 #include "maziakhelper.h"
 
-#include "trace.h"
+
 
 ribi::maziak::IntMaze::IntMaze()
   : m_dead_ends{}, m_int_grid{}, m_rng_engine(0)

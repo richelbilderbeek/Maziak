@@ -1,23 +1,3 @@
-//---------------------------------------------------------------------------
-/*
-Maziak, a simple maze game
-Copyright (C) 2007-2015 Richel Bilderbeek
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-//---------------------------------------------------------------------------
-//From http://www.richelbilderbeek.nl/GameMaziak.htm
-//---------------------------------------------------------------------------
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
@@ -44,12 +24,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "maziakmaze.h"
 #include "maziaksprites.h"
 #include "qtmaziakgameoverdialog.h"
-#include "testtimer.h"
 #include "qtmaziakgamewondialog.h"
 #include "qtgraphics.h"
 #include "maziaksolutionmaze.h"
 #include "maziakmaindialog.h"
-#include "trace.h"
+
 
 #pragma GCC diagnostic pop
 
@@ -61,10 +40,6 @@ ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
     m_timer_animate_enemies_and_prisoners{},
     m_timer_show_solution{}
 {
-  #ifndef NDEBUG
-  Test();
-  #endif
-
   //Put the dialog in the screen center at 75% of fullscreen size
   const QRect screen = QApplication::desktop()->screenGeometry();
   this->setGeometry(0,0,screen.width() * 75 / 100,screen.height() * 75 / 100);
@@ -220,30 +195,3 @@ void ribi::maziak::QtDisplay::StartShowSolution()
 {
   m_timer_show_solution = Stopwatch();
 }
-
-#ifndef NDEBUG
-void ribi::maziak::QtDisplay::Test() noexcept
-{
-  {
-    static bool is_tested{false};
-    if (is_tested) return;
-    is_tested = true;
-  }
-  {
-    maziak::MainDialog d(7);
-  }
-  const TestTimer test_timer(__func__,__FILE__,1.0);
-  {
-    QtDisplay q;
-    //Cannot test this in constructor: never call virtual functions in a class constructor
-    assert(q.GetViewHeight() == 9);
-    assert(q.GetViewWidth() == 9);
-  }
-  {
-    QtDisplay q;
-    maziak::MainDialog d(7);
-    d.SetDisplay(&q);
-    q.show();
-  }
-}
-#endif
