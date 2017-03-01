@@ -22,6 +22,7 @@ include(../RibiClasses/CppWidget/CppWidget.pri)
 
 #Specific, desktop
 include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
+include(MaziakConsole.pri)
 include(MaziakDesktop.pri)
 
 SOURCES += qtmain.cpp

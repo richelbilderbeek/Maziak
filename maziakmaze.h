@@ -56,12 +56,13 @@ struct Maze
   std::vector<std::vector<MazeSquare>> m_maze;
   std::mt19937 m_rng_engine;
 
-  static IntMaze CreateIntMaze(const int size) noexcept;
 
   std::vector<std::vector<MazeSquare>> CreateMaze(
     const IntMaze& int_maze
   ) noexcept;
 };
+
+IntMaze CreateIntMaze(const int size);
 
 } //~namespace maziak
 } //~namespace ribi

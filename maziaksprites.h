@@ -26,12 +26,13 @@ struct Sprites
   const std::map<Sprite,QPixmap> m_sprites;
 
   //assert(CamelCasify("player_look_down_sword") == "playerLookDownSword");
-  static std::string CamelCasify(const std::string& s) noexcept;
   std::map<Sprite,QPixmap> CreateSprites() noexcept;
-  static std::vector<Sprite> GetAllSprites() noexcept;
-
-  static std::string ToStr(const Sprite) noexcept;
 };
+
+std::string CamelCasify(const std::string& s) noexcept;
+std::vector<Sprite> GetAllSprites() noexcept;
+
+std::string ToStr(const Sprite) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

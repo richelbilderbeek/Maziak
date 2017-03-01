@@ -45,12 +45,13 @@ struct SolutionMaze
   private:
   IntMaze m_maze;
 
-  static IntMaze CreateSolution(
-    const DistancesMaze& maze,
-    const int x,
-    const int y
-  ) noexcept;
 };
+
+IntMaze CreateSolution(
+  const DistancesMaze& maze,
+  const int x,
+  const int y
+);
 
 } //~namespace maziak
 } //~namespace ribi

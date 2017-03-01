@@ -20,7 +20,7 @@ ribi::maziak::DistancesMaze::DistancesMaze(
 
 }
 
-std::vector<std::vector<int>> ribi::maziak::DistancesMaze::CalculateDistances(
+std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   const IntMaze& maze,
   const int x, const int y) noexcept
 {

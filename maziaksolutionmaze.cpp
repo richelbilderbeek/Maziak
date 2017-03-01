@@ -23,11 +23,11 @@ ribi::maziak::SolutionMaze::SolutionMaze(
 }
 
 //From http://www.richelbilderbeek.nl/GetDistancesPath.htm
-ribi::maziak::IntMaze ribi::maziak::SolutionMaze::CreateSolution(
+ribi::maziak::IntMaze ribi::maziak::CreateSolution(
   const DistancesMaze& distances,
   const int player_x,
   const int player_y
-) noexcept
+)
 {
   const int size = distances.GetSize();
 

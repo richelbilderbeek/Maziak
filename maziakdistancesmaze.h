@@ -42,12 +42,13 @@ struct DistancesMaze
   private:
   std::vector<std::vector<int>> m_distances;
 
-  static std::vector<std::vector<int>> CalculateDistances(
-    const IntMaze& maze,
-    const int x,
-    const int y
-  ) noexcept;
 };
+
+std::vector<std::vector<int>> CalculateDistances(
+  const IntMaze& maze,
+  const int x,
+  const int y
+) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

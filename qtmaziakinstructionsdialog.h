@@ -14,7 +14,7 @@ namespace ribi {
 
 class QtMaziakInstructionsDialog : public QtHideAndShowDialog
 {
-    Q_OBJECT
+    Q_OBJECT //!OCLINT
 
 public:
     explicit QtMaziakInstructionsDialog(QWidget *parent = 0);

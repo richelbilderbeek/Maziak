@@ -20,7 +20,7 @@ ribi::maziak::Sprites::Sprites()
 
 }
 
-std::string ribi::maziak::Sprites::CamelCasify(const std::string& s) noexcept
+std::string ribi::maziak::CamelCasify(const std::string& s) noexcept
 {
   //assert(CamelCasify("player_look_down_sword") == "playerLookDownSword");
   std::string t;
@@ -80,7 +80,7 @@ const QPixmap& ribi::maziak::Sprites::Get(const Sprite sprite) const noexcept
   return pixmap;
 }
 
-std::vector<ribi::maziak::Sprite> ribi::maziak::Sprites::GetAllSprites() noexcept
+std::vector<ribi::maziak::Sprite> ribi::maziak::GetAllSprites() noexcept
 {
   const std::vector<Sprite> v {
     Sprite::empty,
@@ -192,7 +192,7 @@ char ribi::maziak::Sprites::ToChar(const ribi::maziak::Sprite sprite) noexcept
   throw std::logic_error("Unknown Sprite");
 }
 
-std::string ribi::maziak::Sprites::ToStr(const ribi::maziak::Sprite sprite) noexcept
+std::string ribi::maziak::ToStr(const ribi::maziak::Sprite sprite) noexcept
 {
   switch (sprite)
   {

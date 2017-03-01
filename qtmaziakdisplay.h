@@ -30,7 +30,7 @@ namespace maziak {
 
 class QtDisplay : public QWidget, public Display
 {
-  Q_OBJECT
+  Q_OBJECT //!OCLINT
 
 public:
 

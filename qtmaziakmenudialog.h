@@ -22,7 +22,7 @@ namespace maziak {
 
 class QtMaziakMenuDialog : public QtHideAndShowDialog
 {
-  Q_OBJECT
+  Q_OBJECT //!OCLINT
 
 public:
   explicit QtMaziakMenuDialog(QWidget *parent = 0);

@@ -1,5 +1,3 @@
-include(MaziakConsole.pri)
-
 SOURCES += \
     $$PWD/qtmaziakmenudialog.cpp \
     $$PWD/qtmaziakdisplay.cpp \

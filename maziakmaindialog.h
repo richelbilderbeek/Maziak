@@ -53,9 +53,19 @@ struct MainDialog
 
   const SolutionMaze& GetSolution() const noexcept { return m_solution; }
 
-  Sprite GetSpriteFloor(const int x,const int y) const noexcept { return GetSpriteFloor(m_maze,x,y,m_do_show_solution,m_solution); }
-  Sprite GetSpriteAboveFloor(const int x,const int y) const noexcept { return GetSpriteAboveFloor(x,y,m_maze); }
-  Sprite GetSpritePlayer() const noexcept { return GetSpritePlayer(m_direction,m_move_now,m_has_sword,m_fighting_frame); }
+  Sprite GetSpriteFloor(const int x,const int y) const noexcept
+  {
+    return GetSpriteFloor(m_maze,x,y,m_do_show_solution,m_solution);
+  }
+
+  Sprite GetSpriteAboveFloor(const int x,const int y) const noexcept
+  {
+    return GetSpriteAboveFloor(x,y,m_maze);
+  }
+  Sprite GetSpritePlayer() const noexcept
+  {
+    return GetSpritePlayer(m_direction,m_move_now,m_has_sword,m_fighting_frame);
+  }
 
   static Sprite GetSpriteFloor(
     const Maze& maze,
