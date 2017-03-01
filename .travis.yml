@@ -34,6 +34,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script: 
+  - ./download_other_githubs
   # Console
   - qmake -qt=qt5 MaziakConsole.pro
   - make debug
