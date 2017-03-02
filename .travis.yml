@@ -38,7 +38,8 @@ script:
   # Console
   - qmake -qt=qt5 MaziakConsole.pro
   - make debug
-  - ./MaziakConsole &
+  # Do not do below: Travis will not be able to handle this
+  # - ./MaziakConsole & 
   # Desktop
   - qmake -qt=qt5 MaziakDesktop.pro
   - make debug
