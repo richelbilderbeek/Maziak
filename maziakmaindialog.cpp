@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <iostream>
-
+#include <boost/timer/timer.hpp>
 #include "maziakkey.h"
 #include "maziakmaze.h"
 #include "maziakdisplay.h"
@@ -92,28 +92,9 @@ void ribi::maziak::MainDialog::Execute() noexcept
 {
   while (1)
   {
-    m_display->DoDisplay(*this);
-    if (this->GetState() == GameState::game_over) break;
-    if (this->GetState() == GameState::has_won) break;
+    Tick();
 
-    const auto keys = m_display->RequestKeys();
 
-    PressKeys(keys);
-
-    m_do_show_solution = m_display->GetDoShowSolution();
-
-    RespondToCurrentSquare();
-
-    const int view_width  = m_display->GetViewWidth(); //Was 20
-    const int view_height = m_display->GetViewHeight(); //Was 20
-    if (m_display->MustAnimateEnemiesAndPrisoners())
-    {
-      AnimateEnemiesAndPrisoners(view_width,view_height);
-    }
-    if(m_fighting_frame > 0)
-    {
-      AnimateFighting();
-    }
   }
 }
 
@@ -306,6 +287,15 @@ void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
   }
 }
 
+void ribi::maziak::MainDialog::Profile() noexcept
+{
+  boost::timer::cpu_timer t;
+  while (t.elapsed().wall < 10)
+  {
+    Tick();
+  }
+}
+
 void ribi::maziak::MainDialog::SetDisplay(Display * const display)
 {
 
@@ -348,5 +338,31 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare() noexcept
     default:
       assert(!"Should not get here");
       break;
+  }
+}
+
+void ribi::maziak::MainDialog::Tick()
+{
+  m_display->DoDisplay(*this);
+  if (this->GetState() == GameState::game_over) return;
+  if (this->GetState() == GameState::has_won) return;
+
+  const auto keys = m_display->RequestKeys();
+
+  PressKeys(keys);
+
+  m_do_show_solution = m_display->GetDoShowSolution();
+
+  RespondToCurrentSquare();
+
+  const int view_width  = m_display->GetViewWidth(); //Was 20
+  const int view_height = m_display->GetViewHeight(); //Was 20
+  if (m_display->MustAnimateEnemiesAndPrisoners())
+  {
+    AnimateEnemiesAndPrisoners(view_width,view_height);
+  }
+  if(m_fighting_frame > 0)
+  {
+    AnimateFighting();
   }
 }

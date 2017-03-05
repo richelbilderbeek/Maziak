@@ -43,8 +43,7 @@ script:
   # Desktop
   - qmake -qt=qt5 MaziakDesktop.pro
   - make debug
-  - ./MaziakDesktop &
-  - sudo killall MaziakDesktop
+  - ./MaziakDesktop --profile
   # Get code coverage
   - ./get_code_cov
   - codecov

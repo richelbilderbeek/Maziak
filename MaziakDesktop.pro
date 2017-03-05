@@ -74,3 +74,4 @@ QMAKE_CXXFLAGS += -Wno-unused-variable
 #   ^
 QMAKE_CXXFLAGS += -fext-numeric-literals
 
+LIBS += -lboost_timer

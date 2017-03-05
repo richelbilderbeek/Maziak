@@ -94,6 +94,9 @@ struct MainDialog
   ///Press all active keys
   void PressKeys(const std::set<Key>& keys);
 
+  ///Play the game for profiling
+  void Profile() noexcept;
+
   void RespondToCurrentSquare() noexcept;
 
   ///Set how the game is displayed
@@ -121,6 +124,9 @@ struct MainDialog
   int m_y;
 
   SolutionMaze CreateNewSolution() noexcept;
+
+  ///Main game loop
+  void Tick();
 };
 
 } //namespace maziak
