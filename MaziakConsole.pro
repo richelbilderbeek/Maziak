@@ -62,4 +62,4 @@ QMAKE_CXXFLAGS += -Wno-unused-variable
 QMAKE_CXXFLAGS += -fext-numeric-literals
 
 # Boost.Timer
-LIBS += -lboost_timer -boost_system
+LIBS += -lboost_timer -lboost_system
