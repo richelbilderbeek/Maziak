@@ -8,10 +8,10 @@ include(../RibiClasses/CppQtHideAndShowDialog/CppQtHideAndShowDialog.pri)
 #Specific, console
 include(../RibiClasses/CppCanvas/CppCanvas.pri)
 include(../RibiClasses/CppContainer/CppContainer.pri)
-include(../DotMatrix/DotMatrix.pri)
+#include(../DotMatrix/DotMatrix.pri)
 include(../RibiClasses/CppGeometry/CppGeometry.pri)
 include(../RibiClasses/CppFuzzy_equal_to/CppFuzzy_equal_to.pri)
-include(../plane/plane.pri)
+#include(../plane/plane.pri)
 include(../RibiClasses/CppRibiRandom/CppRibiRandom.pri)
 include(../RibiClasses/CppRibiRegex/CppRibiRegex.pri)
 include(../RibiClasses/CppStopwatch/CppStopwatch.pri)
@@ -27,9 +27,9 @@ SOURCES += qtmain.cpp
 
 # C++14
 CONFIG += c++14
-QMAKE_CXX = g++-5
-QMAKE_LINK = g++-5
-QMAKE_CC = gcc-5
+QMAKE_CXX = g++
+QMAKE_LINK = g++
+QMAKE_CC = gcc
 QMAKE_CXXFLAGS += -std=c++14
 
 # High warning levels
@@ -72,4 +72,5 @@ QMAKE_CXXFLAGS += -Wno-unused-variable
 #   ^
 QMAKE_CXXFLAGS += -fext-numeric-literals
 
-LIBS += -lboost_timer
+# Boost.Timer
+LIBS += -lboost_timer -lboost_system
