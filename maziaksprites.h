@@ -34,9 +34,6 @@ std::string CamelCasify(const std::string& s) noexcept;
 
 std::vector<Sprite> GetAllSprites() noexcept;
 
-///Determines if the image format is correct
-bool IsValidFormat(const QImage::Format format) noexcept;
-
 std::string ToStr(const Sprite) noexcept;
 
 

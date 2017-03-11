@@ -59,7 +59,6 @@ std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key> ribi::maziak::QtDispla
 void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 {
   //std::clog << "."; //DEBUG
-
   const int block_width  = 22;
   const int block_height = 22;
   const int view_height{GetViewHeight()}; //Classic value is 9
@@ -165,7 +164,7 @@ bool ribi::maziak::QtDisplay::MustAnimateEnemiesAndPrisoners() noexcept
 void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
 {
   QPainter painter(this);
-  painter.drawImage(0,0,m_image);
+  painter.drawImage(this->rect(),m_image);
 }
 
 void ribi::maziak::QtDisplay::OnGameOver()

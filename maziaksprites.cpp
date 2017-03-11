@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <boost/range/algorithm/count_if.hpp>
 #include <gsl/gsl_assert>
+#include "qtgraphics.h"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <QPixmap>
@@ -142,12 +143,6 @@ std::vector<ribi::maziak::Sprite> ribi::maziak::GetAllSprites() noexcept
     && "All Sprite values (except Sprite::n_sprites) must be in");
 
   return v;
-}
-
-bool ribi::maziak::IsValidFormat(const QImage::Format f) noexcept
-{
-  return f == QImage::Format::Format_RGB32
-      || f == QImage::Format::Format_ARGB32;
 }
 
 char ribi::maziak::Sprites::ToChar(const ribi::maziak::Sprite sprite) noexcept
