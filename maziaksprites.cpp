@@ -64,16 +64,17 @@ std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::Sprites::CreateSprites() no
     const std::string filename {
       ":/images/" + spritename + ".png"
     };
-    const QPixmap pixmap{filename.c_str()};
+    QPixmap pixmap{filename.c_str()};
     assert(pixmap.width() > 0);
     assert(pixmap.height() > 0);
-    #ifdef FIX_MAZIAK_ISSUE_2
-    #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
-    assert(pixmap.toImage().format() == QImage::Format::Format_RGB32
-        || pixmap.toImage().format() == QImage::Format::Format_ARGB32
-    );
-    #endif
-    #endif // FIX_MAZIAK_ISSUE_2
+    if (!IsValidFormat(pixmap.toImage().format()))
+    {
+      pixmap = QPixmap::fromImage(
+        pixmap.toImage().convertToFormat(QImage::Format::Format_ARGB32),
+        Qt::NoFormatConversion);
+      assert(IsValidFormat(pixmap.toImage().format()));
+    }
+    assert(IsValidFormat(pixmap.toImage().format()));
     m.insert(std::make_pair(sprite,pixmap));
   }
   return m;
