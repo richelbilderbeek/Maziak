@@ -11,7 +11,7 @@ include(../RibiClasses/CppCanvas/CppCanvas.pri)
 include(../DotMatrix/DotMatrix.pri)
 include(../RibiClasses/CppRibiRandom/CppRibiRandom.pri)
 include(../RibiClasses/CppTextCanvas/CppTextCanvas.pri)
-include(../Maziak/MaziakConsole.pri)
+include(MaziakConsole.pri)
 
 SOURCES += main.cpp
 

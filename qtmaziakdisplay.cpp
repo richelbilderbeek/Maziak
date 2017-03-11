@@ -62,8 +62,8 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 
   const int block_width  = 22;
   const int block_height = 22;
-  const int view_height{GetViewHeight()};
-  const int view_width{GetViewWidth()};
+  const int view_height{GetViewHeight()}; //Classic value is 9
+  const int view_width{GetViewWidth()}; //Classic value is 9
   //Draw maze
   {
     for (int y=0; y!=view_height; ++y)
@@ -93,9 +93,7 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
           yVector
         );
         const auto pixmap_above_floor = m_sprites.Get(sprite_above_floor);
-        assert(pixmap_above_floor.toImage().format() == QImage::Format::Format_RGB32
-            || pixmap_above_floor.toImage().format() == QImage::Format::Format_ARGB32
-        );
+        assert(IsValidFormat(pixmap_above_floor.toImage().format()));
         QtGraphics().DrawImage(
           m_image,
           pixmap_above_floor.toImage(),

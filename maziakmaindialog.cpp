@@ -93,8 +93,6 @@ void ribi::maziak::MainDialog::Execute() noexcept
   while (1)
   {
     Tick();
-
-
   }
 }
 
