@@ -1,5 +1,3 @@
-# include(../RibiLibraries/Apfloat.pri)
-include(../RibiLibraries/Boost.pri)
 include(../RibiClasses/CppAbout/CppAbout.pri)
 include(../RibiClasses/CppFileIo/CppFileIo.pri)
 include(../RibiClasses/CppHelp/CppHelp.pri)

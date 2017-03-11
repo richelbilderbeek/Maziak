@@ -140,7 +140,7 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteAboveFloor(
     case MazeSquare::msSword     : return Sprite::sword;
     case MazeSquare::msExit      : return Sprite::exit;
     default:
-      assert(!"Should not get here");
+      assert(!"Should not get here"); //!OCLINT accepted idiom
       throw std::logic_error("Unexpected MazeSquare at mMaze");
   }
 }

@@ -88,13 +88,14 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
           (y * block_height)+0
         );
         //Draw what's moving or standing on the floor
-        const auto pixmap_above_floor = m_sprites.Get(
-          main_dialog.GetSpriteAboveFloor(
-            xVector,
-            yVector
-          )
+        const auto sprite_above_floor = main_dialog.GetSpriteAboveFloor(
+          xVector,
+          yVector
         );
-
+        const auto pixmap_above_floor = m_sprites.Get(sprite_above_floor);
+        assert(pixmap_above_floor.toImage().format() == QImage::Format::Format_RGB32
+            || pixmap_above_floor.toImage().format() == QImage::Format::Format_ARGB32
+        );
         QtGraphics().DrawImage(
           m_image,
           pixmap_above_floor.toImage(),
