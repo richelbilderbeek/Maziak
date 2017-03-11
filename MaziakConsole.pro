@@ -4,6 +4,7 @@ include(../RibiClasses/CppFileIo/CppFileIo.pri)
 include(../RibiClasses/CppHelp/CppHelp.pri)
 include(../RibiClasses/CppMenuDialog/CppMenuDialog.pri)
 include(../RibiClasses/CppTrace/CppTrace.pri)
+include(gsl.pri)
 
 #Specific, console
 include(../RibiClasses/CppCanvas/CppCanvas.pri)
