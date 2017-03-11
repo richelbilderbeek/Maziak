@@ -7,6 +7,7 @@ include(../RibiClasses/CppQtHideAndShowDialog/CppQtHideAndShowDialog.pri)
 include(gsl.pri)
 
 #Specific, console
+include(../DotMatrix/DotMatrix.pri)
 include(../plane/plane.pri)
 include(../RibiClasses/CppCanvas/CppCanvas.pri)
 include(../RibiClasses/CppContainer/CppContainer.pri)

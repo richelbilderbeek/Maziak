@@ -179,7 +179,7 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
       case PlayerMove::up1:  return has_sword ? Sprite::player_walk_up_sword1 : Sprite::player_walk_up1;
       case PlayerMove::up2:  return has_sword ? Sprite::player_walk_up_sword2 : Sprite::player_walk_up2;
       default:
-        assert(!"Should not get here");
+        assert(!"Should not get here"); //!OCLINT accepted idiom
         throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == up");
       }
     }
@@ -192,7 +192,7 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
         case PlayerMove::right1: return has_sword ? Sprite::player_walk_right_sword1 : Sprite::player_walk_right1;
         case PlayerMove::right2: return has_sword ? Sprite::player_walk_right_sword2 : Sprite::player_walk_right2;
         default:
-          assert(!"Should not get here");
+          assert(!"Should not get here"); //!OCLINT accepted idiom
           throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == right");
       }
     }
@@ -205,7 +205,7 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
       case PlayerMove::down1: return has_sword ? Sprite::player_walk_down_sword1 : Sprite::player_walk_down1;
       case PlayerMove::down2: return has_sword ? Sprite::player_walk_down_sword2 : Sprite::player_walk_down2;
       default:
-        assert(!"Should not get here");
+        assert(!"Should not get here"); //!OCLINT accepted idiom
         throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == down");
       }
     }
@@ -218,7 +218,7 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
         case PlayerMove::left1: return (has_sword ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1);
         case PlayerMove::left2: return (has_sword ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2);
         default:
-          assert(!"Should not get here");
+          assert(!"Should not get here"); //!OCLINT accepted idiom
           throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == left");
       }
     }
@@ -336,7 +336,7 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
       break;
     }
     default:
-      assert(!"Should not get here");
+      assert(!"Should not get here"); //!OCLINT accepted idiom
       break;
   }
 }
