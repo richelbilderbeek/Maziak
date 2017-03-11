@@ -6,6 +6,7 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
+#include <QImage>
 #include "maziaksprite.h"
 #pragma GCC diagnostic pop
 
@@ -30,9 +31,14 @@ struct Sprites
 };
 
 std::string CamelCasify(const std::string& s) noexcept;
+
 std::vector<Sprite> GetAllSprites() noexcept;
 
+///Determines if the image format is correct
+bool IsValidFormat(const QImage::Format format) noexcept;
+
 std::string ToStr(const Sprite) noexcept;
+
 
 } //~namespace maziak
 } //~namespace ribi

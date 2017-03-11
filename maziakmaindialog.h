@@ -84,7 +84,7 @@ struct MainDialog
     const PlayerMove moveNow,
     const bool m_has_sword,
     const int m_fighting_frame
-  ) noexcept;
+  );
 
   GameState GetState() const noexcept { return m_state; }
 
@@ -97,7 +97,7 @@ struct MainDialog
   ///Play the game for profiling
   void Profile() noexcept;
 
-  void RespondToCurrentSquare() noexcept;
+  void RespondToCurrentSquare();
 
   ///Set how the game is displayed
   void SetDisplay(Display * const display);

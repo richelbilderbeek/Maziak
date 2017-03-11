@@ -1,7 +1,10 @@
 #include "maziaksprites.h"
 
+#include <algorithm>
 #include <cassert>
 #include <stdexcept>
+#include <boost/range/algorithm/count_if.hpp>
+#include <gsl/gsl_assert>
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <QPixmap>
@@ -9,15 +12,20 @@
 #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
 #include <QImage>
 #endif
-
-
-
 #pragma GCC diagnostic pop
 
 ribi::maziak::Sprites::Sprites()
   : m_sprites(CreateSprites())
 {
-
+  Ensures(
+    boost::range::count_if(
+      GetAllSprites(),
+      [this](const auto s)
+      {
+        return IsValidFormat(this->Get(s).toImage().format());
+      }
+    ) == static_cast<int>(GetAllSprites().size())
+  );
 }
 
 std::string ribi::maziak::CamelCasify(const std::string& s) noexcept
@@ -135,6 +143,12 @@ std::vector<ribi::maziak::Sprite> ribi::maziak::GetAllSprites() noexcept
   return v;
 }
 
+bool ribi::maziak::IsValidFormat(const QImage::Format f) noexcept
+{
+  return f == QImage::Format::Format_RGB32
+      || f == QImage::Format::Format_ARGB32;
+}
+
 char ribi::maziak::Sprites::ToChar(const ribi::maziak::Sprite sprite) noexcept
 {
   switch (sprite)
@@ -185,11 +199,10 @@ char ribi::maziak::Sprites::ToChar(const ribi::maziak::Sprite sprite) noexcept
     case Sprite::sword: return '+';
     case Sprite::exit: return '!';
     case Sprite::n_sprites:
-      assert(!"Should never use Sprite::n_sprites");
-      throw std::logic_error("Never use Sprite::n_sprites");
+      assert(!"Should never use Sprite::n_sprites"); //!OCLINT accepted idiom
   }
-  assert(!"Should not get here");
-  throw std::logic_error("Unknown Sprite");
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return '\0';
 }
 
 std::string ribi::maziak::ToStr(const ribi::maziak::Sprite sprite) noexcept
@@ -242,9 +255,8 @@ std::string ribi::maziak::ToStr(const ribi::maziak::Sprite sprite) noexcept
     case Sprite::sword: return "sword";
     case Sprite::exit: return "exit";
     case Sprite::n_sprites:
-      assert(!"Should never use Sprite::n_sprites");
-      throw std::logic_error("Never use Sprite::n_sprites");
+      assert(!"Should never use Sprite::n_sprites"); //!OCLINT accepted idiom
   }
-  assert(!"Should not get here");
-  throw std::logic_error("Unknown Sprite");
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return "";
 }
