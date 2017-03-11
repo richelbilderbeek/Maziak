@@ -6,6 +6,10 @@ if [ ! -d DotMatrix ]; then
   git clone https://github.com/richelbilderbeek/DotMatrix
 fi
 
+if [ ! -d GSL ]; then
+  git clone https://github.com/Microsoft/GSL
+fi
+
 if [ ! -d plane ]; then
   git clone https://github.com/richelbilderbeek/plane
 fi
