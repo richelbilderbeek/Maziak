@@ -31,7 +31,7 @@ struct IntMaze
   const auto& Get() const noexcept { return m_int_grid; }
 
   ///Already shuffled, m_dead_ends[0] is the suggested initial coordinat for the player
-  std::vector<std::pair<int,int>> GetDeadEnds() const noexcept { return m_dead_ends; }
+  const auto& GetDeadEnds() const noexcept { return m_dead_ends; }
 
   ///Find the distances to (x,y) in walking squared
   DistancesMaze GetDistancesMaze(
@@ -41,7 +41,7 @@ struct IntMaze
 
   private:
 
-  std::vector<std::pair<int,int> > m_dead_ends;
+  std::vector<std::pair<int,int>> m_dead_ends;
   IntGrid m_int_grid;
   std::mt19937 m_rng_engine;
 
