@@ -139,6 +139,26 @@ Sprite GetSpritePlayer(
   const int fighting_frame
 );
 
+Sprite GetSpritePlayerDown(
+  const PlayerMove moveNow,
+  const bool has_sword
+);
+
+Sprite GetSpritePlayerLeft(
+  const PlayerMove moveNow,
+  const bool has_sword
+);
+
+Sprite GetSpritePlayerRight(
+  const PlayerMove moveNow,
+  const bool has_sword
+);
+
+Sprite GetSpritePlayerUp(
+  const PlayerMove moveNow,
+  const bool has_sword
+);
+
 Sprite GetSpritePlayerFighting(
   const int fighting_frame,
   const bool has_sword

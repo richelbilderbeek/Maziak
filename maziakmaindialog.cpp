@@ -179,80 +179,107 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayer(
 )
 {
   if (fighting_frame != 0) return GetSpritePlayerFighting(fighting_frame, has_sword);
+  assert(fighting_frame == 0);
   switch (direction)
   {
-    case PlayerDirection::pdUp:
-    {
-      switch (move)
-      {
-      case PlayerMove::none: return has_sword
-        ? Sprite::player_look_up_sword : Sprite::player_look_up;
-      case PlayerMove::up1:  return has_sword
-        ? Sprite::player_walk_up_sword1 : Sprite::player_walk_up1;
-      case PlayerMove::up2:  return has_sword
-        ? Sprite::player_walk_up_sword2 : Sprite::player_walk_up2;
-      default:
-        assert(!"Should not get here"); //!OCLINT accepted idiom
-        throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == up");
-      }
-    }
-    //break; Unreachable
-    case PlayerDirection::pdRight:
-    {
-      switch (move)
-      {
-        case PlayerMove::none:   return has_sword
-          ? Sprite::player_look_right_sword : Sprite::player_look_right;
-        case PlayerMove::right1: return has_sword
-          ? Sprite::player_walk_right_sword1 : Sprite::player_walk_right1;
-        case PlayerMove::right2: return has_sword
-          ? Sprite::player_walk_right_sword2 : Sprite::player_walk_right2;
-        default:
-          assert(!"Should not get here"); //!OCLINT accepted idiom
-          throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == right");
-      }
-    }
-    //break; Unreachable
-    case PlayerDirection::pdDown:
-    {
-      switch (move)
-      {
-      case PlayerMove::none:  return has_sword
-        ? Sprite::player_look_down_sword : Sprite::player_look_down;
-      case PlayerMove::down1: return has_sword
-        ? Sprite::player_walk_down_sword1 : Sprite::player_walk_down1;
-      case PlayerMove::down2: return has_sword
-        ? Sprite::player_walk_down_sword2 : Sprite::player_walk_down2;
-      default:
-        assert(!"Should not get here"); //!OCLINT accepted idiom
-        throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == down");
-      }
-    }
-    //break; Unreachable
-    case PlayerDirection::pdLeft:
-    {
-      switch (move)
-      {
-        case PlayerMove::none:  return has_sword
-          ? Sprite::player_look_left_sword : Sprite::player_look_left;
-        case PlayerMove::left1: return has_sword
-          ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1;
-        case PlayerMove::left2: return has_sword
-          ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2;
-        default:
-          assert(!"Should not get here"); //!OCLINT accepted idiom
-          throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == left");
-      }
-    }
-      //break; Unreachable
+    case PlayerDirection::pdUp: return GetSpritePlayerUp(move, has_sword);
+    case PlayerDirection::pdRight: return GetSpritePlayerRight(move, has_sword);
+    case PlayerDirection::pdDown: return GetSpritePlayerDown(move, has_sword);
+    case PlayerDirection::pdLeft: return GetSpritePlayerLeft(move, has_sword);
     default:
       assert(!"Should not get here"); //!OCLINT accepted idiom
-    throw std::logic_error("Unsupported PlayerDirection");
+      break;
   }
-  //Unreachable
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  throw std::logic_error("Reached unreachable part");
+  return Sprite::transparent;
 }
+
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayerDown(
+  const PlayerMove move,
+  const bool has_sword
+)
+{
+  switch (move)
+  {
+    case PlayerMove::none:  return has_sword
+      ? Sprite::player_look_down_sword : Sprite::player_look_down;
+    case PlayerMove::down1: return has_sword
+      ? Sprite::player_walk_down_sword1 : Sprite::player_walk_down1;
+    case PlayerMove::down2: return has_sword
+      ? Sprite::player_walk_down_sword2 : Sprite::player_walk_down2;
+    default:
+      assert(!"Should not get here"); //!OCLINT accepted idiom
+      break;
+  }
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return Sprite::transparent;
+}
+
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayerLeft(
+  const PlayerMove move,
+  const bool has_sword
+)
+{
+  switch (move)
+  {
+    case PlayerMove::none:  return has_sword
+      ? Sprite::player_look_left_sword : Sprite::player_look_left;
+    case PlayerMove::left1: return has_sword
+      ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1;
+    case PlayerMove::left2: return has_sword
+      ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2;
+    default:
+      assert(!"Should not get here"); //!OCLINT accepted idiom
+      break;
+  }
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return Sprite::transparent;
+}
+
+
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayerRight(
+  const PlayerMove move,
+  const bool has_sword
+)
+{
+  switch (move)
+  {
+    case PlayerMove::none:   return has_sword
+      ? Sprite::player_look_right_sword : Sprite::player_look_right;
+    case PlayerMove::right1: return has_sword
+      ? Sprite::player_walk_right_sword1 : Sprite::player_walk_right1;
+    case PlayerMove::right2: return has_sword
+      ? Sprite::player_walk_right_sword2 : Sprite::player_walk_right2;
+    default:
+      assert(!"Should not get here"); //!OCLINT accepted idiom
+      break;
+  }
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return Sprite::transparent;
+}
+
+
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayerUp(
+  const PlayerMove move,
+  const bool has_sword
+)
+{
+  switch (move)
+  {
+    case PlayerMove::none: return has_sword
+      ? Sprite::player_look_up_sword : Sprite::player_look_up;
+    case PlayerMove::up1:  return has_sword
+      ? Sprite::player_walk_up_sword1 : Sprite::player_walk_up1;
+    case PlayerMove::up2:  return has_sword
+      ? Sprite::player_walk_up_sword2 : Sprite::player_walk_up2;
+    default:
+      assert(!"Should not get here"); //!OCLINT accepted idiom
+      break;
+  }
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return Sprite::transparent;
+}
+
 
 ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting(
   const int fighting_frame,
