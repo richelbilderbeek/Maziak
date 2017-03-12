@@ -41,3 +41,8 @@ BOOST_AUTO_TEST_CASE(maziak_IsSquare)
     BOOST_CHECK(!IsSquare(v));
   }
 }
+
+BOOST_AUTO_TEST_CASE(maziak_CamelCasify)
+{
+  BOOST_CHECK_EQUAL(CamelCasify("player_look_down_sword"), "playerLookDownSword");
+}

@@ -10,17 +10,19 @@
 namespace ribi {
 namespace maziak {
 
-std::vector<std::pair<int,int>> GetShuffledDeadEnds(
-    const std::vector<std::vector<int>>& intMaze);
+std::string CamelCasify(const std::string& s) noexcept;
 
-std::vector<std::pair<int,int>> GetShuffledNonDeadEnds(
-    const std::vector<std::vector<int>>& intMaze);
+//std::vector<std::pair<int,int>> GetShuffledDeadEnds(
+//    const std::vector<std::vector<int>>& intMaze);
+
+//std::vector<std::pair<int,int>> GetShuffledNonDeadEnds(
+//    const std::vector<std::vector<int>>& intMaze);
 
 bool CanMoveTo(
-    const std::vector<std::vector<MazeSquare> >& maze,
-    const int x, const int y,
-    const bool hasSword,
-    const bool showSolution);
+  const std::vector<std::vector<MazeSquare> >& maze,
+  const int x, const int y,
+  const bool hasSword,
+  const bool showSolution);
 
 ///Get the coordinats where the end ends are
 //From http://www.richelbilderbeek.nl/CppGetDeadEnds.htm

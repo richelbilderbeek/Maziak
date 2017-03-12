@@ -21,25 +21,18 @@ struct Sprites
   Sprites();
   const QPixmap& Get(const Sprite sprite) const noexcept;
 
-  ///ASCII art
-  static char ToChar(const Sprite) noexcept;
-
   int GetHeight() const noexcept { return 24; }
   int GetWidth() const noexcept { return 24; }
 
   private:
   const std::map<Sprite,QPixmap> m_sprites;
 
-  //assert(CamelCasify("player_look_down_sword") == "playerLookDownSword");
-  std::map<Sprite,QPixmap> CreateSprites() noexcept;
 };
 
-std::string CamelCasify(const std::string& s) noexcept;
+///Create a Sprite to QPixmap lookup table
+std::map<Sprite,QPixmap> CreateSprites() noexcept;
 
 std::vector<Sprite> GetAllSprites() noexcept;
-
-std::string ToStr(const Sprite) noexcept;
-
 
 } //~namespace maziak
 } //~namespace ribi

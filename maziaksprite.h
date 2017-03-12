@@ -1,6 +1,8 @@
 #ifndef MAZIAKSPRITE_H
 #define MAZIAKSPRITE_H
 
+#include <string>
+
 namespace ribi {
 namespace maziak {
 
@@ -58,6 +60,12 @@ enum class Sprite
 
   n_sprites //Never use, used for debugging
 };
+
+///ASCII art
+char ToChar(const Sprite s) noexcept;
+
+///To full word
+std::string ToStr(const Sprite) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi
