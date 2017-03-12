@@ -59,8 +59,8 @@ std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key> ribi::maziak::QtDispla
 void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 {
   //std::clog << "."; //DEBUG
-  const int block_width  = 22;
-  const int block_height = 22;
+  const int block_width  = 24;
+  const int block_height = 24;
   const int view_height{GetViewHeight()}; //Classic value is 9
   const int view_width{GetViewWidth()}; //Classic value is 9
   //Draw maze

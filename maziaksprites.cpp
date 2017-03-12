@@ -76,6 +76,8 @@ std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::Sprites::CreateSprites() no
       assert(IsValidFormat(pixmap.toImage().format()));
     }
     assert(IsValidFormat(pixmap.toImage().format()));
+    assert(pixmap.width() == this->GetWidth());
+    assert(pixmap.height() == this->GetHeight());
     m.insert(std::make_pair(sprite,pixmap));
   }
   return m;
