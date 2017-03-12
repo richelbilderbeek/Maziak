@@ -1,21 +1,15 @@
-#include "maziaksprites.h"
-
-#include <boost/test/unit_test.hpp>
-#include <QPixmap>
-
-#include "maziakhelper.h"
+#include "qtmaziaksprites_test.h"
+#include "qtmaziaksprites.h"
 #include "qtgraphics.h"
 
-using namespace ribi::maziak;
-
-BOOST_AUTO_TEST_CASE(maziak_CreateSprites)
+void ribi::maziak::QtSprites_test::images_are_correct()
 {
   const auto m = CreateSprites();
   for (const auto& p: m)
   {
     const QPixmap& pixmap = p.second;
-    BOOST_CHECK_EQUAL(pixmap.width(), Sprites().GetWidth());
-    BOOST_CHECK_EQUAL(pixmap.height(), Sprites().GetHeight());
-    BOOST_CHECK(::ribi::IsValidFormat(pixmap.toImage().format()));
+    QVERIFY(pixmap.width() == GetSpriteWidth());
+    QVERIFY(pixmap.height() == GetSpriteHeight());
+    QVERIFY(::ribi::IsValidFormat(pixmap.toImage().format()));
   }
 }

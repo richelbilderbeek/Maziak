@@ -46,6 +46,10 @@ script:
   # Do not do below: Travis will not be able to handle this
   # - ./MaziakConsole & 
   # Desktop debug profile run
+  - qmake -qt=qt5 MaziakDesktopTest.pro
+  - make debug
+  - ./MaziakDesktopTest
+  # Desktop debug profile run
   - make clean
   - qmake -qt=qt5 MaziakDesktop.pro
   - make debug

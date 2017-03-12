@@ -23,8 +23,9 @@ include(../RibiClasses/CppWidget/CppWidget.pri)
 include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
 include(MaziakConsole.pri)
 include(MaziakDesktop.pri)
+include(MaziakDesktopTest.pri)
 
-SOURCES += qtmain.cpp
+SOURCES += qtmain_test.cpp
 
 # C++14
 CONFIG += c++14
@@ -91,3 +92,5 @@ QMAKE_CXXFLAGS += -fext-numeric-literals
 # Boost.Timer
 LIBS += -lboost_timer -lboost_system
 
+# QTest
+QT += testlib
