@@ -17,6 +17,9 @@
    <iconset resource="Maziak.qrc">
     <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background: url(:/images/MaziakBackground.png) no-repeat center center fixed;</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="label">

@@ -14,8 +14,11 @@
    <string>Maziak</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../GameAminoAcidFighter/GameAminoAcidFighter.qrc">
+   <iconset resource="Maziak.qrc">
     <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: url(:/images/MaziakBackground.png) no-repeat center center fixed;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -51,7 +54,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../GameAminoAcidFighter/GameAminoAcidFighter.qrc"/>
+  <include location="Maziak.qrc"/>
  </resources>
  <connections/>
 </ui>

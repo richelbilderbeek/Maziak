@@ -321,8 +321,10 @@ void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
 void ribi::maziak::MainDialog::Profile() noexcept
 {
   boost::timer::cpu_timer t;
-  while (t.elapsed().wall < 10)
+  while (1)
   {
+    const auto now = t.elapsed().wall; //nanoseconds!
+    if (now > 10'000'000'000) break;
     Tick();
   }
 }

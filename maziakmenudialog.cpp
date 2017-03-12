@@ -11,9 +11,6 @@
 #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include "maziakmaindialog.h"
 #include "maziakterminal.h"
-
- 
-
 #pragma GCC diagnostic pop
 
 ribi::maziak::MenuDialog::MenuDialog()
@@ -46,9 +43,9 @@ ribi::About ribi::maziak::MenuDialog::GetAbout() const noexcept
     "Richel Bilderbeek",
     "Maziak",
     "a simple maze game",
-    "the 28th of January 2014",
-    "2007-2015",
-    "http://www.richelbilderbeek.nl/GameMaziak.htm",
+    "March 12th 2017",
+    "2007-2017",
+    "https://github.com/richelbilderbeek/Maziak",
     GetVersion(),
     GetVersionHistory()
   );
@@ -71,7 +68,7 @@ ribi::Help ribi::maziak::MenuDialog::GetHelp() const noexcept
 
 std::string ribi::maziak::MenuDialog::GetVersion() const noexcept
 {
-  return "3.1";
+  return "3.2";
 }
 
 std::vector<std::string> ribi::maziak::MenuDialog::GetVersionHistory() const noexcept
@@ -86,5 +83,6 @@ std::vector<std::string> ribi::maziak::MenuDialog::GetVersionHistory() const noe
     "2012-03-06: version 2.1: Conformized architecture and naming for ProjectRichelBilderbeek.",
     "2014-01-06: version 3.0: Seperated GUI from game logic, allow console gaming",
     "2015-12-11: version 3.1: Minor update",
+    "2017-03-12: version 3.2: Added tests, simplified code",
   };
 }
