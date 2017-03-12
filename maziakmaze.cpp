@@ -143,13 +143,6 @@ bool ribi::maziak::Maze::CanSet(const int x, const int y, const MazeSquare /* s 
   return CanGet(x,y);
 }
 
-ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(const int size)
-{
-  assert( size > 4 && size % 4 == 3
-    && "Size must be 3 + (n * 4) for n > 0");
-  return IntMaze{size};
-}
-
 std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMaze(
   const IntMaze& int_maze) noexcept
 {

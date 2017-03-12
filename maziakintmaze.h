@@ -1,14 +1,11 @@
 #ifndef MAZIAKINTMAZE_H
 #define MAZIAKINTMAZE_H
 
+#include <random>
 #include <vector>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#include <boost/shared_ptr.hpp>
-#include <random>
 #include "maziakfwd.h"
-#pragma GCC diagnostic pop
+#include "maziakintgrid.h"
 
 namespace ribi {
 namespace maziak {
@@ -18,8 +15,6 @@ namespace maziak {
 /// 1 : wall
 struct IntMaze
 {
-  using IntGrid = std::vector<std::vector<int>>;
-
   explicit IntMaze();
   explicit IntMaze(const int sz, const int rng_seed = 42);
   explicit IntMaze(const IntGrid& int_grid, const int rng_seed = 42);
@@ -46,15 +41,11 @@ struct IntMaze
   std::mt19937 m_rng_engine;
 
   ///From http://www.richelbilderbeek.nl/CppGetDeadEnds.htm
-  std::vector<std::pair<int,int>> CreateDeadEnds(
+  std::vector<std::pair<int,int>> CollectDeadEnds(
     const IntGrid& maze) noexcept;
-
-  //Creates a maze
-  // 0 : path
-  // 1 : wall
-  ///From http://www.richelbilderbeek.nl/CppCreateMaze.htm
-  IntGrid CreateIntGrid(const int sz) noexcept;
 };
+
+IntMaze CreateIntMaze(const int size);
 
 int GetSize(const IntMaze& m) noexcept;
 

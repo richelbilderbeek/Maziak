@@ -57,8 +57,6 @@ struct Maze
   ) noexcept;
 };
 
-IntMaze CreateIntMaze(const int size);
-
 int GetSize(const Maze& m) noexcept;
 
 bool IsSquare(const Maze& m);

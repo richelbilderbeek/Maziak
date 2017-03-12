@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
-
+#include <gsl/gsl_assert>
 #include "maziakdistancesmaze.h"
 #include "maziakhelper.h"
 
@@ -18,8 +18,9 @@ ribi::maziak::IntMaze::IntMaze()
 ribi::maziak::IntMaze::IntMaze(const int sz, const int rng_seed)
   : m_dead_ends{}, m_int_grid{}, m_rng_engine(rng_seed)
 {
+  Expects(IsValidSize(sz));
   m_int_grid = CreateIntGrid(sz);
-  m_dead_ends = CreateDeadEnds(m_int_grid);
+  m_dead_ends = CollectDeadEnds(m_int_grid);
 }
 
 ribi::maziak::IntMaze::IntMaze(
@@ -28,7 +29,7 @@ ribi::maziak::IntMaze::IntMaze(
 )
   : m_dead_ends{}, m_int_grid{int_grid}, m_rng_engine(rng_seed)
 {
-  m_dead_ends = CreateDeadEnds(m_int_grid);
+  m_dead_ends = CollectDeadEnds(m_int_grid);
 }
 
 bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
@@ -37,12 +38,12 @@ bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
       && y >= 0 && y < GetSize(*this);
 }
 
-std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CreateDeadEnds(
-  const std::vector<std::vector<int> >& maze) noexcept
+std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CollectDeadEnds(
+  const std::vector<std::vector<int>>& maze) noexcept
 {
   const int size = maze.size();
 
-  std::vector<std::pair<int,int> > dead_ends;
+  std::vector<std::pair<int,int>> dead_ends;
 
   for (int y=1; y!=size-1; ++y)
   {
@@ -64,71 +65,12 @@ std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CreateDeadEnds(
   return dead_ends;
 }
 
-ribi::maziak::IntMaze::IntGrid
-  ribi::maziak::IntMaze::CreateIntGrid(const int sz
-) noexcept
+
+
+ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(const int size)
 {
-  //Assume correct size dimensions
-  assert( sz > 4 && sz % 4 == 3
-    && "Size must be 3 + (n * 4) for n > 0");
-
-  //Start with a wall-only maze
-  std::vector<std::vector<int> > maze(sz, std::vector<int>(sz,1));
-
-  //Prepare maze, remove paths
-  // XXXXXXX    1111111
-  // X X X X    1212121
-  // XXXXXXX    1111111
-  // X XOX X -> 1210121
-  // XXXXXXX    1111111
-  // X X X X    1212121
-  // XXXXXXX    1111111
-
-  //Draw open spaces
-  for (int y=1; y<sz; y+=2)
-  {
-    for (int x=1; x<sz; x+=2)
-    {
-      maze[y][x] = 2; //2: unexplored
-    }
-  }
-
-  const int mid = sz/2;
-
-  maze[mid][mid] = 0;
-
-  std::vector<std::pair<int,int> > v;
-  v.push_back(std::make_pair(mid,mid));
-  while (!v.empty())
-  {
-    //Set a random explorer square at the back
-    std::swap(v.back(),v[ std::rand() % static_cast<int>(v.size())]);
-    //Check possible adjacent squares
-    const int x = v.back().first;
-    const int y = v.back().second;
-    std::vector<std::pair<int,int> > next;
-    if (x > 0 + 2 && maze[y][x-2] == 2) next.push_back(std::make_pair(x-2,y));
-    if (y > 0 + 2 && maze[y-2][x] == 2) next.push_back(std::make_pair(x,y-2));
-    if (x < sz - 2 && maze[y][x+2] == 2) next.push_back(std::make_pair(x+2,y));
-    if (y < sz - 2 && maze[y+2][x] == 2) next.push_back(std::make_pair(x,y+2));
-    //Dead end?
-    if (next.empty())
-    {
-      v.pop_back();
-      continue;
-    }
-    //Select a random next adjacent square
-    const int nextIndex = (std::rand() >> 4) % static_cast<int>(next.size());
-    const int nextX = next[nextIndex].first;
-    const int nextY = next[nextIndex].second;
-    //Clear next square
-    maze[nextY][nextX] = 0;
-    //Clear path towards next square
-    maze[(y + nextY)/2][(x + nextX)/2] = 0;
-    //Add next square to stack
-    v.push_back(std::make_pair(nextX,nextY));
-  }
-  return maze;
+  Expects(IsValidSize(size));
+  return IntMaze{size};
 }
 
 int ribi::maziak::IntMaze::Get(const int x, const int y) const noexcept

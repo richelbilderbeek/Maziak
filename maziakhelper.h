@@ -1,6 +1,7 @@
 #ifndef MAZIAKHELPER_H
 #define MAZIAKHELPER_H
 
+#include <algorithm>
 #include <cassert>
 #include <vector>
 #include <gsl/gsl_assert>
@@ -9,10 +10,10 @@
 namespace ribi {
 namespace maziak {
 
-const std::vector<std::pair<int,int>> GetShuffledDeadEnds(
+std::vector<std::pair<int,int>> GetShuffledDeadEnds(
     const std::vector<std::vector<int>>& intMaze);
 
-const std::vector<std::pair<int,int>> GetShuffledNonDeadEnds(
+std::vector<std::pair<int,int>> GetShuffledNonDeadEnds(
     const std::vector<std::vector<int>>& intMaze);
 
 bool CanMoveTo(
@@ -47,11 +48,13 @@ template <class T>
 bool IsSquare(const std::vector<std::vector<T>>& v)
 {
   Expects(!v.empty());
-  for(const std::vector<T>& row: v)
-  {
-    if (row.size() != v.size()) return false;
-  }
-  return true;
+  return std::all_of(
+    std::begin(v), std::end(v),
+    [v](const auto& row)
+    {
+      return row.size() == v.size();
+    }
+  );
 }
 
 

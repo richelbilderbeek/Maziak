@@ -29,8 +29,9 @@ namespace maziak {
 
 */
 
-struct SolutionMaze
+class SolutionMaze
 {
+public:
   SolutionMaze();
   SolutionMaze(
     const DistancesMaze& maze,
@@ -42,9 +43,8 @@ struct SolutionMaze
 
   const auto& Get() const noexcept { return m_maze; }
 
-  private:
+private:
   IntMaze m_maze;
-
 };
 
 IntMaze CreateSolution(
