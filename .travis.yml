@@ -45,13 +45,20 @@ script:
   - make debug
   # Do not do below: Travis will not be able to handle this
   # - ./MaziakConsole & 
-  # Desktop
+  # Desktop, just run a bit
   - qmake -qt=qt5 MaziakDesktop.pro
   - make debug
   - ./MaziakDesktop --profile
   # Get code coverage
   - ./get_code_cov
   - codecov
+  # Desktop profiling
+  - make clean
+  - qmake -qt=qt5 MaziakDesktop.pro
+  - make release
+  - ./MaziakDesktop --profile
+  - gprof MaziakDesktop > gprof.log
+  - head gprof.log -n 1000
   # Call OCLint
   - ./do_oclint
 
