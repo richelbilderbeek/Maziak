@@ -34,19 +34,28 @@
 
 ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
   : QWidget(parent),
-    m_image{QtGraphics().CreateImage(22 * ((9 * 2) + 1), 22 * ((9 * 2) + 1))},
+    m_image{QtGraphics().CreateImage(9 * 24, 9 * 24)},
     m_keys{},
     m_sprites{},
     m_timer_animate_enemies_and_prisoners{},
     m_timer_show_solution{}
 {
+  {
+    const int view_height{GetViewHeight()}; //Classic value is 9
+    const int view_width{GetViewWidth()}; //Classic value is 9
+    assert(m_image.height() == m_sprites.GetHeight() * view_height);
+    assert(m_image.width() == m_sprites.GetWidth() * view_width);
+  }
+
+
   //Put the dialog in the screen center at 75% of fullscreen size
   const QRect screen = QApplication::desktop()->screenGeometry();
   this->setGeometry(0,0,screen.width() * 75 / 100,screen.height() * 75 / 100);
   this->move( screen.center() - this->rect().center() );
 }
 
-std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key> ribi::maziak::QtDisplay::CreateDefaultKeys() noexcept
+std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key>
+ribi::maziak::QtDisplay::CreateDefaultKeys() noexcept
 {
   std::map<WORD,Key> m;
   m.insert(std::make_pair(Qt::Key_Up   ,Key::up   ));
@@ -59,10 +68,12 @@ std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key> ribi::maziak::QtDispla
 void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 {
   //std::clog << "."; //DEBUG
-  const int block_width  = 24;
-  const int block_height = 24;
+  const int block_width{m_sprites.GetWidth()};
+  const int block_height{m_sprites.GetHeight()};
   const int view_height{GetViewHeight()}; //Classic value is 9
   const int view_width{GetViewWidth()}; //Classic value is 9
+  assert(m_image.height() == block_height * view_height);
+  assert(m_image.width() == block_width * view_width);
   //Draw maze
   {
     for (int y=0; y!=view_height; ++y)
