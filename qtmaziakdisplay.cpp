@@ -12,8 +12,8 @@
 #include <stdexcept>
 #include <vector>
 
-#include <boost/scoped_ptr.hpp>
-
+#include <memory>
+#include <gsl/gsl_assert>
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QKeyEvent>
@@ -68,13 +68,24 @@ ribi::maziak::QtDisplay::CreateDefaultKeys() noexcept
 
 void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 {
-  //std::clog << "."; //DEBUG
-  const int block_width{m_sprites.GetWidth()};
-  const int block_height{m_sprites.GetHeight()};
+  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
+  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  DisplaySpritesFloor(main_dialog);
+  DisplaySpritesAboveFloor(main_dialog);
+  DisplayPlayer(main_dialog);
+  this->repaint();
+  qApp->processEvents();
+}
+
+void ribi::maziak::QtDisplay::DisplaySpritesFloor(
+  const MainDialog& main_dialog)
+{
+  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
+  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
   const int view_height{GetViewHeight()}; //Classic value is 9
   const int view_width{GetViewWidth()}; //Classic value is 9
-  assert(m_image.height() == block_height * view_height);
-  assert(m_image.width() == block_width * view_width);
+  const int block_height{m_sprites.GetHeight()};
+  const int block_width{m_sprites.GetWidth()};
   //Draw maze
   {
     for (int y=0; y!=view_height; ++y)
@@ -91,18 +102,41 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
             yVector
           )
         );
-
-        QtGraphics().DrawImage(
+         QtGraphics().DrawImage(
           m_image,
           pixmap_floor.toImage(),
           (x * block_width )+0,
           (y * block_height)+0
         );
+      }
+    }
+  }
+}
+
+void ribi::maziak::QtDisplay::DisplaySpritesAboveFloor(
+  const MainDialog& main_dialog)
+{
+  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
+  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  const int view_height{GetViewHeight()}; //Classic value is 9
+  const int view_width{GetViewWidth()}; //Classic value is 9
+  const int block_height{m_sprites.GetHeight()};
+  const int block_width{m_sprites.GetWidth()};
+  {
+    for (int y=0; y!=view_height; ++y)
+    {
+      for (int x=0; x!=view_width; ++x)
+      {
+        //xVector and yVector are the indices in the non-visual maze 2D std::vector
+        const int xVector = main_dialog.GetX() - (view_width  / 2) + x;
+        const int yVector = main_dialog.GetY() - (view_height / 2) + y;
+
         //Draw what's moving or standing on the floor
         const auto sprite_above_floor = main_dialog.GetSpriteAboveFloor(
           xVector,
           yVector
         );
+        if (sprite_above_floor == Sprite::transparent) continue;
         const auto pixmap_above_floor = m_sprites.Get(sprite_above_floor);
         assert(IsValidFormat(pixmap_above_floor.toImage().format()));
         QtGraphics().DrawImage(
@@ -115,20 +149,26 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
     }
   }
 
-  //Draw player
-  {
-    const auto player = m_sprites.Get(
-      main_dialog.GetSpritePlayer()
-    );
-    QtGraphics().DrawImage(
-      m_image,
-      player.toImage(),
-      ((view_width  / 2) * block_width ) + 0,
-      ((view_height / 2) * block_height) + 0
-    );
-  }
-  this->repaint();
-  qApp->processEvents();
+}
+
+void ribi::maziak::QtDisplay::DisplayPlayer(const MainDialog& main_dialog)
+{
+  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
+  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  const int view_height{GetViewHeight()}; //Classic value is 9
+  const int view_width{GetViewWidth()}; //Classic value is 9
+  const int block_height{m_sprites.GetHeight()};
+  const int block_width{m_sprites.GetWidth()};
+
+  const auto player = m_sprites.Get(
+    main_dialog.GetSpritePlayer()
+  );
+  QtGraphics().DrawImage(
+    m_image,
+    player.toImage(),
+    ((view_width  / 2) * block_width ) + 0,
+    ((view_height / 2) * block_height) + 0
+  );
 }
 
 bool ribi::maziak::QtDisplay::GetDoShowSolution()
@@ -182,7 +222,7 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
 void ribi::maziak::QtDisplay::OnGameOver()
 {
   this->hide();
-  boost::scoped_ptr<QtMaziakGameOverDialog> f(new QtMaziakGameOverDialog(0));
+  std::unique_ptr<QtMaziakGameOverDialog> f(new QtMaziakGameOverDialog(0));
   f->exec();
   close();
 }
@@ -190,7 +230,7 @@ void ribi::maziak::QtDisplay::OnGameOver()
 void ribi::maziak::QtDisplay::OnGameWon()
 {
   this->hide();
-  boost::scoped_ptr<QtMaziakGameWonDialog> f(new QtMaziakGameWonDialog);
+  std::unique_ptr<QtMaziakGameWonDialog> f(new QtMaziakGameWonDialog);
   this->hide();
   f->exec();
   close();

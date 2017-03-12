@@ -65,6 +65,12 @@ private:
   Stopwatch m_timer_show_solution;
 
   static std::map<WORD,Key> CreateDefaultKeys() noexcept;
+
+  void DisplaySpritesFloor(const MainDialog& main_dialog);
+  void DisplaySpritesAboveFloor(const MainDialog& main_dialog);
+  void DisplayPlayer(const MainDialog& main_dialog);
+
+
   bool GetDoShowSolution() override;
 
   void OnGameOver();

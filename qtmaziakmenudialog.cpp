@@ -6,7 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include <QDesktopWidget>
 #include <QKeyEvent>
@@ -240,13 +240,13 @@ int ribi::maziak::QtMaziakMenuDialog::GetMazeSize() const
 void ribi::maziak::QtMaziakMenuDialog::OnAbout()
 {
   About a = MenuDialog().GetAbout();
-  boost::scoped_ptr<QtAboutDialog> d(new QtAboutDialog(a));
+  std::unique_ptr<QtAboutDialog> d(new QtAboutDialog(a));
   this->ShowChild(d.get());
 }
 
 void ribi::maziak::QtMaziakMenuDialog::OnInstructions()
 {
-  boost::scoped_ptr<QtMaziakInstructionsDialog> d(new QtMaziakInstructionsDialog);
+  std::unique_ptr<QtMaziakInstructionsDialog> d(new QtMaziakInstructionsDialog);
   this->ShowChild(d.get());
 }
 
