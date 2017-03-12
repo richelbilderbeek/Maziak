@@ -19,15 +19,7 @@ bool all(const T& v, const P& p)
 ribi::maziak::Sprites::Sprites()
   : m_sprites(CreateSprites())
 {
-  Ensures(
-    all(
-      GetAllSprites(),
-      [this](const Sprite s)
-      {
-        return ::ribi::IsValidFormat(this->Get(s).toImage().format());
-      }
-    )
-  );
+
 }
 
 
@@ -50,7 +42,6 @@ std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::CreateSprites() noexcept
       pixmap = QPixmap::fromImage(
         pixmap.toImage().convertToFormat(QImage::Format::Format_ARGB32),
         Qt::NoFormatConversion);
-      assert(IsValidFormat(pixmap.toImage().format()));
     }
     m.insert(std::make_pair(sprite,pixmap));
   }

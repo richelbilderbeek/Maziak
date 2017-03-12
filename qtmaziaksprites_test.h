@@ -11,6 +11,7 @@ class QtSprites_test : public QObject
     Q_OBJECT //!OCLINT
 
 private slots:
+  void all_sprites_are_present();
   void images_are_correct();
 };
 
