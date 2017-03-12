@@ -13,6 +13,7 @@
 #include <vector>
 
 #include <memory>
+#include <boost/timer.hpp>
 #include <gsl/gsl_assert>
 #include <QDesktopWidget>
 #include <QApplication>

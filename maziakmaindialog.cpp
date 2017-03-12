@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <boost/timer/timer.hpp>
+#include <boost/timer.hpp>
 #include "maziakkey.h"
 #include "maziakmaze.h"
 #include "maziakdisplay.h"
@@ -386,11 +386,11 @@ void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
 
 void ribi::maziak::MainDialog::Profile() noexcept
 {
-  boost::timer::cpu_timer t;
+  boost::timer t;
   while (1)
   {
-    const auto now = t.elapsed().wall; //nanoseconds!
-    if (now > 10'000'000'000) break;
+    const auto now = t.elapsed(); //seconds
+    if (now > 10.0) break;
     Tick();
   }
 }
@@ -447,9 +447,16 @@ void ribi::maziak::MainDialog::Tick()
   if (this->GetState() == GameState::game_over) return;
   if (this->GetState() == GameState::has_won) return;
 
-  const auto keys = m_display->RequestKeys();
-
-  PressKeys(keys);
+  //HACK: let the player move less often than the framerate
+  {
+    static boost::timer t;
+    if (t.elapsed() > 0.05)
+    {
+      const auto keys = m_display->RequestKeys();
+      PressKeys(keys);
+      t.restart();
+    }
+  }
 
   m_do_show_solution = m_display->GetDoShowSolution();
 
