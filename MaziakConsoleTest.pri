@@ -9,3 +9,6 @@ SOURCES += \
     $$PWD/maziakterminal_test.cpp \
     $$PWD/maziakmaindialog_test.cpp
 
+
+# $$PWD/qtmaziaksprites_test.cpp
+

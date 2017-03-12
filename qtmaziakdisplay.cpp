@@ -23,6 +23,7 @@
 #include "maziakintmaze.h"
 #include "maziakmaze.h"
 #include "maziaksprites.h"
+#include "qtmaziaksprites.h"
 #include "qtmaziakgameoverdialog.h"
 #include "qtmaziakgamewondialog.h"
 #include "qtgraphics.h"
@@ -56,9 +57,9 @@ ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
 }
 
 std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key>
-ribi::maziak::QtDisplay::CreateDefaultKeys() noexcept
+ribi::maziak::CreateDefaultKeys() noexcept
 {
-  std::map<WORD,Key> m;
+  std::map<QtDisplay::WORD, Key> m;
   m.insert(std::make_pair(Qt::Key_Up   ,Key::up   ));
   m.insert(std::make_pair(Qt::Key_Right,Key::right));
   m.insert(std::make_pair(Qt::Key_Down ,Key::down ));
@@ -68,8 +69,8 @@ ribi::maziak::QtDisplay::CreateDefaultKeys() noexcept
 
 void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 {
-  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
-  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
+  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
   DisplaySpritesFloor(main_dialog);
   DisplaySpritesAboveFloor(main_dialog);
   DisplayPlayer(main_dialog);
@@ -80,12 +81,12 @@ void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
 void ribi::maziak::QtDisplay::DisplaySpritesFloor(
   const MainDialog& main_dialog)
 {
-  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
-  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
+  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
   const int view_height{GetViewHeight()}; //Classic value is 9
   const int view_width{GetViewWidth()}; //Classic value is 9
-  const int block_height{m_sprites.GetHeight()};
-  const int block_width{m_sprites.GetWidth()};
+  const int block_height{GetSpriteHeight()};
+  const int block_width{GetSpriteWidth()};
   //Draw maze
   {
     for (int y=0; y!=view_height; ++y)
@@ -116,12 +117,12 @@ void ribi::maziak::QtDisplay::DisplaySpritesFloor(
 void ribi::maziak::QtDisplay::DisplaySpritesAboveFloor(
   const MainDialog& main_dialog)
 {
-  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
-  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
+  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
   const int view_height{GetViewHeight()}; //Classic value is 9
   const int view_width{GetViewWidth()}; //Classic value is 9
-  const int block_height{m_sprites.GetHeight()};
-  const int block_width{m_sprites.GetWidth()};
+  const int block_height{GetSpriteHeight()}; //Classic value is 24
+  const int block_width{GetSpriteWidth()};
   {
     for (int y=0; y!=view_height; ++y)
     {
@@ -153,12 +154,12 @@ void ribi::maziak::QtDisplay::DisplaySpritesAboveFloor(
 
 void ribi::maziak::QtDisplay::DisplayPlayer(const MainDialog& main_dialog)
 {
-  Expects(m_image.height() == m_sprites.GetHeight() * GetViewHeight());
-  Expects(m_image.width() == m_sprites.GetWidth() * GetViewWidth());
+  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
+  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
   const int view_height{GetViewHeight()}; //Classic value is 9
   const int view_width{GetViewWidth()}; //Classic value is 9
-  const int block_height{m_sprites.GetHeight()};
-  const int block_width{m_sprites.GetWidth()};
+  const int block_height{GetSpriteHeight()};
+  const int block_width{GetSpriteWidth()};
 
   const auto player = m_sprites.Get(
     main_dialog.GetSpritePlayer()

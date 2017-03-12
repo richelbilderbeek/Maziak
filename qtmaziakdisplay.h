@@ -15,7 +15,7 @@
 #include "maziakdisplay.h"
 #include "maziakfwd.h"
 #include "maziakkey.h"
-#include "maziaksprites.h"
+#include "qtmaziaksprites.h"
 #include "maziakplayerdirection.h"
 #include "maziakplayermove.h"
 #include "stopwatch.h"
@@ -33,6 +33,8 @@ class QtDisplay : public QWidget, public Display
   Q_OBJECT //!OCLINT
 
 public:
+
+  typedef unsigned int WORD;
 
   explicit QtDisplay(QWidget *parent = 0);
   QtDisplay(const QtDisplay&) = delete;
@@ -53,7 +55,6 @@ public:
   std::set<Key> RequestKeys() override;
 
 private:
-  typedef unsigned int WORD;
 
   //Will be painted
   QImage m_image;
@@ -64,7 +65,6 @@ private:
   Stopwatch m_timer_animate_enemies_and_prisoners;
   Stopwatch m_timer_show_solution;
 
-  static std::map<WORD,Key> CreateDefaultKeys() noexcept;
 
   void DisplaySpritesFloor(const MainDialog& main_dialog);
   void DisplaySpritesAboveFloor(const MainDialog& main_dialog);
@@ -84,6 +84,8 @@ private:
   void keyReleaseEvent(QKeyEvent * e);
   void paintEvent(QPaintEvent * event);
 };
+
+std::map<QtDisplay::WORD,Key> CreateDefaultKeys() noexcept;
 
 } //~namespace maziak
 } //~namespace ribi
