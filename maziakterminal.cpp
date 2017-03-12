@@ -39,7 +39,7 @@ void ribi::maziak::Terminal::DoDisplay(const MainDialog& main_dialog)
         //Draw the floor tile
         const char pixmap_floor {
           Sprites::ToChar(
-            main_dialog.GetSpriteFloor(
+            GetSpriteFloor(
               main_dialog.GetMaze(),
               xVector,
               yVector,
@@ -51,7 +51,7 @@ void ribi::maziak::Terminal::DoDisplay(const MainDialog& main_dialog)
         canvas.PutChar(x,y,pixmap_floor);
         //Draw what's moving or standing on the floor
         const Sprite sprite_above_floor {
-          main_dialog.GetSpriteAboveFloor(xVector,yVector,main_dialog.GetMaze())
+          GetSpriteAboveFloor(xVector,yVector,main_dialog.GetMaze())
         };
         if (sprite_above_floor != Sprite::transparent)
         {

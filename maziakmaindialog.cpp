@@ -96,13 +96,13 @@ void ribi::maziak::MainDialog::Execute() noexcept
   }
 }
 
-ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteFloor(
+ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   const Maze& maze,
   const int x,
   const int y,
   const bool do_show_solution,
   const SolutionMaze& solution
-) noexcept
+)
 {
   assert(do_show_solution == false || GetSize(solution) == GetSize(maze));
   if (!maze.CanGet(x,y)) { return Sprite::wall; }
@@ -118,11 +118,11 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteFloor(
   return Sprite::empty;
 }
 
-ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteAboveFloor(
+ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   const int x,
   const int y,
   const Maze& maze
-) noexcept
+)
 {
   if (!maze.CanGet(x,y)) { return Sprite::wall; }
   //What else here?
@@ -141,6 +141,23 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteAboveFloor(
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::transparent;
+}
+
+ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteFloor(
+  const int x, const int y) const
+{
+  return ::ribi::maziak::GetSpriteFloor(
+    m_maze,
+    x,
+    y,
+    m_do_show_solution,
+    m_solution);
+}
+
+ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteAboveFloor(
+  const int x, const int y) const
+{
+  return ribi::maziak::GetSpriteAboveFloor(x,y,m_maze);
 }
 
 ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer() const
