@@ -33,7 +33,7 @@ struct IntMaze
   int GetSize() const noexcept { return static_cast<int>(m_int_grid.size()); }
 
   ///Already shuffled, m_dead_ends[0] is the suggested initial coordinat for the player
-  const std::vector<std::pair<int,int> > GetDeadEnds() const noexcept { return m_dead_ends; }
+  std::vector<std::pair<int,int>> GetDeadEnds() const noexcept { return m_dead_ends; }
 
   ///Find the distances to (x,y) in walking squared
   DistancesMaze GetDistancesMaze(
@@ -51,7 +51,7 @@ struct IntMaze
   std::mt19937 m_rng_engine;
 
   ///From http://www.richelbilderbeek.nl/CppGetDeadEnds.htm
-  std::vector<std::pair<int,int> > CreateDeadEnds(
+  std::vector<std::pair<int,int>> CreateDeadEnds(
     const IntGrid& maze) noexcept;
 
   //Creates a maze

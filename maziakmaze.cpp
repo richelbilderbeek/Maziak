@@ -1,7 +1,7 @@
 #include "maziakmaze.h"
 
 #include <cassert>
-
+#include <gsl/gsl_assert>
 #include "ribi_random.h"
 
 #include "maziakintmaze.h"
@@ -245,7 +245,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMa
   return maze;
 }
 
-const std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
+std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
 {
   for (std::pair<int,int> p: GetIntMaze().GetDeadEnds())
   {
@@ -255,7 +255,7 @@ const std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
   throw std::logic_error("Cannot find exit");
 }
 
-const std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
+std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
 {
   for (std::pair<int,int> p: GetIntMaze().GetDeadEnds())
   {
@@ -267,13 +267,13 @@ const std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
 
 ribi::maziak::MazeSquare ribi::maziak::Maze::Get(const int x, const int y) const noexcept
 {
-  assert(CanGet(x,y));
+  Expects(CanGet(x,y));
   return m_maze[y][x];
 }
 
 bool ribi::maziak::Maze::IsSquare() const noexcept
 {
-  assert(!m_maze.empty());
+  Expects(!m_maze.empty());
   for(std::vector<MazeSquare> row: m_maze)
   {
     if (row.size()!=m_maze.size()) return false;
@@ -283,7 +283,7 @@ bool ribi::maziak::Maze::IsSquare() const noexcept
 
 void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexcept
 {
-  assert(CanSet(x,y,s));
+  Expects(CanSet(x,y,s));
   m_maze[y][x] = s;
-  assert(Get(x,y) == s);
+  Ensures(Get(x,y) == s);
 }

@@ -5,7 +5,7 @@
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
 
-using namespace maziak;
+using namespace ribi::maziak;
 
 BOOST_AUTO_TEST_CASE(maze_constructor)
 {

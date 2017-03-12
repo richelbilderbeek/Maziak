@@ -36,8 +36,8 @@ struct Maze
     const bool hasSword,
     const bool showSolution) const noexcept;
 
-  const std::pair<int,int> FindExit() const noexcept;
-  const std::pair<int,int> FindStart() const noexcept;
+  std::pair<int,int> FindExit() const noexcept;
+  std::pair<int,int> FindStart() const noexcept;
 
   MazeSquare Get(const int x, const int y) const noexcept;
 
