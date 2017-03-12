@@ -25,7 +25,7 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   const int x, const int y) noexcept
 {
   //Assume maze is square
-  assert(maze.IsSquare());
+  assert(IsSquare(maze));
   assert(maze.Get(x,y) == 0); //Assume starting point is no wall
 
   const int size = maze.GetSize();

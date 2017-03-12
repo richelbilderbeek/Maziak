@@ -41,9 +41,6 @@ struct IntMaze
     const int y
   ) const noexcept;
 
-  ///Adapted from http://www.richelbilderbeek.nl/CppIsSquare.htm
-  bool IsSquare() const noexcept;
-
   private:
 
   std::vector<std::pair<int,int> > m_dead_ends;
@@ -60,6 +57,8 @@ struct IntMaze
   ///From http://www.richelbilderbeek.nl/CppCreateMaze.htm
   IntGrid CreateIntGrid(const int sz) noexcept;
 };
+
+bool IsSquare(const IntMaze& m);
 
 } //~namespace maziak
 } //~namespace ribi

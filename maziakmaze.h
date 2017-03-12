@@ -45,9 +45,6 @@ struct Maze
 
   int GetSize() const noexcept { return static_cast<int>(m_maze.size()); }
 
-  ///Adapted from http://www.richelbilderbeek.nl/CppIsSquare.htm
-  bool IsSquare() const noexcept;
-
   void Set(const int x, const int y, const MazeSquare s) noexcept;
 
   private:
@@ -63,6 +60,8 @@ struct Maze
 };
 
 IntMaze CreateIntMaze(const int size);
+
+bool IsSquare(const Maze& m);
 
 } //~namespace maziak
 } //~namespace ribi

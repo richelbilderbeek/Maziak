@@ -40,7 +40,8 @@ struct SolutionMaze
 
   int Get(const int x, const int y) const noexcept;
   int GetSize() const noexcept;
-  bool IsSquare() const noexcept;
+
+  const auto& Get() const noexcept { return m_maze; }
 
   private:
   IntMaze m_maze;
@@ -52,6 +53,8 @@ IntMaze CreateSolution(
   const int x,
   const int y
 );
+
+bool IsSquare(const SolutionMaze& m);
 
 } //~namespace maziak
 } //~namespace ribi

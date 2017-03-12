@@ -3,7 +3,7 @@
 
 #include <cassert>
 #include <vector>
-
+#include <gsl/gsl_assert>
 #include "maziakmazesquare.h"
 
 namespace ribi {
@@ -42,7 +42,21 @@ std::vector<std::vector<int>> GetMazeDistances(
     const int x,
     const int y);
 
+
+template <class T>
+bool IsSquare(const std::vector<std::vector<T>>& v)
+{
+  Expects(!v.empty());
+  for(const std::vector<T>& row: v)
+  {
+    if (row.size() != v.size()) return false;
+  }
+  return true;
+}
+
+
 } //~namespace maziak
 } //~namespace ribi
+
 
 #endif // MAZIAKHELPER_H

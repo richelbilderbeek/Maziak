@@ -4,6 +4,7 @@
 #include <gsl/gsl_assert>
 #include "ribi_random.h"
 
+#include "maziakhelper.h"
 #include "maziakintmaze.h"
 
 
@@ -31,9 +32,9 @@ ribi::maziak::Maze::Maze(const int size,const int rng_seed)
     m_rng_engine(rng_seed)
 {
   m_maze = CreateMaze(m_int_maze);
-  assert(IsSquare());
-  assert(FindExit().first  >= 0);
-  assert(FindStart().first >= 0);
+  Ensures(IsSquare(m_maze));
+  Ensures(FindExit().first  >= 0);
+  Ensures(FindStart().first >= 0);
 }
 
 void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
@@ -46,7 +47,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
   //Move them
   const int minx = std::max(0,x - view_width );
   const int miny = std::max(0,y - view_height);
-  assert(IsSquare());
+  assert(IsSquare(m_maze));
   const int maxy = std::min(GetSize(),y + view_height);
   const int maxx = std::min(GetSize(),x + view_width);
   assert(miny >= 0);
@@ -265,20 +266,16 @@ std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
   throw std::logic_error("Cannot find start");
 }
 
-ribi::maziak::MazeSquare ribi::maziak::Maze::Get(const int x, const int y) const noexcept
+ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
+  const int x, const int y) const noexcept
 {
   Expects(CanGet(x,y));
   return m_maze[y][x];
 }
 
-bool ribi::maziak::Maze::IsSquare() const noexcept
+bool ribi::maziak::IsSquare(const Maze& m)
 {
-  Expects(!m_maze.empty());
-  for(std::vector<MazeSquare> row: m_maze)
-  {
-    if (row.size()!=m_maze.size()) return false;
-  }
-  return true;
+  return IsSquare(m.GetIntMaze());
 }
 
 void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexcept

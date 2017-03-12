@@ -146,15 +146,10 @@ ribi::maziak::DistancesMaze ribi::maziak::IntMaze::GetDistancesMaze(
   return maze;
 }
 
-
-
-bool ribi::maziak::IntMaze::IsSquare() const noexcept
+bool ribi::maziak::IsSquare(const IntMaze& m)
 {
-  assert(!m_int_grid.empty());
-  for(std::vector<int> row: m_int_grid)
-  {
-    if (row.size()!=m_int_grid.size()) return false;
-  }
-  return true;
+  return IsSquare(m.GetMaze());
 }
+
+
 

@@ -43,7 +43,7 @@ ribi::maziak::MainDialog::MainDialog(const int maze_size)
     m_y = start.second;
   }
   assert(maze_size && "Maze size must be 7 + (4 * n) for n e [0,->>");
-  assert(m_maze.IsSquare());
+  assert(IsSquare(m_maze));
 
   m_solution = CreateNewSolution();
 
@@ -173,9 +173,12 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
     {
       switch (move)
       {
-      case PlayerMove::none: return has_sword ? Sprite::player_look_up_sword : Sprite::player_look_up;
-      case PlayerMove::up1:  return has_sword ? Sprite::player_walk_up_sword1 : Sprite::player_walk_up1;
-      case PlayerMove::up2:  return has_sword ? Sprite::player_walk_up_sword2 : Sprite::player_walk_up2;
+      case PlayerMove::none: return has_sword
+        ? Sprite::player_look_up_sword : Sprite::player_look_up;
+      case PlayerMove::up1:  return has_sword
+        ? Sprite::player_walk_up_sword1 : Sprite::player_walk_up1;
+      case PlayerMove::up2:  return has_sword
+        ? Sprite::player_walk_up_sword2 : Sprite::player_walk_up2;
       default:
         assert(!"Should not get here"); //!OCLINT accepted idiom
         throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == up");
@@ -186,9 +189,12 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
     {
       switch (move)
       {
-        case PlayerMove::none:   return has_sword ? Sprite::player_look_right_sword : Sprite::player_look_right;
-        case PlayerMove::right1: return has_sword ? Sprite::player_walk_right_sword1 : Sprite::player_walk_right1;
-        case PlayerMove::right2: return has_sword ? Sprite::player_walk_right_sword2 : Sprite::player_walk_right2;
+        case PlayerMove::none:   return has_sword
+          ? Sprite::player_look_right_sword : Sprite::player_look_right;
+        case PlayerMove::right1: return has_sword
+          ? Sprite::player_walk_right_sword1 : Sprite::player_walk_right1;
+        case PlayerMove::right2: return has_sword
+          ? Sprite::player_walk_right_sword2 : Sprite::player_walk_right2;
         default:
           assert(!"Should not get here"); //!OCLINT accepted idiom
           throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == right");
@@ -199,9 +205,12 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
     {
       switch (move)
       {
-      case PlayerMove::none:  return has_sword ? Sprite::player_look_down_sword : Sprite::player_look_down;
-      case PlayerMove::down1: return has_sword ? Sprite::player_walk_down_sword1 : Sprite::player_walk_down1;
-      case PlayerMove::down2: return has_sword ? Sprite::player_walk_down_sword2 : Sprite::player_walk_down2;
+      case PlayerMove::none:  return has_sword
+        ? Sprite::player_look_down_sword : Sprite::player_look_down;
+      case PlayerMove::down1: return has_sword
+        ? Sprite::player_walk_down_sword1 : Sprite::player_walk_down1;
+      case PlayerMove::down2: return has_sword
+        ? Sprite::player_walk_down_sword2 : Sprite::player_walk_down2;
       default:
         assert(!"Should not get here"); //!OCLINT accepted idiom
         throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == down");
@@ -212,9 +221,12 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
     {
       switch (move)
       {
-        case PlayerMove::none:  return has_sword ? Sprite::player_look_left_sword : Sprite::player_look_left;
-        case PlayerMove::left1: return has_sword ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1;
-        case PlayerMove::left2: return has_sword ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2;
+        case PlayerMove::none:  return has_sword
+          ? Sprite::player_look_left_sword : Sprite::player_look_left;
+        case PlayerMove::left1: return has_sword
+          ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1;
+        case PlayerMove::left2: return has_sword
+          ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2;
         default:
           assert(!"Should not get here"); //!OCLINT accepted idiom
           throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == left");
@@ -251,7 +263,8 @@ void ribi::maziak::MainDialog::PressKeyDown()
     m_move_now = PlayerMove::none;
     return;
   }
-  m_move_now = (m_move_now == PlayerMove::down1 ? PlayerMove::down2 : PlayerMove::down1);
+  m_move_now = (m_move_now == PlayerMove::down1
+    ? PlayerMove::down2 : PlayerMove::down1);
   ++m_y;
 }
 
@@ -263,7 +276,8 @@ void ribi::maziak::MainDialog::PressKeyLeft()
     m_move_now = PlayerMove::none;
     return;
   }
-  m_move_now = (m_move_now == PlayerMove::left1 ? PlayerMove::left2 : PlayerMove::left1);
+  m_move_now = (m_move_now == PlayerMove::left1
+    ? PlayerMove::left2 : PlayerMove::left1);
   --m_x;
 }
 
@@ -275,7 +289,8 @@ void ribi::maziak::MainDialog::PressKeyRight()
     m_move_now = PlayerMove::none;
     return;
   }
-  m_move_now = (m_move_now == PlayerMove::right1 ? PlayerMove::right2 : PlayerMove::right1);
+  m_move_now = (m_move_now == PlayerMove::right1
+    ? PlayerMove::right2 : PlayerMove::right1);
   ++m_x;
 }
 
@@ -287,7 +302,8 @@ void ribi::maziak::MainDialog::PressKeyUp()
     m_move_now = PlayerMove::none;
     return;
   }
-  m_move_now = (m_move_now == PlayerMove::up1 ? PlayerMove::up2 : PlayerMove::up1);
+  m_move_now = (m_move_now == PlayerMove::up1
+    ? PlayerMove::up2 : PlayerMove::up1);
   --m_y;
 }
 
@@ -335,7 +351,7 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
     case MazeSquare::msPrisoner1: case MazeSquare::msPrisoner2:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       m_solution = CreateNewSolution();
-      assert(m_solution.IsSquare());
+      assert(IsSquare(m_solution));
       this->m_display->StartShowSolution();
       m_do_show_solution = true;
       m_display->StartShowSolution();

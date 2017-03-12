@@ -61,7 +61,7 @@ int ribi::maziak::SolutionMaze::GetSize() const noexcept
   return m_maze.GetSize();
 }
 
-bool ribi::maziak::SolutionMaze::IsSquare() const noexcept
+bool ribi::maziak::IsSquare(const SolutionMaze& m)
 {
-  return m_maze.IsSquare();
+  return IsSquare(m.Get());
 }
