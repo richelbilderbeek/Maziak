@@ -39,9 +39,13 @@ public:
   QtDisplay& operator=(const QtDisplay&) = delete;
   ~QtDisplay() {}
 
+  ///Show the main dialog's state
   void DoDisplay(const MainDialog& main_dialog) override;
 
+  ///The heigh of the view displayed, in number of blocks
   int GetViewHeight() const noexcept override { return 9; }
+
+  ///The width of the view displayed, in number of blocks
   int GetViewWidth() const noexcept override { return 9; }
 
   bool MustAnimateEnemiesAndPrisoners() noexcept override;

@@ -11,6 +11,7 @@ namespace maziak {
 
 struct MainDialog;
 
+/*
 enum class DisplayType { terminal, qt };
 
 ///The heigh of the view displayed, in number of blocks
@@ -22,6 +23,17 @@ constexpr int GetViewHeight<DisplayType::terminal>() { return 20; }
 
 template <>
 constexpr int GetViewHeight<DisplayType::qt>() { return 9; }
+
+///The width of the view displayed, in number of blocks
+template <DisplayType>
+constexpr int GetViewWidth();
+
+template <>
+constexpr int GetViewWidth<DisplayType::terminal>() { return 20; }
+
+template <>
+constexpr int GetViewWidth<DisplayType::qt>() { return 9; }
+*/
 
 ///Displays Maziak in any way
 ///Cannot use Boost or Qt due to NDS library
@@ -40,7 +52,10 @@ struct Display
 
   GameState GetGameState() const noexcept { return m_game_state; }
 
+  ///The heigh of the view displayed, in number of blocks
   virtual int GetViewHeight() const noexcept = 0;
+
+  ///The width of the view displayed, in number of blocks
   virtual int GetViewWidth() const noexcept = 0;
 
   ///Must the enemies and prisoners be animated?

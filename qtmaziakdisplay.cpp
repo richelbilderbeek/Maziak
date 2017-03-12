@@ -40,13 +40,14 @@ ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
     m_timer_animate_enemies_and_prisoners{},
     m_timer_show_solution{}
 {
+  #ifdef DO_CALL_VIRTUAL_FUNCTIONS_IN_CONSTRUCRTOR
   {
     const int view_height{GetViewHeight()}; //Classic value is 9
-    const int view_width{GetViewWidth()}; //Classic value is 9
+    const int view_width{GetViewWidth()};
     assert(m_image.height() == m_sprites.GetHeight() * view_height);
     assert(m_image.width() == m_sprites.GetWidth() * view_width);
   }
-
+  #endif
 
   //Put the dialog in the screen center at 75% of fullscreen size
   const QRect screen = QApplication::desktop()->screenGeometry();

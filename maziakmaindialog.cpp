@@ -222,10 +222,12 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
     }
       //break; Unreachable
     default:
-      assert(!"Should not get here");
+      assert(!"Should not get here"); //!OCLINT accepted idiom
     throw std::logic_error("Unsupported PlayerDirection");
   }
   //Unreachable
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  throw std::logic_error("Reached unreachable part");
 }
 
 void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
@@ -309,7 +311,7 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
     case MazeSquare::msEmpty:
       break;
     case MazeSquare::msWall:
-      assert(!"Should not get here");
+      assert(!"Should not get here"); //!OCLINT accepted idiom
       throw std::logic_error("Player cannot be in wall");
     case MazeSquare::msEnemy1: case MazeSquare::msEnemy2:
       m_fighting_frame = 1;

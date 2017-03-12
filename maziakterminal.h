@@ -18,7 +18,10 @@ struct Terminal : public Display
 
   bool GetDoShowSolution() override { --m_do_show_solution_cnt; return m_do_show_solution_cnt > 0; }
 
+  ///The heigh of the view displayed, in number of blocks
   int GetViewHeight() const noexcept override { return 20; }
+
+  ///The width of the view displayed, in number of blocks
   int GetViewWidth() const noexcept override { return 20; }
 
   ///Every turn, the animation must take place
@@ -27,7 +30,6 @@ struct Terminal : public Display
   std::set<Key> RequestKeys() override;
 
   void StartShowSolution() override { m_do_show_solution_cnt = 20; }
-
 
   private:
   int m_do_show_solution_cnt;
