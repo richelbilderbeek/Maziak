@@ -5,13 +5,8 @@
 #include <sstream>
 #include <stdexcept>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include "maziakmaindialog.h"
 #include "maziakterminal.h"
-#pragma GCC diagnostic pop
 
 ribi::maziak::MenuDialog::MenuDialog()
 {
@@ -27,12 +22,10 @@ int ribi::maziak::MenuDialog::ExecuteSpecific(const std::vector<std::string>& ar
     return 1;
   }
 
-  boost::shared_ptr<MainDialog> dialog {
-    new MainDialog( 7 + (4 * 2) )
-  };
+  MainDialog dialog{7 + (4 * 2)};
   Terminal terminal;
-  dialog->SetDisplay(&terminal);
-  dialog->Execute();
+  dialog.SetDisplay(&terminal);
+  dialog.Execute();
   return 0;
 
 }

@@ -19,14 +19,15 @@
 
 #pragma GCC diagnostic pop
 
-ribi::maziak::MainDialog::MainDialog(const int maze_size)
+ribi::maziak::MainDialog::MainDialog(
+  const int maze_size, const int rng_seed)
   : m_direction(PlayerDirection::pdDown),
     m_display{nullptr},
     m_distances{},
     m_do_show_solution{false},
     m_fighting_frame(0),
     m_has_sword(true),
-    m_maze(maze_size),
+    m_maze(maze_size, rng_seed),
     m_move_now(PlayerMove::none),
     m_solution{},
     m_state{GameState::playing},

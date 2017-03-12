@@ -30,7 +30,7 @@ struct Display;
 
 struct MainDialog
 {
-  MainDialog(const int maze_size);
+  MainDialog(const int maze_size, const int rng_seed = 42);
 
   MainDialog(const MainDialog&) = delete;
   MainDialog& operator=(const MainDialog&) = delete;
@@ -67,17 +67,6 @@ struct MainDialog
   ///Press all active keys
   void PressKeys(const std::set<Key>& keys);
 
-  ///Key down is pressed
-  void PressKeyDown();
-
-  ///Key left is pressed
-  void PressKeyLeft();
-
-  ///Key right is pressed
-  void PressKeyRight();
-
-  ///Key up is pressed
-  void PressKeyUp();
 
   ///Play the game for profiling
   void Profile() noexcept;
@@ -109,6 +98,18 @@ struct MainDialog
   int m_y;
 
   SolutionMaze CreateNewSolution() noexcept;
+
+  ///Key down is pressed
+  void PressKeyDown();
+
+  ///Key left is pressed
+  void PressKeyLeft();
+
+  ///Key right is pressed
+  void PressKeyRight();
+
+  ///Key up is pressed
+  void PressKeyUp();
 
   ///Main game loop
   void Tick();
