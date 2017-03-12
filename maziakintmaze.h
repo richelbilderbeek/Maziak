@@ -28,9 +28,7 @@ struct IntMaze
 
   int Get(const int x, const int y) const noexcept;
 
-  const IntGrid& GetMaze() const noexcept { return m_int_grid; }
-
-  int GetSize() const noexcept { return static_cast<int>(m_int_grid.size()); }
+  const auto& Get() const noexcept { return m_int_grid; }
 
   ///Already shuffled, m_dead_ends[0] is the suggested initial coordinat for the player
   std::vector<std::pair<int,int>> GetDeadEnds() const noexcept { return m_dead_ends; }
@@ -57,6 +55,8 @@ struct IntMaze
   ///From http://www.richelbilderbeek.nl/CppCreateMaze.htm
   IntGrid CreateIntGrid(const int sz) noexcept;
 };
+
+int GetSize(const IntMaze& m) noexcept;
 
 bool IsSquare(const IntMaze& m);
 

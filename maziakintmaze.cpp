@@ -33,8 +33,8 @@ ribi::maziak::IntMaze::IntMaze(
 
 bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
 {
-  return x >= 0 && x < GetSize()
-      && y >= 0 && y < GetSize();
+  return x >= 0 && x < GetSize(*this)
+      && y >= 0 && y < GetSize(*this);
 }
 
 std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CreateDeadEnds(
@@ -146,9 +146,15 @@ ribi::maziak::DistancesMaze ribi::maziak::IntMaze::GetDistancesMaze(
   return maze;
 }
 
+int ribi::maziak::GetSize(const IntMaze& m) noexcept
+{
+  assert(IsSquare(m));
+  return static_cast<int>(m.Get().size());
+}
+
 bool ribi::maziak::IsSquare(const IntMaze& m)
 {
-  return IsSquare(m.GetMaze());
+  return IsSquare(m.Get());
 }
 
 

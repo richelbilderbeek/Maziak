@@ -39,7 +39,6 @@ struct SolutionMaze
   );
 
   int Get(const int x, const int y) const noexcept;
-  int GetSize() const noexcept;
 
   const auto& Get() const noexcept { return m_maze; }
 
@@ -53,6 +52,8 @@ IntMaze CreateSolution(
   const int x,
   const int y
 );
+
+int GetSize(const SolutionMaze& m) noexcept;
 
 bool IsSquare(const SolutionMaze& m);
 

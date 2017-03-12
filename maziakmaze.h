@@ -43,8 +43,6 @@ struct Maze
 
   const IntMaze& GetIntMaze() const noexcept { return m_int_maze; }
 
-  int GetSize() const noexcept { return static_cast<int>(m_maze.size()); }
-
   void Set(const int x, const int y, const MazeSquare s) noexcept;
 
   private:
@@ -60,6 +58,8 @@ struct Maze
 };
 
 IntMaze CreateIntMaze(const int size);
+
+int GetSize(const Maze& m) noexcept;
 
 bool IsSquare(const Maze& m);
 

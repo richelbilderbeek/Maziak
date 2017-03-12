@@ -28,7 +28,7 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   assert(IsSquare(maze));
   assert(maze.Get(x,y) == 0); //Assume starting point is no wall
 
-  const int size = maze.GetSize();
+  const int size = GetSize(maze);
   const int area = size * size;
   const int maxDistance = area;
   std::vector<std::vector<int> > distances(size, std::vector<int>(size,maxDistance));

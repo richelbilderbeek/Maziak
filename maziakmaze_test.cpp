@@ -12,5 +12,12 @@ BOOST_AUTO_TEST_CASE(maze_constructor)
   BOOST_CHECK_NO_THROW(Maze(11));
 }
 
+BOOST_AUTO_TEST_CASE(maze_size)
+{
+  const auto sz = 11;
+  const Maze m(sz);
+  BOOST_CHECK_EQUAL(GetSize(m), sz);
+}
+
 #pragma GCC diagnostic pop
 

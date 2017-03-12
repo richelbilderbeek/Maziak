@@ -104,7 +104,7 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteFloor(
   const SolutionMaze& solution
 ) noexcept
 {
-  assert(do_show_solution == false || solution.GetSize() == maze.GetSize());
+  assert(do_show_solution == false || GetSize(solution) == GetSize(maze));
   if (!maze.CanGet(x,y)) { return Sprite::wall; }
   else if (do_show_solution
     && solution.Get(x,y) == 1

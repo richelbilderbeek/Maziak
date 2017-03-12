@@ -48,28 +48,28 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
   const int minx = std::max(0,x - view_width );
   const int miny = std::max(0,y - view_height);
   assert(IsSquare(m_maze));
-  const int maxy = std::min(GetSize(),y + view_height);
-  const int maxx = std::min(GetSize(),x + view_width);
+  const int maxy = std::min(GetSize(*this),y + view_height);
+  const int maxx = std::min(GetSize(*this),x + view_width);
   assert(miny >= 0);
-  assert(miny <= GetSize());
+  assert(miny <= GetSize(*this));
   assert(maxy >= 0);
-  assert(maxy <= GetSize());
+  assert(maxy <= GetSize(*this));
   assert(minx >= 0);
-  assert(minx <= GetSize());
+  assert(minx <= GetSize(*this));
   assert(maxx >= 0);
-  assert(maxx <= GetSize());
+  assert(maxx <= GetSize(*this));
   assert(miny <= maxy);
   assert(minx <= maxx);
   for (int row=miny; row!=maxy; ++row)
   {
     assert(row >= 0);
-    assert(row < GetSize());
+    assert(row < GetSize(*this));
     for (int col=minx; col!=maxx; ++col)
     {
       //msEnemy1 changes to msEnemy2
       //Only msEnemy2 moves, after moving turning to msEnemy1
       assert(col >= 0);
-      assert(col < GetSize());
+      assert(col < GetSize(*this));
       const MazeSquare s = Get(col,row);
 
       if (s == MazeSquare::msEnemy1)
@@ -110,8 +110,8 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
 
 bool ribi::maziak::Maze::CanGet(const int x, const int y) const noexcept
 {
-  return x >= 0 && x < GetSize()
-    && y >= 0 && y < GetSize();
+  return x >= 0 && x < GetSize(*this)
+    && y >= 0 && y < GetSize(*this);
 }
 
 bool ribi::maziak::Maze::CanMoveTo(
@@ -153,9 +153,9 @@ ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(const int size)
 std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMaze(
   const IntMaze& int_maze) noexcept
 {
-  const int sz = int_maze.GetSize();
+  const int sz = GetSize(int_maze);
   std::vector<std::vector<ribi::maziak::MazeSquare> > maze {
-    ConvertMatrix<int,MazeSquare>(int_maze.GetMaze())
+    ConvertMatrix<int,MazeSquare>(int_maze.Get())
   };
 
   std::vector<std::pair<int,int> > dead_ends = int_maze.GetDeadEnds();
@@ -271,6 +271,11 @@ ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
 {
   Expects(CanGet(x,y));
   return m_maze[y][x];
+}
+
+int ribi::maziak::GetSize(const Maze& m) noexcept
+{
+  return GetSize(m.GetIntMaze());
 }
 
 bool ribi::maziak::IsSquare(const Maze& m)
