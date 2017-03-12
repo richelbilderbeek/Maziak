@@ -14,7 +14,7 @@
    <string>Maziak</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../GameAminoAcidFighter/GameAminoAcidFighter.qrc">
+   <iconset resource="Maziak.qrc">
     <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -30,7 +30,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="GameMaziak.qrc">:/images/InstructionScreen.png</pixmap>
+      <pixmap resource="Maziak.qrc">:/images/InstructionScreen.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -43,8 +43,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../GameAminoAcidFighter/GameAminoAcidFighter.qrc"/>
-  <include location="GameMaziak.qrc"/>
+  <include location="Maziak.qrc"/>
  </resources>
  <connections/>
 </ui>
