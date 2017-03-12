@@ -21,11 +21,11 @@ ribi::maziak::Sprites::Sprites()
   Ensures(
     boost::range::count_if(
       GetAllSprites(),
-      [this](const auto s)
+      [this](const Sprite s)
       {
-        return IsValidFormat(this->Get(s).toImage().format());
+        return !IsValidFormat(this->Get(s).toImage().format());
       }
-    ) == static_cast<int>(GetAllSprites().size())
+    ) == 0
   );
 }
 
