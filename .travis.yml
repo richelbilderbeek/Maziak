@@ -26,6 +26,8 @@ install:
   - sudo pip install codecov
   # OCLint
   - ./install_oclint
+  # Other GitHubs
+  - ./download_other_githubs
 
 # Start virtual X server, from https://docs.travis-ci.com/user/gui-and-headless-browsers/
 before_script:
@@ -34,7 +36,10 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script: 
-  - ./download_other_githubs
+  # Console test
+  - qmake -qt=qt5 MaziakConsoleTest.pro
+  - make debug
+  - ./MaziakConsoleTest
   # Console
   - qmake -qt=qt5 MaziakConsole.pro
   - make debug

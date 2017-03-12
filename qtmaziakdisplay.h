@@ -76,6 +76,7 @@ private:
   void OnGameOver();
   void OnGameWon();
   void OnTimerStartShowingSolution();
+  void Paint(QPainter& painter, const QRect& target);
   void StartShowSolution();
 
   void resizeEvent(QResizeEvent*);

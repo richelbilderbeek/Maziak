@@ -216,7 +216,13 @@ bool ribi::maziak::QtDisplay::MustAnimateEnemiesAndPrisoners() noexcept
 void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
 {
   QPainter painter(this);
-  painter.drawImage(this->rect(),m_image);
+  Paint(painter, this->rect());
+}
+
+void ribi::maziak::QtDisplay::Paint(QPainter& painter, const QRect& target)
+{
+  //TODO: Use spritegrid here
+  painter.drawImage(target,m_image);
 }
 
 void ribi::maziak::QtDisplay::OnGameOver()

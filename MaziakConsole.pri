@@ -18,7 +18,8 @@ SOURCES += \
     $$PWD/maziakreceiver.cpp \
     $$PWD/maziakdisplay.cpp \
     $$PWD/maziakgamestate.cpp \
-    $$PWD/maziakterminal.cpp
+    $$PWD/maziakterminal.cpp \
+    $$PWD/maziakspritegrid.cpp
 
 HEADERS  += \
     $$PWD/maziakmenudialog.h \
@@ -39,7 +40,8 @@ HEADERS  += \
     $$PWD/maziakreceiver.h \
     $$PWD/maziakdisplay.h \
     $$PWD/maziakgamestate.h \
-    $$PWD/maziakterminal.h
+    $$PWD/maziakterminal.h \
+    $$PWD/maziakspritegrid.h
 
 RESOURCES += \
     $$PWD/Maziak.qrc
