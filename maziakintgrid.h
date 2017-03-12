@@ -1,6 +1,7 @@
 #ifndef MAZIAKINTGRID_H
 #define MAZIAKINTGRID_H
 
+#include <iosfwd>
 #include <vector>
 
 namespace ribi {
@@ -18,6 +19,8 @@ int GetSize(const IntGrid& g) noexcept;
 
 ///Determine if the size if good to make a maze from
 bool IsValidSize(const int sz) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const IntGrid& v) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

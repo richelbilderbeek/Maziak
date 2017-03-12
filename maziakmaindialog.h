@@ -1,6 +1,7 @@
 #ifndef MAZIAKMAINDIALOG_H
 #define MAZIAKMAINDIALOG_H
 
+#include <iosfwd>
 #include <set>
 #include <vector>
 
@@ -113,6 +114,8 @@ struct MainDialog
 
   ///Main game loop
   void Tick();
+
+  friend std::ostream& operator<<(std::ostream& os, const MainDialog& d) noexcept;
 };
 
 Sprite GetSpriteAboveFloor(
@@ -140,6 +143,8 @@ Sprite GetSpritePlayerFighting(
   const int fighting_frame,
   const bool has_sword
 );
+
+std::ostream& operator<<(std::ostream& os, const MainDialog& d) noexcept;
 
 } //namespace maziak
 } //namespace ribi

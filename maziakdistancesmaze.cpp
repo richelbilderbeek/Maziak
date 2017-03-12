@@ -1,6 +1,9 @@
 #include "maziakdistancesmaze.h"
 
 #include <cassert>
+#include <iostream>
+#include <iterator>
+#include <numeric>
 
 #include "maziakintmaze.h"
 
@@ -96,3 +99,36 @@ int ribi::maziak::DistancesMaze::Get(const int x, const int y) const noexcept
   return m_distances[y][x];
 }
 
+int ribi::maziak::DistancesMaze::GetSize() const noexcept
+{
+  return ::ribi::maziak::GetSize(*this);
+}
+
+int ribi::maziak::GetSize(const DistancesMaze& m) noexcept
+{
+  return static_cast<int>(m.Get().size());
+}
+
+std::ostream& ribi::maziak::operator<<(
+  std::ostream& os, const DistancesMaze& m) noexcept
+{
+  const auto& v = m.Get();
+  std::transform(
+    std::begin(v),
+    std::end(v),
+    std::ostream_iterator<std::string>(os, "\n"),
+    [](const auto& row)
+    {
+      return std::accumulate(
+        std::begin(row),
+        std::end(row),
+        std::string(),
+        [](std::string init, const int i)
+        {
+          return init + std::to_string(i);
+        }
+      );
+    }
+  );
+  return os;
+}

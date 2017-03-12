@@ -1,6 +1,8 @@
 #include "maziakmaze.h"
 
 #include <cassert>
+#include <iostream>
+#include <iterator>
 #include <gsl/gsl_assert>
 #include "ribi_random.h"
 
@@ -281,4 +283,30 @@ void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexc
   Expects(CanSet(x,y,s));
   m_maze[y][x] = s;
   Ensures(Get(x,y) == s);
+}
+
+std::ostream& ribi::maziak::operator<<(
+  std::ostream& os, const Maze& m) noexcept
+{
+  os << m.m_int_maze << '\n';
+
+  const auto& v = m.m_maze;
+  std::transform(
+    std::begin(v),
+    std::end(v),
+    std::ostream_iterator<std::string>(os, "\n"),
+    [](const auto& row)
+    {
+      return std::accumulate(
+        std::begin(row),
+        std::end(row),
+        std::string(),
+        [](std::string init, const MazeSquare s)
+        {
+          return init + to_str(s);
+        }
+      );
+    }
+  );
+  return os;
 }

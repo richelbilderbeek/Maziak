@@ -25,8 +25,9 @@ namespace maziak {
 
 */
 
-struct DistancesMaze
+class DistancesMaze
 {
+public:
   DistancesMaze();
 
   DistancesMaze(
@@ -36,10 +37,13 @@ struct DistancesMaze
   );
 
   bool CanGet(const int x, const int y) const noexcept;
+  const auto& Get() const noexcept { return m_distances; }
   int Get(const int x, const int y) const noexcept;
-  int GetSize() const noexcept { return static_cast<int>(m_distances.size()); }
 
-  private:
+  //TODO: make obsolete
+  int GetSize() const noexcept;
+
+private:
   std::vector<std::vector<int>> m_distances;
 
 };
@@ -49,6 +53,10 @@ std::vector<std::vector<int>> CalculateDistances(
   const int x,
   const int y
 ) noexcept;
+
+int GetSize(const DistancesMaze& m) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const DistancesMaze& m) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

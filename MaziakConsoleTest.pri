@@ -6,5 +6,6 @@ SOURCES += \
     $$PWD/maziakintmaze_test.cpp \
     $$PWD/maziaksolutionmaze_test.cpp \
     $$PWD/maziakintgrid_test.cpp \
-    $$PWD/maziakterminal_test.cpp
+    $$PWD/maziakterminal_test.cpp \
+    $$PWD/maziakmaindialog_test.cpp
 

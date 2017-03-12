@@ -1,6 +1,7 @@
 #ifndef MAZIAKINTMAZE_H
 #define MAZIAKINTMAZE_H
 
+#include <iosfwd>
 #include <random>
 #include <vector>
 
@@ -43,6 +44,9 @@ struct IntMaze
   ///From http://www.richelbilderbeek.nl/CppGetDeadEnds.htm
   std::vector<std::pair<int,int>> CollectDeadEnds(
     const IntGrid& maze) noexcept;
+
+
+  friend std::ostream& operator<<(std::ostream& os, const IntMaze& m) noexcept;
 };
 
 IntMaze CreateIntMaze(const int size);
@@ -50,6 +54,8 @@ IntMaze CreateIntMaze(const int size);
 int GetSize(const IntMaze& m) noexcept;
 
 bool IsSquare(const IntMaze& m);
+
+std::ostream& operator<<(std::ostream& os, const IntMaze& m) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

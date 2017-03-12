@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
+#include <iostream>
+#include <iterator>
 #include <gsl/gsl_assert>
 #include "maziakdistancesmaze.h"
 #include "maziakhelper.h"
@@ -99,5 +101,22 @@ bool ribi::maziak::IsSquare(const IntMaze& m)
   return IsSquare(m.Get());
 }
 
+std::ostream& ribi::maziak::operator<<(
+  std::ostream& os, const IntMaze& m) noexcept
+{
+
+  os << m.m_int_grid << '\n';
+
+  std::transform(
+    std::begin(m.m_dead_ends),
+    std::end(m.m_dead_ends),
+    std::ostream_iterator<std::string>(os, "\n"),
+    [](const auto& p)
+    {
+      return '(' + std::to_string(p.first) + ',' + std::to_string(p.second) + ')';
+    }
+  );
+  return os;
+}
 
 

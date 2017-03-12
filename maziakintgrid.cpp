@@ -1,5 +1,8 @@
 #include "maziakintgrid.h"
 
+#include <iostream>
+#include <iterator>
+#include <numeric>
 #include <gsl/gsl_assert>
 
 #include "maziakhelper.h"
@@ -79,3 +82,28 @@ bool ribi::maziak::IsValidSize(const int sz) noexcept
 {
   return sz >= 7 && sz % 4 == 3;
 }
+
+std::ostream& ribi::maziak::operator<<(
+  std::ostream& os, const IntGrid& v) noexcept
+{
+  std::transform(
+    std::begin(v),
+    std::end(v),
+    std::ostream_iterator<std::string>(os, "\n"),
+    [](const auto& row)
+    {
+      return std::accumulate(
+        std::begin(row),
+        std::end(row),
+        std::string(),
+        [](std::string init, const int i)
+        {
+          return init + std::to_string(i);
+        }
+      );
+    }
+  );
+  return os;
+}
+
+

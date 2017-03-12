@@ -1,15 +1,12 @@
 #ifndef MAZIAKMAZE_H
 #define MAZIAKMAZE_H
 
+#include <iosfwd>
 #include <vector>
 
 #include "maziakfwd.h"
 #include "maziakmazesquare.h"
 #include "maziakintmaze.h"
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#include <boost/shared_ptr.hpp>
-#pragma GCC diagnostic pop
 
 namespace ribi {
 namespace maziak {
@@ -55,11 +52,16 @@ struct Maze
   std::vector<std::vector<MazeSquare>> CreateMaze(
     const IntMaze& int_maze
   ) noexcept;
+
+
+  friend std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 };
 
 int GetSize(const Maze& m) noexcept;
 
 bool IsSquare(const Maze& m);
+
+std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

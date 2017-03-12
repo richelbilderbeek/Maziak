@@ -1,6 +1,7 @@
 #include "maziaksolutionmaze.h"
 
 #include <cassert>
+#include <iostream>
 
 #include "maziakdistancesmaze.h"
 #include "maziakintmaze.h"
@@ -64,4 +65,11 @@ int ribi::maziak::GetSize(const SolutionMaze& m) noexcept
 bool ribi::maziak::IsSquare(const SolutionMaze& m)
 {
   return IsSquare(m.Get());
+}
+
+std::ostream& ribi::maziak::operator<<(
+  std::ostream& os, const SolutionMaze& m) noexcept
+{
+  os << m.Get();
+  return os;
 }

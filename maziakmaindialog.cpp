@@ -439,3 +439,27 @@ void ribi::maziak::MainDialog::Tick()
     AnimateFighting();
   }
 }
+
+std::ostream& ribi::maziak::operator<<(std::ostream& os, const MainDialog& d) noexcept
+{
+  os
+    << "Direction: " << d.m_direction << '\n'
+  //;
+  //if (d.m_display)
+  //{
+  //  os << (*d.m_display) << '\n'
+  //}
+  //os
+    << "distances: " << d.m_distances << '\n'
+    << "do_show_solution: " << d.m_do_show_solution << '\n'
+    << "fighting_frame: " << d.m_fighting_frame << '\n'
+    << "has_sword: " << d.m_has_sword << '\n'
+    << "maze: " << d.m_maze << '\n'
+    << "move_now: " << d.m_move_now << '\n'
+    << "solution: " << d.m_solution << '\n'
+    << "state: " << d.m_state << '\n'
+    << "x: " << d.m_x << '\n'
+    << "y: " << d.m_y << '\n'
+  ;
+  return os;
+}

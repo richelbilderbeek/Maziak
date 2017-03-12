@@ -1,6 +1,7 @@
 #ifndef MAZIAKSOLUTIONMAZE_H
 #define MAZIAKSOLUTIONMAZE_H
 
+#include <iosfwd>
 #include <vector>
 
 #pragma GCC diagnostic push
@@ -56,6 +57,8 @@ IntMaze CreateSolution(
 int GetSize(const SolutionMaze& m) noexcept;
 
 bool IsSquare(const SolutionMaze& m);
+
+std::ostream& operator<<(std::ostream& os, const SolutionMaze& m) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi
