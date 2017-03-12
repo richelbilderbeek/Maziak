@@ -65,6 +65,10 @@ CONFIG(debug, debug|release) {
   QMAKE_LFLAGS += -fsanitize=undefined
   LIBS += -lubsan
 
+  # gprof
+  QMAKE_CXXFLAGS += -pg
+  QMAKE_LFLAGS += -pg
+
   # GSL
   DEFINES += GSL_THROW_ON_CONTRACT_VIOLATION
 }

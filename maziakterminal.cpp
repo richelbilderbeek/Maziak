@@ -68,7 +68,7 @@ void ribi::maziak::Terminal::DoDisplay(const MainDialog& main_dialog)
   {
     const char player {
       Sprites::ToChar(
-        main_dialog.GetSpritePlayer(
+        GetSpritePlayer(
           main_dialog.GetPlayerDirection(),
           main_dialog.GetPlayerMove(),
           main_dialog.GetPlayerHasSword(),

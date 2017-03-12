@@ -143,30 +143,24 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteAboveFloor(
   return Sprite::transparent;
 }
 
-ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
+ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer() const
+{
+  return ::ribi::maziak::GetSpritePlayer(
+    m_direction,
+    m_move_now,
+    m_has_sword,
+    m_fighting_frame
+  );
+}
+
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayer(
   const PlayerDirection direction,
   const PlayerMove move,
   const bool has_sword,
   const int fighting_frame
 )
 {
-  switch (fighting_frame)
-  {
-    case  0: break;
-    case  1: return has_sword ? Sprite::fight_sword1 : Sprite::fight_no_sword1;
-    case  2: return Sprite::fight2;
-    case  3: return Sprite::fight3;
-    case  4: return Sprite::fight4;
-    case  5: return has_sword ? Sprite::fight_sword1 : Sprite::fight_no_sword1;
-    case  6: return Sprite::fight2;
-    case  7: return Sprite::fight3;
-    case  8: return Sprite::fight4;
-    case  9: return has_sword ? Sprite::fight_won1 : Sprite::fight_lost1;
-    case 10: return has_sword ? Sprite::fight_won2 : Sprite::fight_lost2;
-    case 11: return has_sword ? Sprite::fight_won1 : Sprite::fight_lost1;
-    case 12: return has_sword ? Sprite::fight_won2 : Sprite::fight_lost2;
-  }
-
+  if (fighting_frame != 0) return GetSpritePlayerFighting(fighting_frame, has_sword);
   switch (direction)
   {
     case PlayerDirection::pdUp:
@@ -240,6 +234,33 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
   //Unreachable
   assert(!"Should not get here"); //!OCLINT accepted idiom
   throw std::logic_error("Reached unreachable part");
+}
+
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting(
+  const int fighting_frame,
+  const bool has_sword
+)
+{
+  switch (fighting_frame)
+  {
+    case  1: return has_sword ? Sprite::fight_sword1 : Sprite::fight_no_sword1;
+    case  2: return Sprite::fight2;
+    case  3: return Sprite::fight3;
+    case  4: return Sprite::fight4;
+    case  5: return has_sword ? Sprite::fight_sword1 : Sprite::fight_no_sword1;
+    case  6: return Sprite::fight2;
+    case  7: return Sprite::fight3;
+    case  8: return Sprite::fight4;
+    case  9: return has_sword ? Sprite::fight_won1 : Sprite::fight_lost1;
+    case 10: return has_sword ? Sprite::fight_won2 : Sprite::fight_lost2;
+    case 11: return has_sword ? Sprite::fight_won1 : Sprite::fight_lost1;
+    case 12: return has_sword ? Sprite::fight_won2 : Sprite::fight_lost2;
+    case  0:
+    case 13:
+    default: assert(!"Should not get here"); //!OCLINT accepted idiom
+  }
+  assert(!"Should not get here"); //!OCLINT accepted idiom
+  return Sprite::transparent;
 }
 
 void ribi::maziak::MainDialog::PressKey(const Key key)

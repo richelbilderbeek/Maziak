@@ -45,14 +45,17 @@ script:
   - make debug
   # Do not do below: Travis will not be able to handle this
   # - ./MaziakConsole & 
-  # Desktop, just run a bit
+  # Desktop debug profile run
+  - make clean
   - qmake -qt=qt5 MaziakDesktop.pro
   - make debug
   - ./MaziakDesktop --profile
+  - gprof MaziakDesktop > gprof.log
+  - head gprof.log -n 1000
   # Get code coverage
   - ./get_code_cov
   - codecov
-  # Desktop profiling
+  # Desktop release profile run
   - make clean
   - qmake -qt=qt5 MaziakDesktop.pro
   - make release

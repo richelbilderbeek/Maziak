@@ -62,10 +62,7 @@ struct MainDialog
   {
     return GetSpriteAboveFloor(x,y,m_maze);
   }
-  Sprite GetSpritePlayer() const noexcept
-  {
-    return GetSpritePlayer(m_direction,m_move_now,m_has_sword,m_fighting_frame);
-  }
+  Sprite GetSpritePlayer() const;
 
   static Sprite GetSpriteFloor(
     const Maze& maze,
@@ -79,12 +76,6 @@ struct MainDialog
     const int y,
     const Maze& m_maze
   ) noexcept;
-  static Sprite GetSpritePlayer(
-    const PlayerDirection direction,
-    const PlayerMove moveNow,
-    const bool m_has_sword,
-    const int m_fighting_frame
-  );
 
   GameState GetState() const noexcept { return m_state; }
 
@@ -142,6 +133,18 @@ struct MainDialog
   ///Main game loop
   void Tick();
 };
+
+Sprite GetSpritePlayer(
+  const PlayerDirection direction,
+  const PlayerMove moveNow,
+  const bool has_sword,
+  const int fighting_frame
+);
+
+Sprite GetSpritePlayerFighting(
+  const int fighting_frame,
+  const bool has_sword
+);
 
 } //namespace maziak
 } //namespace ribi
