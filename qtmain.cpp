@@ -4,6 +4,7 @@
 #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include <QApplication>
 #include <QTimer>
+#include <gsl/gsl_assert>
 #include <memory>
 #include "qtmaziakmenudialog.h"
 
@@ -17,6 +18,13 @@
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
+  #ifdef NDEBUG
+  //Must be really release mode
+  assert(1 == 2);
+  Expects(1 == 2);
+  Ensures(1 == 2);
+  #endif
+
   if (argc == 2 && std::string(argv[1]) == "--profile")
   {
     ribi::maziak::QtDisplay d;
