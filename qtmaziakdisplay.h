@@ -44,6 +44,8 @@ public:
   ///Show the main dialog's state
   void DoDisplay(const MainDialog& main_dialog) override;
 
+  const auto& GetSprites() const noexcept { return m_sprites; }
+
   ///The heigh of the view displayed, in number of blocks
   int GetViewHeight() const noexcept override { return 9; }
 

@@ -24,8 +24,11 @@ struct Maze
     const int view_height
     ) noexcept;
 
+  ///Can I get a value at (x,y)?
   bool CanGet(const int x, const int y) const noexcept;
-  bool CanSet(const int x, const int y, const MazeSquare s) const noexcept;
+
+  ///Can I set a value at (x,y)?
+  bool CanSet(const int x, const int y) const noexcept;
 
   ///Can a player move to coordinat (x,y) ?
   bool CanMoveTo(
@@ -37,6 +40,7 @@ struct Maze
   std::pair<int,int> FindStart() const noexcept;
 
   MazeSquare Get(const int x, const int y) const noexcept;
+  const auto& Get() const noexcept { return m_maze; }
 
   const IntMaze& GetIntMaze() const noexcept { return m_int_maze; }
 
@@ -44,7 +48,10 @@ struct Maze
 
   private:
 
+  ///Locations of walls and moving places
   const IntMaze m_int_maze;
+
+  ///?
   std::vector<std::vector<MazeSquare>> m_maze;
   std::mt19937 m_rng_engine;
 

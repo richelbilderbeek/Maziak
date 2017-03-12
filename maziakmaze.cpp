@@ -28,8 +28,10 @@ template <class Source, class Target>
   return t;
 }
 
-ribi::maziak::Maze::Maze(const int size,const int rng_seed)
-  : m_int_maze{CreateIntMaze(size)},
+ribi::maziak::Maze::Maze(
+  const int size,
+  const int rng_seed
+) : m_int_maze{CreateIntMaze(size)},
     m_maze{},
     m_rng_engine(rng_seed)
 {
@@ -140,7 +142,7 @@ bool ribi::maziak::Maze::CanMoveTo(
   return true;
 }
 
-bool ribi::maziak::Maze::CanSet(const int x, const int y, const MazeSquare /* s */) const noexcept
+bool ribi::maziak::Maze::CanSet(const int x, const int y) const noexcept
 {
   return CanGet(x,y);
 }
@@ -280,7 +282,7 @@ bool ribi::maziak::IsSquare(const Maze& m)
 
 void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexcept
 {
-  Expects(CanSet(x,y,s));
+  Expects(CanSet(x,y));
   m_maze[y][x] = s;
   Ensures(Get(x,y) == s);
 }
@@ -288,7 +290,8 @@ void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexc
 std::ostream& ribi::maziak::operator<<(
   std::ostream& os, const Maze& m) noexcept
 {
-  os << m.m_int_maze << '\n';
+  os << "IntMaze:\n" << m.m_int_maze << '\n';
+  os << "Maze:\n";
 
   const auto& v = m.m_maze;
   std::transform(
@@ -303,7 +306,7 @@ std::ostream& ribi::maziak::operator<<(
         std::string(),
         [](std::string init, const MazeSquare s)
         {
-          return init + to_str(s);
+          return init + to_char(s);
         }
       );
     }

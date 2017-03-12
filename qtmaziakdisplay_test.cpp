@@ -1,50 +1,31 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
+#include "qtmaziakdisplay_test.h"
 #include "qtmaziakdisplay.h"
-
-#include <algorithm>
-#include <cassert>
-#include <cmath>
-
-#include <iostream>
-#include <stdexcept>
-#include <vector>
-
-#include <boost/scoped_ptr.hpp>
-
-#include <QDesktopWidget>
-#include <QApplication>
-#include <QKeyEvent>
-#include <QPainter>
-#include <QTimer>
-#include "maziakhelper.h"
-#include "maziakintmaze.h"
-#include "maziakmaze.h"
-#include "maziaksprites.h"
-#include "qtmaziakgameoverdialog.h"
-#include "testtimer.h"
-#include "qtmaziakgamewondialog.h"
-#include "qtgraphics.h"
-#include "maziaksolutionmaze.h"
 #include "maziakmaindialog.h"
-#include "trace.h"
 
-#pragma GCC diagnostic pop
 
-void ribi::TestQtDisplay() noexcept
+
+void ribi::maziak::QtDisplay_test::view_width_is_nine()
 {
-  {
-    QtDisplay q;
-    //Cannot test this in constructor: never call virtual functions in a class constructor
-    assert(q.GetViewHeight() == 9);
-    assert(q.GetViewWidth() == 9);
-  }
-  {
-    QtDisplay q;
-    maziak::MainDialog d(7);
-    d.SetDisplay(&q);
-    q.show();
-  }
+  QtDisplay q;
+  //Cannot test this in constructor: never call virtual functions in a class constructor
+  assert(q.GetViewHeight() == 9);
+  assert(q.GetViewWidth() == 9);
 }
+
+void ribi::maziak::QtDisplay_test::display()
+{
+  QtDisplay q;
+  MainDialog d(7);
+  d.SetDisplay(&q);
+  q.show();
+}
+
+/*
+void ribi::maziak::QtDisplay_test::display()
+{
+  QtDisplay q;
+  const auto sprites = q.GetSprites();
+  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
+  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
+}
+*/

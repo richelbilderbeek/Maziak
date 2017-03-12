@@ -74,7 +74,6 @@ ribi::maziak::IntGrid
 
 int ribi::maziak::GetSize(const IntGrid& g) noexcept
 {
-  Expects(IsSquare(g));
   return static_cast<int>(g.size());
 }
 
