@@ -6,7 +6,7 @@ master|[![Build Status](https://travis-ci.org/richelbilderbeek/Maziak.svg?branch
 
 C++ maze game that is a port of the MSX game Maziak/Maziacs/Mazoggs
 
-![Game](Game.png)
+![Game](Screenshots/Game.png)
 
 ![Menu](Screenshots/Menu.png)
 
