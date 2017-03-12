@@ -212,9 +212,9 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
     {
       switch (move)
       {
-        case PlayerMove::none:  return (has_sword ? Sprite::player_look_left_sword : Sprite::player_look_left);
-        case PlayerMove::left1: return (has_sword ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1);
-        case PlayerMove::left2: return (has_sword ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2);
+        case PlayerMove::none:  return has_sword ? Sprite::player_look_left_sword : Sprite::player_look_left;
+        case PlayerMove::left1: return has_sword ? Sprite::player_walk_left_sword1 : Sprite::player_walk_left1;
+        case PlayerMove::left2: return has_sword ? Sprite::player_walk_left_sword2 : Sprite::player_walk_left2;
         default:
           assert(!"Should not get here"); //!OCLINT accepted idiom
           throw std::logic_error("Unsupported PlayerMove mMoveNow for mDirection == left");
@@ -230,6 +230,67 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer(
   throw std::logic_error("Reached unreachable part");
 }
 
+void ribi::maziak::MainDialog::PressKey(const Key key)
+{
+  switch (key)
+  {
+    case Key::left : PressKeyLeft(); break;
+    case Key::right: PressKeyRight(); break;
+    case Key::up   : PressKeyUp(); break;
+    case Key::down : PressKeyDown(); break;
+    case Key::quit :
+    case Key::none : m_move_now = PlayerMove::none; break;
+  }
+}
+
+void ribi::maziak::MainDialog::PressKeyDown()
+{
+  m_direction = PlayerDirection::pdDown;
+  if (!m_maze.CanMoveTo(m_x,m_y+1,m_has_sword,m_do_show_solution))
+  {
+    m_move_now = PlayerMove::none;
+    return;
+  }
+  m_move_now = (m_move_now == PlayerMove::down1 ? PlayerMove::down2 : PlayerMove::down1);
+  ++m_y;
+}
+
+void ribi::maziak::MainDialog::PressKeyLeft()
+{
+  m_direction = PlayerDirection::pdLeft;
+  if (!m_maze.CanMoveTo(m_x-1,m_y,m_has_sword,m_do_show_solution))
+  {
+    m_move_now = PlayerMove::none;
+    return;
+  }
+  m_move_now = (m_move_now == PlayerMove::left1 ? PlayerMove::left2 : PlayerMove::left1);
+  --m_x;
+}
+
+void ribi::maziak::MainDialog::PressKeyRight()
+{
+  m_direction = PlayerDirection::pdRight;
+  if (!m_maze.CanMoveTo(m_x+1,m_y,m_has_sword,m_do_show_solution))
+  {
+    m_move_now = PlayerMove::none;
+    return;
+  }
+  m_move_now = (m_move_now == PlayerMove::right1 ? PlayerMove::right2 : PlayerMove::right1);
+  ++m_x;
+}
+
+void ribi::maziak::MainDialog::PressKeyUp()
+{
+  m_direction = PlayerDirection::pdUp;
+  if (!m_maze.CanMoveTo(m_x,m_y-1,m_has_sword,m_do_show_solution))
+  {
+    m_move_now = PlayerMove::none;
+    return;
+  }
+  m_move_now = (m_move_now == PlayerMove::up1 ? PlayerMove::up2 : PlayerMove::up1);
+  --m_y;
+}
+
 void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
 {
   if (m_fighting_frame > 0) return;
@@ -237,53 +298,7 @@ void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
 
   for(const Key key: keys)
   {
-    //Check the keys pressed
-    switch (key)
-    {
-      case Key::left:
-        m_direction = PlayerDirection::pdLeft;
-        if (!m_maze.CanMoveTo(m_x-1,m_y,m_has_sword,m_do_show_solution))
-        {
-          m_move_now = PlayerMove::none;
-          continue;
-        }
-        m_move_now = (m_move_now == PlayerMove::left1 ? PlayerMove::left2 : PlayerMove::left1);
-        --m_x;
-        break;
-      case Key::right:
-        m_direction = PlayerDirection::pdRight;
-        if (!m_maze.CanMoveTo(m_x+1,m_y,m_has_sword,m_do_show_solution))
-        {
-          m_move_now = PlayerMove::none;
-          continue;
-        }
-        m_move_now = (m_move_now == PlayerMove::right1 ? PlayerMove::right2 : PlayerMove::right1);
-        ++m_x;
-        break;
-      case Key::up:
-        m_direction = PlayerDirection::pdUp;
-        if (!m_maze.CanMoveTo(m_x,m_y-1,m_has_sword,m_do_show_solution))
-        {
-          m_move_now = PlayerMove::none;
-          continue;
-        }
-        m_move_now = (m_move_now == PlayerMove::up1 ? PlayerMove::up2 : PlayerMove::up1);
-        --m_y;
-        break;
-      case Key::down:
-        m_direction = PlayerDirection::pdDown;
-        if (!m_maze.CanMoveTo(m_x,m_y+1,m_has_sword,m_do_show_solution))
-        {
-          m_move_now = PlayerMove::none;
-          continue;
-        }
-        m_move_now = (m_move_now == PlayerMove::down1 ? PlayerMove::down2 : PlayerMove::down1);
-        ++m_y;
-        break;
-      default:
-        m_move_now = PlayerMove::none;
-        continue;
-    }
+    PressKey(key);
   }
 }
 
@@ -309,14 +324,14 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
   {
     case MazeSquare::msStart:
     case MazeSquare::msEmpty:
-      break;
+      return;
     case MazeSquare::msWall:
       assert(!"Should not get here"); //!OCLINT accepted idiom
-      throw std::logic_error("Player cannot be in wall");
+      return;
     case MazeSquare::msEnemy1: case MazeSquare::msEnemy2:
       m_fighting_frame = 1;
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
-      break;
+      return;
     case MazeSquare::msPrisoner1: case MazeSquare::msPrisoner2:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       m_solution = CreateNewSolution();
@@ -324,21 +339,22 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
       this->m_display->StartShowSolution();
       m_do_show_solution = true;
       m_display->StartShowSolution();
-      break;
+      return;
     case MazeSquare::msSword:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       m_has_sword = true;
-      break;
+      return;
     case MazeSquare::msExit:
     {
       m_state = GameState::has_won;
       m_display->SetGameState(GameState::has_won);
-      break;
+      return;
     }
     default:
       assert(!"Should not get here"); //!OCLINT accepted idiom
-      break;
+      return;
   }
+  assert(!"Should not get here"); //!OCLINT accepted idiom
 }
 
 void ribi::maziak::MainDialog::Tick()

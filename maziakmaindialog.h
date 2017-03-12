@@ -91,8 +91,22 @@ struct MainDialog
   int GetX() const noexcept { return m_x; }
   int GetY() const noexcept { return m_y; }
 
+  ///Press an active key
+  void PressKey(const Key keys);
   ///Press all active keys
   void PressKeys(const std::set<Key>& keys);
+
+  ///Key down is pressed
+  void PressKeyDown();
+
+  ///Key left is pressed
+  void PressKeyLeft();
+
+  ///Key right is pressed
+  void PressKeyRight();
+
+  ///Key up is pressed
+  void PressKeyUp();
 
   ///Play the game for profiling
   void Profile() noexcept;
