@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   if (argc == 2 && std::string(argv[1]) == "--profile")
   {
     ribi::maziak::QtDisplay d;
-    ribi::maziak::MainDialog w(11);
+    ribi::maziak::MainDialog w(11 + 36);
     w.SetDisplay(&d);
     d.DoDisplay(w);
     d.show();
