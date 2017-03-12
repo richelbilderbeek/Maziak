@@ -3,29 +3,28 @@
 #include <algorithm>
 #include <cassert>
 #include <stdexcept>
-#include <boost/range/algorithm/count_if.hpp>
 #include <gsl/gsl_assert>
-#include "qtgraphics.h"
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
 #include <QPixmap>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
 #include <QImage>
-#endif
-#pragma GCC diagnostic pop
+#include "qtgraphics.h"
+
+template <class T, class P>
+bool all(const T& v, const P& p)
+{
+  return std::all_of(std::begin(v), std::end(v), p);
+}
 
 ribi::maziak::Sprites::Sprites()
   : m_sprites(CreateSprites())
 {
   Ensures(
-    boost::range::count_if(
+    all(
       GetAllSprites(),
       [this](const Sprite s)
       {
-        return !IsValidFormat(this->Get(s).toImage().format());
+        return ::ribi::IsValidFormat(this->Get(s).toImage().format());
       }
-    ) == 0
+    )
   );
 }
 
