@@ -14,7 +14,8 @@ h_files=`ls *.h | egrep -v "^ui_.*\.h$"`
   -I/usr/include/qt5 \
   -I/usr/include/qt5/QtCore \
   -I/usr/include/qt5/QtGui \
-  -I/usr/include/qt5/QtWidgets
+  -I/usr/include/qt5/QtWidgets \
+  -I../GSL/include/gsl \
 
 cat oclint.log
 
