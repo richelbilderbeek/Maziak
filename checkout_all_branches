@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Script to checkout all the branches
+git checkout -b coverity_scan origin/coverity_scan
 git checkout -b develop origin/develop
