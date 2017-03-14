@@ -3,9 +3,26 @@ language: cpp
 compiler: gcc
 dist: trusty # Qt5, from https://gist.github.com/jreese/6207161#gistcomment-1462109
 
-addons: 
+# Coverity Scan
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "s8NseiHz0yVT/AJejZKFOnQZqkk6o8NEr92aQ8kV0y7oc2Nt1D73huGFwmWRmN559ONhEx3YuGhktKtV/vtLwWzLb736AUMXtk/WYnzRjWc6qgL5v/qe5t6010LUUKSLr9bEia8Yo+umzGuyGUgby5uqjXw9ETNxy3xjeLmXYR5IlT+mDd6npUpTN8dUoVhvEsXd4/zzgEB+fR6Ct5Mdo5coM2KGYhjKjAFgvjaO7gDtbu7niOqA9j53LRUgFeYigQBxu8hRJLpgwerKHkZ98f2rnK5aDjmr9n8aWH7CClEr6IWtHmPfopl2B//Y2ZI9yT2396PzPE0Bfs9cDSQKKdpgLdifM/UCeyXlCfuQWmlqki2F1liIv+fu23QVqjWqXZaJuJr/5Kp+fRUL6vV/nmD3teVVGKfgfMWntcETGW8YhTj6g7R92LRQG+ra1B9gXu1LJwjQjOSRRZPm+skmYXQfs40ErMCiF0n5MLHzlzYsNB4oIPDC/uhBgkwKCOb+w5qfmiUmSsUPdwMyL5E/pE7j7cF77FQswI2Pdtu60pjLZcramdTL+GoF9aeXmsIJWcxKfMn8hMjfDXap8DlaawWdn2W/qID4rdAZftW84rN5gajMixQZXeNHfdOD/kJYzvesAA6vQaEPo8FYTiLbL5QyqnGT+ARzx5zPtMK/Xhw="
+
+addons:
+  # Boost
   apt: 
     packages: libboost-all-dev
+  # Coverity Scan
+  coverity_scan:
+    project:
+      name: "richelbilderbeek/Maziak"
+      description: "Build submitted via Travis CI"
+    notification_email: richel@richelbilderbeek.nl
+    build_command_prepend: "./configure; make clean"
+    build_command:   "make -j 4"
+    branch_pattern: coverity_scan
 
 before_install:
   # Qt5, from https://gist.github.com/jreese/6207161#gistcomment-1462109
@@ -14,6 +31,8 @@ before_install:
   # C++14
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get update -qq
+  # Coverity Scan
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 install: 
   # Qt5
