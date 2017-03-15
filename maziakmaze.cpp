@@ -249,8 +249,8 @@ std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
   {
     if (Get(p.first,p.second) == MazeSquare::msExit) return p;
   }
-  assert(!"Should not get here");
-  throw std::logic_error("Cannot find exit");
+  assert(!"Maze guarantees to have an exit");
+  return {0, 0};
 }
 
 std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
@@ -259,8 +259,8 @@ std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
   {
     if (Get(p.first,p.second) == MazeSquare::msStart) return p;
   }
-  assert(!"Should not get here");
-  throw std::logic_error("Cannot find start");
+  assert(!"Maze guarantees to have a start");
+  return {0, 0};
 }
 
 ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
