@@ -89,7 +89,7 @@ script:
   - gprof MaziakDesktop > gprof.log
   - head gprof.log -n 1000
   # Run cppcheck on folder
-  - cppcheck .
+  - cppcheck -q .
   # Call OCLint
   - ./do_oclint
 
