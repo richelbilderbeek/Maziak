@@ -31,10 +31,20 @@ CONFIG += debug_and_release
 CONFIG(release, debug|release) {
 
   DEFINES += NDEBUG
+
+  # GSL
+  DEFINES += GSL_UNENFORCED_ON_CONTRACT_VIOLATION
+
+  # gprof
+  QMAKE_CXXFLAGS += -pg
+  QMAKE_LFLAGS += -pg
 }
 
 # In debug mode, turn on gcov and UBSAN
 CONFIG(debug, debug|release) {
+
+  # GSL
+  DEFINES += GSL_UNENFORCED_ON_CONTRACT_VIOLATION
 
   # gcov
   QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
