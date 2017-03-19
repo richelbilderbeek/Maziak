@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 
+
 std::string ribi::maziak::to_str(const GameState g) noexcept
 {
   switch (g)

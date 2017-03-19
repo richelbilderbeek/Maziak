@@ -74,3 +74,11 @@ LIBS += -lboost_timer -lboost_system
 
 # Boost.Test
 LIBS += -lboost_unit_test_framework
+
+message(Host name: $$QMAKE_HOST.name)
+contains(QMAKE_HOST.name,pc-157-103) {
+  message("Host is university computer in the canteen")
+  QMAKE_CXX = g++-5
+  QMAKE_LINK = g++-5
+  QMAKE_CC = gcc-5
+}
