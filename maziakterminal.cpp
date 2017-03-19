@@ -38,7 +38,7 @@ void ribi::maziak::Terminal::DoDisplay(const MainDialog& main_dialog)
         const int yVector = main_dialog.GetY() - (view_height / 2) + y;
         //Draw the floor tile
         const char pixmap_floor {
-          ToChar(
+          to_char(
             GetSpriteFloor(
               main_dialog.GetMaze(),
               xVector,
@@ -56,7 +56,7 @@ void ribi::maziak::Terminal::DoDisplay(const MainDialog& main_dialog)
         if (sprite_above_floor != Sprite::transparent)
         {
           const char pixmap_above_floor {
-            ToChar(sprite_above_floor)
+            to_char(sprite_above_floor)
           };
           canvas.PutChar(x,y,pixmap_above_floor);
         }
@@ -67,7 +67,7 @@ void ribi::maziak::Terminal::DoDisplay(const MainDialog& main_dialog)
   //Draw player
   {
     const char player {
-      ToChar(
+      to_char(
         GetSpritePlayer(
           main_dialog.GetPlayerDirection(),
           main_dialog.GetPlayerMove(),

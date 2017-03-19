@@ -12,7 +12,8 @@ SOURCES += \
     maziakmazesquare_test.cpp \
     maziakplayerdirection_test.cpp \
     maziakmenudialog_test.cpp \
-    maziakplayermove_test.cpp
+    maziakplayermove_test.cpp \
+    maziaksprite_test.cpp
 
 
 # $$PWD/qtmaziaksprites_test.cpp

@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(maziak_CreateTestMaze1)
   BOOST_CHECK(Count(MazeSquare::msEnemy1, m) > 0);
   BOOST_CHECK_EQUAL(Count(MazeSquare::msStart, m), 1);
   BOOST_CHECK_EQUAL(Count(MazeSquare::msExit, m), 1);
-  const std::string measured{ToStr(m.Get())};
+  const std::string measured{to_str(m.Get())};
   const std::string expected{
     "XXXXXXXXXXXXXXX\n"
     "X  +X+    X+  X\n"

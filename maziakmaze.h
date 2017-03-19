@@ -88,8 +88,8 @@ int GetSize(const Maze& m) noexcept;
 
 bool IsSquare(const Maze& m);
 
-std::string ToStr(const Maze& m) noexcept;
-std::string ToStr(const std::vector<std::vector<MazeSquare>>& m) noexcept;
+std::string to_str(const Maze& m) noexcept;
+std::string to_str(const std::vector<std::vector<MazeSquare>>& m) noexcept;
 
 bool operator==(const Maze& lhs, const Maze& rhs) noexcept;
 

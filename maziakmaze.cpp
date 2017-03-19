@@ -347,14 +347,14 @@ std::ostream& ribi::maziak::operator<<(
   return os;
 }
 
-std::string ribi::maziak::ToStr(const Maze& m) noexcept
+std::string ribi::maziak::to_str(const Maze& m) noexcept
 {
   std::stringstream s;
   s << m;
   return s.str();
 }
 
-std::string ribi::maziak::ToStr(const std::vector<std::vector<MazeSquare>>& m) noexcept
+std::string ribi::maziak::to_str(const std::vector<std::vector<MazeSquare>>& m) noexcept
 {
   std::stringstream s;
   s << m;

@@ -1,7 +1,9 @@
 #include "maziaksprite.h"
 
 #include <cassert>
-char ribi::maziak::ToChar(const ribi::maziak::Sprite sprite) noexcept
+#include <iostream>
+
+char ribi::maziak::to_char(const ribi::maziak::Sprite sprite) noexcept
 {
   switch (sprite)
   {
@@ -50,14 +52,12 @@ char ribi::maziak::ToChar(const ribi::maziak::Sprite sprite) noexcept
     case Sprite::prisoner2: return ';';
     case Sprite::sword: return '+';
     case Sprite::exit: return '!';
-    case Sprite::n_sprites:
-      assert(!"Should never use Sprite::n_sprites"); //!OCLINT accepted idiom
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return '\0';
 }
 
-std::string ribi::maziak::ToStr(const Sprite sprite) noexcept
+std::string ribi::maziak::to_str(const Sprite sprite) noexcept
 {
   switch (sprite)
   {
@@ -106,9 +106,13 @@ std::string ribi::maziak::ToStr(const Sprite sprite) noexcept
     case Sprite::prisoner2: return "prisoner2";
     case Sprite::sword: return "sword";
     case Sprite::exit: return "exit";
-    case Sprite::n_sprites:
-      assert(!"Should never use Sprite::n_sprites"); //!OCLINT accepted idiom
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return "";
+}
+
+std::iostream& ribi::maziak::operator<<(std::iostream& os, const Sprite& s) noexcept
+{
+  os << to_char(s);
+  return os;
 }
