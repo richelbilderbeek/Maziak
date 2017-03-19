@@ -1,6 +1,7 @@
 #ifndef MAZIAKPLAYERMOVE_H
 #define MAZIAKPLAYERMOVE_H
 
+#include <initializer_list>
 #include <iosfwd>
 #include <string>
 
@@ -18,6 +19,22 @@ enum class PlayerMove {
   down1,
   down2
 };
+
+constexpr std::initializer_list<PlayerMove> get_all_player_moves()
+{
+  return
+  {
+    PlayerMove::none,
+    PlayerMove::left1,
+    PlayerMove::left2,
+    PlayerMove::right1,
+    PlayerMove::right2,
+    PlayerMove::up1,
+    PlayerMove::up2,
+    PlayerMove::down1,
+    PlayerMove::down2
+  };
+}
 
 std::string to_str(const PlayerMove m) noexcept;
 std::ostream& operator<<(std::ostream& os, const PlayerMove m) noexcept;

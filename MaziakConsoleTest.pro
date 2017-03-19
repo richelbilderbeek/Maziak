@@ -7,9 +7,7 @@ include(gsl.pri)
 #Specific, console
 include(../RibiClasses/CppCanvas/CppCanvas.pri)
 include(../DotMatrix/DotMatrix.pri)
-include(../RibiClasses/CppRibiRandom/CppRibiRandom.pri)
 include(../RibiClasses/CppTextCanvas/CppTextCanvas.pri)
-#include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
 include(MaziakConsole.pri)
 include(MaziakConsoleTest.pri)
 

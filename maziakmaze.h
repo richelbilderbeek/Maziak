@@ -57,10 +57,6 @@ struct Maze
   ///Locations of walls, swords, prisoners, enemies
   std::vector<std::vector<MazeSquare>> m_maze;
 
-  ///Used for creating the int maze, the populating of the
-  ///maze and the moving of enemies
-  //std::mt19937 m_rng_engine;
-
   friend std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 };
 
