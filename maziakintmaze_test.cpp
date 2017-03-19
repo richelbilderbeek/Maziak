@@ -56,5 +56,15 @@ BOOST_AUTO_TEST_CASE(maziak_CreateIntMaze_must_reproduce_same_maze_each_time)
   BOOST_CHECK_EQUAL(m, n);
 }
 
+BOOST_AUTO_TEST_CASE(maziak_CollectDeadEnds)
+{
+  const auto sz = 7;
+  const int rng_seed{145};
+  const IntMaze m{CreateIntMaze(sz, rng_seed)};
+  BOOST_CHECK(!CollectDeadEnds(m).empty());
+}
+
+
+
 #pragma GCC diagnostic pop
 

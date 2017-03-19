@@ -10,24 +10,24 @@
 #include "maziakhelper.h"
 
 ribi::maziak::IntMaze::IntMaze()
-  : m_dead_ends{}, m_int_grid{}
+  : m_int_grid{}
 {
 
 }
 
 ribi::maziak::IntMaze::IntMaze(const int sz, const int rng_seed)
-  : m_dead_ends{}, m_int_grid{CreateIntGrid(sz, rng_seed)}
+  : m_int_grid{CreateIntGrid(sz, rng_seed)}
 {
   Expects(IsValidSize(sz));
-  m_dead_ends = CollectDeadEnds(m_int_grid);
+  //m_dead_ends = CollectDeadEnds(m_int_grid);
 }
 
 ribi::maziak::IntMaze::IntMaze(
   const IntGrid& int_grid
 )
-  : m_dead_ends{}, m_int_grid{int_grid}
+  : m_int_grid{int_grid}
 {
-  m_dead_ends = CollectDeadEnds(m_int_grid);
+  //m_dead_ends = CollectDeadEnds(m_int_grid);
 }
 
 bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
@@ -37,9 +37,15 @@ bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
 }
 
 std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
-  const std::vector<std::vector<int>>& maze) noexcept
+  const IntMaze& m) noexcept
 {
-  const int size = maze.size();
+  return CollectDeadEnds(m.Get());
+}
+
+std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
+  const std::vector<std::vector<int>>& grid) noexcept
+{
+  const int size = grid.size();
 
   std::vector<std::pair<int,int>> dead_ends;
 
@@ -47,12 +53,12 @@ std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
   {
     for (int x=1; x!=size-1; ++x)
     {
-      if (maze[y][x] != 0) continue; //Continue if here is a wall
+      if (grid[y][x] != 0) continue; //Continue if here is a wall
       const int nWalls
-        = (maze[y+1][x  ] == 1 ? 1 : 0)
-        + (maze[y-1][x  ] == 1 ? 1 : 0)
-        + (maze[y  ][x+1] == 1 ? 1 : 0)
-        + (maze[y  ][x-1] == 1 ? 1 : 0);
+        = (grid[y+1][x  ] == 1 ? 1 : 0)
+        + (grid[y-1][x  ] == 1 ? 1 : 0)
+        + (grid[y  ][x+1] == 1 ? 1 : 0)
+        + (grid[y  ][x-1] == 1 ? 1 : 0);
       if (nWalls == 3) dead_ends.push_back(std::make_pair(x,y));
 
     }
@@ -77,13 +83,21 @@ int ribi::maziak::IntMaze::Get(const int x, const int y) const noexcept
   return m_int_grid[y][x];
 }
 
-ribi::maziak::DistancesMaze ribi::maziak::IntMaze::GetDistancesMaze(
+ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
+  const IntMaze& m,
   const int x,
   const int y
-  ) const noexcept
+  )
 {
-  DistancesMaze maze(*this,x,y);
-  return maze;
+  return DistancesMaze{m,x,y};
+}
+
+ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
+  const IntMaze& m,
+  const std::pair<int, int>& target
+)
+{
+  return CreateDistancesMaze(m, target.first, target.second);
 }
 
 int ribi::maziak::GetSize(const IntMaze& m) noexcept
@@ -106,8 +120,8 @@ std::ostream& ribi::maziak::operator<<(
   std::ostream& os, const IntMaze& m) noexcept
 {
 
-  os << m.m_int_grid << '\n';
-
+  os << m.m_int_grid;
+  /*
   std::transform(
     std::begin(m.m_dead_ends),
     std::end(m.m_dead_ends),
@@ -117,6 +131,7 @@ std::ostream& ribi::maziak::operator<<(
       return '(' + std::to_string(p.first) + ',' + std::to_string(p.second) + ')';
     }
   );
+  */
   return os;
 }
 

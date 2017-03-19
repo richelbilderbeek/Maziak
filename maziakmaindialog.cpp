@@ -23,7 +23,7 @@ ribi::maziak::MainDialog::MainDialog(
   const Maze& maze)
   : m_direction(PlayerDirection::pdDown),
     m_display{nullptr},
-    m_distances{},
+    m_distances{CreateDistancesMaze(maze.GetIntMaze(), maze.FindExit())},
     m_do_show_solution{false},
     m_fighting_frame(0),
     m_has_sword(true),
@@ -34,10 +34,6 @@ ribi::maziak::MainDialog::MainDialog(
     m_x(-1),
     m_y(-1)
 {
-  {
-    const std::pair<int,int> exit = m_maze.FindExit();
-    m_distances = m_maze.GetIntMaze().GetDistancesMaze(exit.first,exit.second);
-  }
   {
     const std::pair<int,int> start = m_maze.FindStart();
     m_x = start.first;

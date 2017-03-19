@@ -191,7 +191,8 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
     ConvertMaze(int_maze)
   };
 
-  std::vector<std::pair<int,int>> dead_ends = int_maze.GetDeadEnds();
+
+  std::vector<std::pair<int,int>> dead_ends = CollectDeadEnds(int_maze);
   const int nDeadEnds = dead_ends.size();
   std::uniform_int_distribution<int> distribution(0,nDeadEnds-1); //Inclusive max
   assert(nDeadEnds >= 2);
@@ -288,7 +289,7 @@ ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
 
 std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
 {
-  for (std::pair<int,int> p: GetIntMaze().GetDeadEnds())
+  for (std::pair<int,int> p: CollectDeadEnds(GetIntMaze()))
   {
     if (Get(p.first,p.second) == MazeSquare::msExit) return p;
   }
@@ -298,7 +299,7 @@ std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
 
 std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
 {
-  for (std::pair<int,int> p: GetIntMaze().GetDeadEnds())
+  for (std::pair<int,int> p: CollectDeadEnds(GetIntMaze()))
   {
     if (Get(p.first,p.second) == MazeSquare::msStart) return p;
   }
