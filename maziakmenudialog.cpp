@@ -19,7 +19,7 @@ int ribi::maziak::MenuDialog::ExecuteSpecific(const std::vector<std::string>& ar
   if (argc != 1)
   {
     std::cout << GetHelp() << '\n';
-    return 1;
+    return 0;
   }
 
   MainDialog dialog{7 + (4 * 2)};
