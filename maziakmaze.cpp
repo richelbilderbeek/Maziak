@@ -34,10 +34,9 @@ ribi::maziak::Maze::Maze(
   const int size,
   const int rng_seed
 ) : m_int_maze{CreateIntMaze(size, rng_seed)},
-    m_maze{},
-    m_rng_engine(rng_seed)
+    m_maze{}
 {
-  m_maze = CreatePopulatedMaze(m_int_maze, m_rng_engine);
+  m_maze = CreatePopulatedMaze(m_int_maze, rng_seed);
   Ensures(IsSquare(m_maze));
   Ensures(FindExit().first  >= 0);
   Ensures(FindStart().first >= 0);
@@ -47,7 +46,8 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
   const int x,
   const int y,
   const int view_width,
-  const int view_height
+  const int view_height,
+  std::mt19937& rng_engine
   ) noexcept
 {
   //Move them
@@ -95,7 +95,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
         //Pick a random move
         if (!moves.empty())
         {
-          std::shuffle(std::begin(moves),std::end(moves), m_rng_engine);
+          std::shuffle(std::begin(moves),std::end(moves), rng_engine);
           Set(moves[0].first,moves[0].second,MazeSquare::msEnemy1);
           Set(col,row,MazeSquare::msEmpty);
         }
@@ -182,6 +182,14 @@ int ribi::maziak::Count(const MazeSquare i, const Maze& m)
   return Count(i, m.Get());
 }
 
+std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulatedMaze(
+  const IntMaze& int_maze,
+  const int rng_seed
+)
+{
+  std::mt19937 rng_engine{rng_seed};
+  return CreatePopulatedMaze(int_maze, rng_engine);
+}
 std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulatedMaze(
   const IntMaze& int_maze,
   std::mt19937& rng_engine)

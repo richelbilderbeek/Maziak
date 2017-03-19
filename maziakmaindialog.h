@@ -89,6 +89,7 @@ struct MainDialog
   Maze m_maze;
   PlayerMove m_move_now;
 
+  std::mt19937 m_rng_engine;
   SolutionMaze m_solution;
   GameState m_state;
   int m_x;

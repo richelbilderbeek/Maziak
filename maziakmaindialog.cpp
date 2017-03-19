@@ -29,6 +29,7 @@ ribi::maziak::MainDialog::MainDialog(
     m_has_sword(true),
     m_maze{maze},
     m_move_now(PlayerMove::none),
+    m_rng_engine{42},
     m_solution{},
     m_state{GameState::playing},
     m_x(-1),
@@ -51,7 +52,8 @@ void ribi::maziak::MainDialog::AnimateEnemiesAndPrisoners(
     m_x,
     m_y,
     view_width,
-    view_height
+    view_height,
+    m_rng_engine
   );
 }
 

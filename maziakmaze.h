@@ -18,11 +18,13 @@ struct Maze
 
   ///Animate the enemies and prisoners in sight
   ///(all others are just standing still)
+  ///Need RNG engine for movement of the enemies
   void AnimateEnemiesAndPrisoners(
     const int x,
     const int y,
     const int view_width,
-    const int view_height
+    const int view_height,
+    std::mt19937& rng_engine
     ) noexcept;
 
   ///Can I get a value at (x,y)?
@@ -57,7 +59,7 @@ struct Maze
 
   ///Used for creating the int maze, the populating of the
   ///maze and the moving of enemies
-  std::mt19937 m_rng_engine;
+  //std::mt19937 m_rng_engine;
 
   friend std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 };
@@ -68,6 +70,12 @@ int Count(const MazeSquare i, const Maze& m);
 std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
   const IntMaze& int_maze,
   std::mt19937& rng_engine
+);
+
+///Create a maze with prisoners, swords, exit, begin and enemies
+std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
+  const IntMaze& int_maze,
+  const int rng_seed
 );
 
 /// Minimal complete maze
