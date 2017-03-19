@@ -9,7 +9,8 @@ SOURCES += \
     $$PWD/maziakterminal_test.cpp \
     $$PWD/maziakmaindialog_test.cpp \
     maziakgamestate_test.cpp \
-    maziakmazesquare_test.cpp
+    maziakmazesquare_test.cpp \
+    maziakplayerdirection_test.cpp
 
 
 # $$PWD/qtmaziaksprites_test.cpp
