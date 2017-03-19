@@ -1,6 +1,7 @@
 #ifndef MAZIAKGAMESTATE_H
 #define MAZIAKGAMESTATE_H
 
+#include <initializer_list>
 #include <iosfwd>
 #include <string>
 
@@ -13,6 +14,16 @@ enum class GameState
   has_won,
   game_over
 };
+
+constexpr std::initializer_list<GameState> get_all_game_states()
+{
+  return
+  {
+    GameState::playing,
+    GameState::has_won,
+    GameState::game_over
+  };
+}
 
 std::string to_str(const GameState g) noexcept;
 

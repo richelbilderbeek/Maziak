@@ -7,7 +7,8 @@ SOURCES += \
     $$PWD/maziaksolutionmaze_test.cpp \
     $$PWD/maziakintgrid_test.cpp \
     $$PWD/maziakterminal_test.cpp \
-    $$PWD/maziakmaindialog_test.cpp
+    $$PWD/maziakmaindialog_test.cpp \
+    maziakgamestate_test.cpp
 
 
 # $$PWD/qtmaziaksprites_test.cpp
