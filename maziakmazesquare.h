@@ -2,6 +2,7 @@
 #define MAZIAKMAZESQUARE_H
 
 #include <iosfwd>
+#include <initializer_list>
 #include <string>
 
 namespace ribi {
@@ -19,6 +20,22 @@ enum class MazeSquare
   msExit,
   msStart //Initial starting position
 };
+
+constexpr std::initializer_list<MazeSquare> get_all_maze_squares()
+{
+  return
+  {
+    MazeSquare::msEmpty,
+    MazeSquare::msWall,
+    MazeSquare::msEnemy1,
+    MazeSquare::msEnemy2,
+    MazeSquare::msPrisoner1,
+    MazeSquare::msPrisoner2,
+    MazeSquare::msSword,
+    MazeSquare::msExit,
+    MazeSquare::msStart
+  };
+}
 
 ///ASCII art
 char to_char(const MazeSquare s) noexcept;
