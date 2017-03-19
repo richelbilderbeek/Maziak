@@ -6,7 +6,7 @@
 void ribi::maziak::QtSprites_test::all_sprites_are_present()
 {
   Sprites s;
-  for (const auto i: GetAllSprites())
+  for (const auto i: get_all_sprites())
   {
     const QPixmap pixmap = s.Get(i);
     QVERIFY(pixmap.width() == GetSpriteWidth());

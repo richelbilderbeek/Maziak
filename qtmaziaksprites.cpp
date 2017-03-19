@@ -26,10 +26,9 @@ ribi::maziak::Sprites::Sprites()
 std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::CreateSprites() noexcept
 {
   std::map<Sprite,QPixmap> m;
-  const std::vector<Sprite> v { GetAllSprites() };
-  for (const Sprite sprite: v)
+  for (const Sprite sprite: get_all_sprites())
   {
-    std::string spritename { ToStr(sprite) };
+    std::string spritename { to_str(sprite) };
     spritename[0] = std::toupper(spritename[0]);
     spritename = CamelCasify(spritename);
 
