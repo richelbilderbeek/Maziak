@@ -10,24 +10,22 @@
 #include "maziakhelper.h"
 
 ribi::maziak::IntMaze::IntMaze()
-  : m_dead_ends{}, m_int_grid{}, m_rng_engine(0)
+  : m_dead_ends{}, m_int_grid{}
 {
 
 }
 
 ribi::maziak::IntMaze::IntMaze(const int sz, const int rng_seed)
-  : m_dead_ends{}, m_int_grid{}, m_rng_engine(rng_seed)
+  : m_dead_ends{}, m_int_grid{CreateIntGrid(sz, rng_seed)}
 {
   Expects(IsValidSize(sz));
-  m_int_grid = CreateIntGrid(sz);
   m_dead_ends = CollectDeadEnds(m_int_grid);
 }
 
 ribi::maziak::IntMaze::IntMaze(
-  const IntGrid& int_grid,
-  const int rng_seed
+  const IntGrid& int_grid
 )
-  : m_dead_ends{}, m_int_grid{int_grid}, m_rng_engine(rng_seed)
+  : m_dead_ends{}, m_int_grid{int_grid}
 {
   m_dead_ends = CollectDeadEnds(m_int_grid);
 }
@@ -38,7 +36,7 @@ bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
       && y >= 0 && y < GetSize(*this);
 }
 
-std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CollectDeadEnds(
+std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
   const std::vector<std::vector<int>>& maze) noexcept
 {
   const int size = maze.size();
@@ -59,9 +57,6 @@ std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CollectDeadEnds(
 
     }
   }
-
-  //Shuffle them
-  std::shuffle(dead_ends.begin(), dead_ends.end(),m_rng_engine);
   return dead_ends;
 }
 
@@ -100,6 +95,11 @@ int ribi::maziak::GetSize(const IntMaze& m) noexcept
 bool ribi::maziak::IsSquare(const IntMaze& m)
 {
   return IsSquare(m.Get());
+}
+
+bool ribi::maziak::operator==(const IntMaze& lhs, const IntMaze& rhs) noexcept
+{
+  return lhs.Get() == rhs.Get();
 }
 
 std::ostream& ribi::maziak::operator<<(

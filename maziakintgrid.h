@@ -9,11 +9,10 @@ namespace maziak {
 
 using IntGrid = std::vector<std::vector<int>>;
 
-//Creates a maze
+//Creates a binary maze
 // 0 : path
 // 1 : wall
-///From http://www.richelbilderbeek.nl/CppCreateMaze.htm
-IntGrid CreateIntGrid(const int sz);
+IntGrid CreateIntGrid(const int sz, const int rng_seed);
 
 int GetSize(const IntGrid& g) noexcept;
 

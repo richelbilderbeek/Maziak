@@ -8,7 +8,7 @@ using namespace ribi::maziak;
 
 BOOST_AUTO_TEST_CASE(maziak_SolutionMaze_size)
 {
-  MainDialog dialog{7 + (4 * 2), 234};
+  MainDialog dialog{CreateTestMaze1()};
   Terminal terminal;
   dialog.SetDisplay(&terminal);
   //dialog.Tick();

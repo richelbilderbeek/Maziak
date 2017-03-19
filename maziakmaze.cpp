@@ -95,7 +95,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
         //Pick a random move
         if (!moves.empty())
         {
-          std::shuffle(std::begin(moves),std::end(moves),m_rng_engine);
+          std::shuffle(std::begin(moves),std::end(moves), m_rng_engine);
           Set(moves[0].first,moves[0].second,MazeSquare::msEnemy1);
           Set(col,row,MazeSquare::msEmpty);
         }
@@ -148,7 +148,6 @@ bool ribi::maziak::Maze::CanSet(const int x, const int y) const noexcept
 {
   return CanGet(x,y);
 }
-
 
 std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::ConvertMaze(
   const IntMaze& int_maze
@@ -280,6 +279,13 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   return maze;
 }
 
+ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
+{
+  const auto sz = 15;
+  const int rng_seed{145};
+  return Maze{sz, rng_seed};
+}
+
 std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
 {
   for (std::pair<int,int> p: GetIntMaze().GetDeadEnds())
@@ -344,6 +350,11 @@ std::string ribi::maziak::ToStr(const std::vector<std::vector<MazeSquare>>& m) n
   std::stringstream s;
   s << m;
   return s.str();
+}
+
+bool ribi::maziak::operator==(const Maze& lhs, const Maze& rhs) noexcept
+{
+  return lhs.Get() == rhs.Get();
 }
 
 std::ostream& ribi::maziak::operator<<(std::ostream& os, const std::vector<std::vector<MazeSquare>>& m) noexcept

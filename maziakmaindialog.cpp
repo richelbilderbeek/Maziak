@@ -20,14 +20,14 @@
 #pragma GCC diagnostic pop
 
 ribi::maziak::MainDialog::MainDialog(
-  const int maze_size, const int rng_seed)
+  const Maze& maze)
   : m_direction(PlayerDirection::pdDown),
     m_display{nullptr},
     m_distances{},
     m_do_show_solution{false},
     m_fighting_frame(0),
     m_has_sword(true),
-    m_maze(maze_size, rng_seed),
+    m_maze{maze},
     m_move_now(PlayerMove::none),
     m_solution{},
     m_state{GameState::playing},
@@ -43,11 +43,7 @@ ribi::maziak::MainDialog::MainDialog(
     m_x = start.first;
     m_y = start.second;
   }
-  assert(maze_size && "Maze size must be 7 + (4 * n) for n e [0,->>");
-  assert(IsSquare(m_maze));
-
   m_solution = CreateNewSolution();
-
 }
 
 void ribi::maziak::MainDialog::AnimateEnemiesAndPrisoners(
@@ -80,6 +76,11 @@ void ribi::maziak::MainDialog::AnimateFighting() noexcept
       m_has_sword = false;
     }
   }
+}
+
+ribi::maziak::MainDialog ribi::maziak::CreateTestMainDialog1()
+{
+  return MainDialog{CreateTestMaze1()};
 }
 
 ribi::maziak::SolutionMaze ribi::maziak::MainDialog::CreateNewSolution() noexcept

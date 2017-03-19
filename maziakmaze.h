@@ -4,6 +4,7 @@
 #include <iosfwd>
 #include <vector>
 
+#include <random>
 #include "maziakfwd.h"
 #include "maziakmazesquare.h"
 #include "maziakintmaze.h"
@@ -53,8 +54,10 @@ struct Maze
 
   ///Locations of walls, swords, prisoners, enemies
   std::vector<std::vector<MazeSquare>> m_maze;
-  std::mt19937 m_rng_engine;
 
+  ///Used for creating the int maze, the populating of the
+  ///maze and the moving of enemies
+  std::mt19937 m_rng_engine;
 
   friend std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 };
@@ -67,6 +70,10 @@ std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
   std::mt19937& rng_engine
 );
 
+/// Minimal complete maze
+Maze CreateTestMaze1() noexcept;
+
+
 ///Convert walls and roads, zeroes and ones to MazeSquares
 std::vector<std::vector<MazeSquare>> ConvertMaze(
   const IntMaze& int_maze
@@ -74,10 +81,13 @@ std::vector<std::vector<MazeSquare>> ConvertMaze(
 
 int GetSize(const Maze& m) noexcept;
 
+
 bool IsSquare(const Maze& m);
 
 std::string ToStr(const Maze& m) noexcept;
 std::string ToStr(const std::vector<std::vector<MazeSquare>>& m) noexcept;
+
+bool operator==(const Maze& lhs, const Maze& rhs) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<MazeSquare>>& m) noexcept;

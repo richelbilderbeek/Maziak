@@ -47,5 +47,14 @@ BOOST_AUTO_TEST_CASE(maziak_CreateIntMaze_abuse)
   BOOST_CHECK_THROW(CreateIntMaze(8, rng_seed), std::exception);
 }
 
+BOOST_AUTO_TEST_CASE(maziak_CreateIntMaze_must_reproduce_same_maze_each_time)
+{
+  const auto sz = 15;
+  const int rng_seed{145};
+  const IntMaze m{CreateIntMaze(sz, rng_seed)};
+  const IntMaze n{CreateIntMaze(sz, rng_seed)};
+  BOOST_CHECK_EQUAL(m, n);
+}
+
 #pragma GCC diagnostic pop
 

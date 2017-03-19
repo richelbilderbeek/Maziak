@@ -9,9 +9,9 @@ namespace maziak {
 enum class Sprite
 {
   //Floor
-  empty,
+  empty, // A road
   wall,
-  path,
+  path, // The golden road to the exit
   transparent,
   //Player sprites
   player_look_down,

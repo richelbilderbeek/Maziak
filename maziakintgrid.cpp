@@ -3,15 +3,18 @@
 #include <iostream>
 #include <iterator>
 #include <numeric>
+#include <random>
 #include <gsl/gsl_assert>
 
 #include "maziakhelper.h"
 
 ribi::maziak::IntGrid
-  ribi::maziak::CreateIntGrid(const int sz
+  ribi::maziak::CreateIntGrid(const int sz,
+  const int rng_seed
 )
 {
   Expects(IsValidSize(sz));
+  std::mt19937 rng_engine{rng_seed};
 
   //Start with a wall-only maze
   std::vector<std::vector<int> > maze(sz, std::vector<int>(sz,1));
@@ -42,8 +45,14 @@ ribi::maziak::IntGrid
   v.push_back(std::make_pair(mid,mid));
   while (!v.empty())
   {
+    std::uniform_int_distribution<int> d_next_explorer(0, v.size() - 1); //-1 as this is inclusive
+
     //Set a random explorer square at the back
-    std::swap(v.back(),v[ std::rand() % static_cast<int>(v.size())]);
+    //std::swap(v.back(),v[ std::rand() % static_cast<int>(v.size())]);
+    const int next_explorer{d_next_explorer(rng_engine)};
+    assert(next_explorer >= 0);
+    assert(next_explorer < static_cast<int>(v.size()));
+    std::swap(v.back(),v[next_explorer]);
     //Check possible adjacent squares
     const int x = v.back().first;
     const int y = v.back().second;
@@ -59,7 +68,12 @@ ribi::maziak::IntGrid
       continue;
     }
     //Select a random next adjacent square
-    const int nextIndex = (std::rand() >> 4) % static_cast<int>(next.size());
+    std::uniform_int_distribution<int> d_next_index(0, next.size() - 1); //-1 as this is inclusive
+
+    const int nextIndex{d_next_index(rng_engine)};
+    //const int nextIndex = (std::rand() >> 4) % static_cast<int>(next.size());
+    assert(nextIndex >= 0);
+    assert(nextIndex < static_cast<int>(next.size()));
     const int nextX = next[nextIndex].first;
     const int nextY = next[nextIndex].second;
     //Clear next square

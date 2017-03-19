@@ -31,10 +31,7 @@ struct Display;
 
 struct MainDialog
 {
-  MainDialog(const int maze_size, const int rng_seed = 42);
-
-  MainDialog(const MainDialog&) = delete;
-  MainDialog& operator=(const MainDialog&) = delete;
+  MainDialog(const Maze& maze);
 
   void AnimateEnemiesAndPrisoners(const int view_width, const int view_height) noexcept;
 
@@ -92,7 +89,6 @@ struct MainDialog
   Maze m_maze;
   PlayerMove m_move_now;
 
-
   SolutionMaze m_solution;
   GameState m_state;
   int m_x;
@@ -118,10 +114,14 @@ struct MainDialog
   friend std::ostream& operator<<(std::ostream& os, const MainDialog& d) noexcept;
 };
 
+///Creates a MainDialog with TestMaze1
+MainDialog CreateTestMainDialog1();
+
+/// Get the sprite above the floor, e.g. Enemy
 Sprite GetSpriteAboveFloor(
   const int x,
   const int y,
-  const Maze& m_maze
+  const Maze& maze
 );
 
 Sprite GetSpriteFloor(
