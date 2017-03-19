@@ -49,7 +49,10 @@ struct IntMaze
   friend std::ostream& operator<<(std::ostream& os, const IntMaze& m) noexcept;
 };
 
-IntMaze CreateIntMaze(const int size);
+///Count the occurance of i in the IntMaze
+int Count(const int i, const IntMaze& m);
+
+IntMaze CreateIntMaze(const int size, const int seed);
 
 int GetSize(const IntMaze& m) noexcept;
 

@@ -39,36 +39,49 @@ struct Maze
   std::pair<int,int> FindExit() const noexcept;
   std::pair<int,int> FindStart() const noexcept;
 
-  MazeSquare Get(const int x, const int y) const noexcept;
+  MazeSquare Get(const int x, const int y) const;
   const auto& Get() const noexcept { return m_maze; }
 
   const IntMaze& GetIntMaze() const noexcept { return m_int_maze; }
 
-  void Set(const int x, const int y, const MazeSquare s) noexcept;
+  void Set(const int x, const int y, const MazeSquare s);
 
   private:
 
-  ///Locations of walls and moving places
+  ///Locations of walls and moving places, used for finding the solution
   const IntMaze m_int_maze;
 
-  ///?
+  ///Locations of walls, swords, prisoners, enemies
   std::vector<std::vector<MazeSquare>> m_maze;
   std::mt19937 m_rng_engine;
-
-
-  std::vector<std::vector<MazeSquare>> CreateMaze(
-    const IntMaze& int_maze
-  ) noexcept;
 
 
   friend std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
 };
 
+int Count(const MazeSquare i, const Maze& m);
+
+///Create a maze with prisoners, swords, exit, begin and enemies
+std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
+  const IntMaze& int_maze,
+  std::mt19937& rng_engine
+);
+
+///Convert walls and roads, zeroes and ones to MazeSquares
+std::vector<std::vector<MazeSquare>> ConvertMaze(
+  const IntMaze& int_maze
+) noexcept;
+
 int GetSize(const Maze& m) noexcept;
 
 bool IsSquare(const Maze& m);
 
+std::string ToStr(const Maze& m) noexcept;
+std::string ToStr(const std::vector<std::vector<MazeSquare>>& m) noexcept;
+
 std::ostream& operator<<(std::ostream& os, const Maze& m) noexcept;
+std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<MazeSquare>>& m) noexcept;
+std::ostream& operator<<(std::ostream& os, const std::vector<MazeSquare>& m) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

@@ -3,13 +3,14 @@
 #include <cassert>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include <gsl/gsl_assert>
 #include "ribi_random.h"
 
 #include "maziakhelper.h"
 #include "maziakintmaze.h"
 
-
+/*
 template <class Source, class Target>
     const std::vector<std::vector<Target> > ConvertMatrix(
         const std::vector<std::vector<Source> >& v)
@@ -27,15 +28,16 @@ template <class Source, class Target>
   }
   return t;
 }
+*/
 
 ribi::maziak::Maze::Maze(
   const int size,
   const int rng_seed
-) : m_int_maze{CreateIntMaze(size)},
+) : m_int_maze{CreateIntMaze(size, rng_seed)},
     m_maze{},
     m_rng_engine(rng_seed)
 {
-  m_maze = CreateMaze(m_int_maze);
+  m_maze = CreatePopulatedMaze(m_int_maze, m_rng_engine);
   Ensures(IsSquare(m_maze));
   Ensures(FindExit().first  >= 0);
   Ensures(FindStart().first >= 0);
@@ -147,15 +149,50 @@ bool ribi::maziak::Maze::CanSet(const int x, const int y) const noexcept
   return CanGet(x,y);
 }
 
-std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMaze(
-  const IntMaze& int_maze) noexcept
+
+std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::ConvertMaze(
+  const IntMaze& int_maze
+) noexcept
+{
+  std::vector<std::vector<MazeSquare>> m;
+  m.reserve(int_maze.Get().size());
+  std::transform(
+    std::begin(int_maze.Get()),
+    std::end(int_maze.Get()),
+    std::back_inserter(m),
+    [](const std::vector<int>& row)
+    {
+      std::vector<MazeSquare> s;
+      s.reserve(row.size());
+      std::transform(
+        std::begin(row),
+        std::end(row),
+        std::back_inserter(s),
+        [](const int i) { return static_cast<MazeSquare>(i); }
+      );
+      return s;
+    }
+  );
+  //const int sz = GetSize(int_maze);
+  //return ConvertMatrix<int,MazeSquare>(int_maze.Get());
+  return m;
+}
+
+int ribi::maziak::Count(const MazeSquare i, const Maze& m)
+{
+  return Count(i, m.Get());
+}
+
+std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulatedMaze(
+  const IntMaze& int_maze,
+  std::mt19937& rng_engine)
 {
   const int sz = GetSize(int_maze);
-  std::vector<std::vector<ribi::maziak::MazeSquare> > maze {
-    ConvertMatrix<int,MazeSquare>(int_maze.Get())
+  std::vector<std::vector<MazeSquare>> maze {
+    ConvertMaze(int_maze)
   };
 
-  std::vector<std::pair<int,int> > dead_ends = int_maze.GetDeadEnds();
+  std::vector<std::pair<int,int>> dead_ends = int_maze.GetDeadEnds();
   const int nDeadEnds = dead_ends.size();
   std::uniform_int_distribution<int> distribution(0,nDeadEnds-1); //Inclusive max
   assert(nDeadEnds >= 2);
@@ -181,8 +218,8 @@ std::vector<std::vector<ribi::maziak::MazeSquare> > ribi::maziak::Maze::CreateMa
       }
       else
       {
-        const int de_a{distribution(m_rng_engine)};
-        const int de_b{distribution(m_rng_engine)};
+        const int de_a{distribution(rng_engine)};
+        const int de_b{distribution(rng_engine)};
         assert(de_a < static_cast<int>(dead_ends.size()));
         assert(de_b < static_cast<int>(dead_ends.size()));
         std::swap(dead_ends[0],dead_ends[de_a]);
@@ -264,7 +301,7 @@ std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
 }
 
 ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
-  const int x, const int y) const noexcept
+  const int x, const int y) const
 {
   Expects(CanGet(x,y));
   return m_maze[y][x];
@@ -280,7 +317,7 @@ bool ribi::maziak::IsSquare(const Maze& m)
   return IsSquare(m.GetIntMaze());
 }
 
-void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s) noexcept
+void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s)
 {
   Expects(CanSet(x,y));
   m_maze[y][x] = s;
@@ -291,24 +328,42 @@ std::ostream& ribi::maziak::operator<<(
   std::ostream& os, const Maze& m) noexcept
 {
   os << "IntMaze:\n" << m.m_int_maze << '\n';
-  os << "Maze:\n";
+  os << "Maze:\n" << m.m_maze;
+  return os;
+}
 
-  const auto& v = m.m_maze;
-  std::transform(
-    std::begin(v),
-    std::end(v),
-    std::ostream_iterator<std::string>(os, "\n"),
-    [](const auto& row)
+std::string ribi::maziak::ToStr(const Maze& m) noexcept
+{
+  std::stringstream s;
+  s << m;
+  return s.str();
+}
+
+std::string ribi::maziak::ToStr(const std::vector<std::vector<MazeSquare>>& m) noexcept
+{
+  std::stringstream s;
+  s << m;
+  return s.str();
+}
+
+std::ostream& ribi::maziak::operator<<(std::ostream& os, const std::vector<std::vector<MazeSquare>>& m) noexcept
+{
+  std::copy(
+    std::begin(m),
+    std::end(m),
+    std::ostream_iterator<std::vector<MazeSquare>>(os, "\n")
+  );
+  return os;
+}
+std::ostream& ribi::maziak::operator<<(std::ostream& os, const std::vector<MazeSquare>& row) noexcept
+{
+  os << std::accumulate(
+    std::begin(row),
+    std::end(row),
+    std::string(),
+    [](std::string init, const MazeSquare s)
     {
-      return std::accumulate(
-        std::begin(row),
-        std::end(row),
-        std::string(),
-        [](std::string init, const MazeSquare s)
-        {
-          return init + to_char(s);
-        }
-      );
+      return init + to_char(s);
     }
   );
   return os;

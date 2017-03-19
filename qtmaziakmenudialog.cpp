@@ -229,7 +229,8 @@ int ribi::maziak::QtMaziakMenuDialog::GetMazeSize() const
 {
   switch (m_difficulty)
   {
-    case Difficulty::easy  : return  99;
+    case Difficulty::easy  : return  19;
+    //case Difficulty::easy  : return  99;
     case Difficulty::medium: return 499;
     case Difficulty::hard  : return 999;
   }

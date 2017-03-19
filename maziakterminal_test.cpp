@@ -12,6 +12,8 @@ BOOST_AUTO_TEST_CASE(maziak_SolutionMaze_size)
   Terminal terminal;
   dialog.SetDisplay(&terminal);
   //dialog.Tick();
-  terminal.DoDisplay(dialog);
+
+  //Not yet, will add test output
+  //terminal.DoDisplay(dialog);
 
 }

@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <numeric>
 #include <vector>
 #include <gsl/gsl_assert>
 #include "maziakmazesquare.h"
@@ -12,17 +13,27 @@ namespace maziak {
 
 std::string CamelCasify(const std::string& s) noexcept;
 
-//std::vector<std::pair<int,int>> GetShuffledDeadEnds(
-//    const std::vector<std::vector<int>>& intMaze);
-
-//std::vector<std::pair<int,int>> GetShuffledNonDeadEnds(
-//    const std::vector<std::vector<int>>& intMaze);
-
 bool CanMoveTo(
   const std::vector<std::vector<MazeSquare> >& maze,
   const int x, const int y,
   const bool hasSword,
   const bool showSolution);
+
+///2D version of std::count
+template <class T>
+int Count(const T i, const std::vector<std::vector<T>>& m)
+{
+  return std::accumulate(
+    std::begin(m),
+    std::end(m),
+    0,
+    [i](int init, const auto& row)
+    {
+      return init + std::count(std::begin(row), std::end(row), i);
+    }
+  );
+}
+
 
 ///Get the coordinats where the end ends are
 //From http://www.richelbilderbeek.nl/CppGetDeadEnds.htm
@@ -58,6 +69,8 @@ bool IsSquare(const std::vector<std::vector<T>>& v)
     }
   );
 }
+
+
 
 
 } //~namespace maziak

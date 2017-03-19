@@ -1,6 +1,7 @@
 #include "maziakmazesquare.h"
 
 #include <cassert>
+#include <iostream>
 
 char ribi::maziak::to_char(const MazeSquare s) noexcept
 {
@@ -41,6 +42,6 @@ std::string ribi::maziak::to_str(const MazeSquare s) noexcept
 
 std::ostream& ribi::maziak::operator<<(std::ostream& os, const MazeSquare s) noexcept
 {
-  os << to_str(s);
+  os << to_char(s);
   return os;
 }

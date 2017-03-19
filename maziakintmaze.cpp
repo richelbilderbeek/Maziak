@@ -9,8 +9,6 @@
 #include "maziakdistancesmaze.h"
 #include "maziakhelper.h"
 
-
-
 ribi::maziak::IntMaze::IntMaze()
   : m_dead_ends{}, m_int_grid{}, m_rng_engine(0)
 {
@@ -67,12 +65,15 @@ std::vector<std::pair<int,int>> ribi::maziak::IntMaze::CollectDeadEnds(
   return dead_ends;
 }
 
+int ribi::maziak::Count(const int i, const IntMaze& m)
+{
+  return Count(i, m.Get());
+}
 
-
-ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(const int size)
+ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(const int size, const int seed)
 {
   Expects(IsValidSize(size));
-  return IntMaze{size};
+  return IntMaze{size, seed};
 }
 
 int ribi::maziak::IntMaze::Get(const int x, const int y) const noexcept
