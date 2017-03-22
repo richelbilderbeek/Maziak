@@ -67,9 +67,6 @@ QMAKE_CXXFLAGS += -Wno-unused-variable
 #   ^
 QMAKE_CXXFLAGS += -fext-numeric-literals
 
-# Boost.Timer
-LIBS += -lboost_timer -lboost_system
-
 # Boost.Test
 LIBS += -lboost_unit_test_framework
 
