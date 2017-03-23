@@ -21,8 +21,9 @@ int main(int argc, char *argv[])
   #ifdef NDEBUG
   //Must be really release mode
   assert(1 == 2);
-  Expects(1 == 2);
-  Ensures(1 == 2);
+  //Not now, see https://github.com/richelbilderbeek/travis_qmake_gcc_cpp14_debug_and_release_gsl/issues/1
+  //Expects(1 == 2);
+  //Ensures(1 == 2);
   #endif
 
   if (argc == 2 && std::string(argv[1]) == "--profile")
