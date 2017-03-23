@@ -34,8 +34,7 @@ int main(int argc, char *argv[])
     d.show();
     w.Profile();
 
-    //return a.exec();
-    return 0;
+    a.exit(0);
   }
   else
   {
