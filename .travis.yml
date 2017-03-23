@@ -74,7 +74,7 @@ script:
   - make debug
   - ./MaziakDesktop --profile
   - gprof MaziakDesktop > gprof.log
-  - head gprof.log -n 1000
+  - head gprof.log -n 100
   # Get code coverage
   - ./get_code_cov >/dev/null
   - codecov >/dev/null
@@ -84,7 +84,7 @@ script:
   - make release
   - ./MaziakDesktop --profile
   - gprof MaziakDesktop > gprof.log
-  - head gprof.log -n 1000
+  - head gprof.log -n 100
   # cppcheck
   - cppcheck --quiet --error-exitcode=1 . 
   # Call OCLint
