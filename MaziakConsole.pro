@@ -1,17 +1,9 @@
-include(../RibiLibraries/Boost.pri)
 include(../RibiClasses/CppAbout/CppAbout.pri)
-include(../RibiClasses/CppFileIo/CppFileIo.pri)
 include(../RibiClasses/CppHelp/CppHelp.pri)
 include(../RibiClasses/CppMenuDialog/CppMenuDialog.pri)
-include(../RibiClasses/CppTrace/CppTrace.pri)
 include(gsl.pri)
 
 #Specific, console
-include(../RibiClasses/CppCanvas/CppCanvas.pri)
-include(../DotMatrix/DotMatrix.pri)
-include(../RibiClasses/CppRibiRandom/CppRibiRandom.pri)
-include(../RibiClasses/CppTextCanvas/CppTextCanvas.pri)
-include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
 include(MaziakConsole.pri)
 
 SOURCES += main.cpp
@@ -21,8 +13,7 @@ CONFIG += c++14
 QMAKE_CXXFLAGS += -std=c++14
 
 # High warning levels
-# Qt does not go well with -Weffc++
-QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Werror
+QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Weffc++ -Werror
 
 # Debug and release mode
 CONFIG += debug_and_release
@@ -57,7 +48,7 @@ CONFIG(debug, debug|release) {
 }
 
 # Qt
-QT += core gui
+QT -= core gui
 
 # Prevent Qt for failing with this error:
 # qrc_[*].cpp:400:44: error: ‘qInitResources_[*]__init_variable__’ defined but not used

@@ -75,6 +75,11 @@ void ribi::maziak::Game::AnimateFighting() noexcept
   }
 }
 
+bool ribi::maziak::Game::CanGet(const int x, const int y) const noexcept
+{
+  return GetMaze().CanGet(x, y);
+}
+
 ribi::maziak::Game ribi::maziak::CreateTestGame1()
 {
   return Game{CreateTestMaze1()};
@@ -111,7 +116,8 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
 ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   const int x,
   const int y,
-  const Maze& maze
+  const Maze& maze,
+  const int prisoner_frame
 )
 {
   if (!maze.CanGet(x,y)) { return Sprite::wall; }
@@ -123,8 +129,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
     case MazeSquare::msWall      : return Sprite::wall;
     case MazeSquare::msEnemy1    : return Sprite::enemy1;
     case MazeSquare::msEnemy2    : return Sprite::enemy2;
-    case MazeSquare::msPrisoner1 : return Sprite::prisoner1;
-    case MazeSquare::msPrisoner2 : return Sprite::prisoner2;
+    case MazeSquare::msPrisoner  : return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
     case MazeSquare::msSword     : return Sprite::sword;
     case MazeSquare::msExit      : return Sprite::exit;
     //default:
@@ -145,9 +150,9 @@ ribi::maziak::Sprite ribi::maziak::Game::GetSpriteFloor(
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
-  const int x, const int y) const
+  const int x, const int y, const int prisoner_frame) const
 {
-  return ribi::maziak::GetSpriteAboveFloor(x,y,m_maze);
+  return ribi::maziak::GetSpriteAboveFloor(x,y,m_maze,prisoner_frame);
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpritePlayer() const
@@ -388,7 +393,7 @@ void ribi::maziak::Game::RespondToCurrentSquare()
       m_fighting_frame = 1;
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       return;
-    case MazeSquare::msPrisoner1: case MazeSquare::msPrisoner2:
+    case MazeSquare::msPrisoner:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       m_solution = CreateNewSolution();
       assert(IsSquare(m_solution));

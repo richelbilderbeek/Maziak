@@ -14,8 +14,7 @@ enum class MazeSquare
   msWall,
   msEnemy1,
   msEnemy2,
-  msPrisoner1,
-  msPrisoner2,
+  msPrisoner,
   msSword,
   msExit,
   msStart //Initial starting position
@@ -29,8 +28,7 @@ constexpr std::initializer_list<MazeSquare> get_all_maze_squares()
     MazeSquare::msWall,
     MazeSquare::msEnemy1,
     MazeSquare::msEnemy2,
-    MazeSquare::msPrisoner1,
-    MazeSquare::msPrisoner2,
+    MazeSquare::msPrisoner,
     MazeSquare::msSword,
     MazeSquare::msExit,
     MazeSquare::msStart

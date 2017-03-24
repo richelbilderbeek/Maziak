@@ -18,7 +18,7 @@
 #include "qtaboutdialog.h"
 #include "qtmaziakcanvas.h"
 #include "qtmaziakinstructionsdialog.h"
-#include "maziakmaindialog.h"
+#include "maziakgame.h"
 #include "qtmaziakdisplay.h"
 
 #include "ui_qtmaziakmenudialog.h"

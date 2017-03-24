@@ -44,6 +44,3 @@ HEADERS  += \
     $$PWD/maziakspritegrid.h \
     $$PWD/maziakintgrid.h \
     $$PWD/maziakgame.h
-
-RESOURCES += \
-    $$PWD/Maziak.qrc

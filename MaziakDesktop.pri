@@ -21,4 +21,5 @@ FORMS += \
     $$PWD/qtmaziakgamewondialog.ui \
     $$PWD/qtmaziakgameoverdialog.ui
 
-
+RESOURCES += \
+    $$PWD/Maziak.qrc

@@ -12,7 +12,6 @@ BOOST_AUTO_TEST_CASE(maziak_SolutionMaze_size)
   BOOST_CHECK(!to_str(t).empty());
 }
 
-#ifdef FIX_ISSUE_5
 BOOST_AUTO_TEST_CASE(terminal_TogglePrisoners_must_animate)
 {
   Terminal t{CreateTestTerminal1()};
@@ -25,4 +24,3 @@ BOOST_AUTO_TEST_CASE(terminal_TogglePrisoners_must_animate)
   BOOST_CHECK_NE(before_again, after);
   BOOST_CHECK_EQUAL(before_again, before);
 }
-#endif // FIX_ISSUE_5

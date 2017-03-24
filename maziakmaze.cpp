@@ -100,16 +100,6 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
           Set(col,row,MazeSquare::msEmpty);
         }
       }
-      else if (s==MazeSquare::msPrisoner1)
-      {
-        //Animate prisoners
-        Set(col,row,MazeSquare::msPrisoner2);
-      }
-      else if (s==MazeSquare::msPrisoner2)
-      {
-        //Animate prisoners
-        Set(col,row,MazeSquare::msPrisoner1);
-      }
     }
   }
 }
@@ -137,9 +127,7 @@ bool ribi::maziak::Maze::CanMoveTo(
   //Bump into sword
   if (s == MazeSquare::msSword && hasSword) return false;
   //Bump into prisoner
-  if (showSolution
-    && (s == MazeSquare::msPrisoner1
-     || s == MazeSquare::msPrisoner2) ) return false;
+  if (showSolution && s == MazeSquare::msPrisoner) return false;
   //Bump into empty/enemy/exit, so player can move there
   return true;
 }
@@ -271,7 +259,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
       const int x = (*deadEndIterator).first;
       const int y = (*deadEndIterator).second;
       assert(maze[y][x] == MazeSquare::msEmpty);
-      maze[y][x] = MazeSquare::msPrisoner1;
+      maze[y][x] = MazeSquare::msPrisoner;
       ++deadEndIterator;
     }
 

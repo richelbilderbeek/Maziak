@@ -33,6 +33,10 @@ struct Game
 
   void AnimateFighting() noexcept;
 
+  ///Is the coordinat in range of the maze?
+  ///If not, this usually ends up in a wall being drawn
+  bool CanGet(const int x, const int y) const noexcept;
+
   const Maze& GetMaze() const noexcept { return m_maze; }
   bool GetDoShowSolution() const noexcept { return m_do_show_solution; }
 
@@ -43,7 +47,7 @@ struct Game
 
   const SolutionMaze& GetSolution() const noexcept { return m_solution; }
 
-  Sprite GetSpriteAboveFloor(const int x, const int y) const;
+  Sprite GetSpriteAboveFloor(const int x, const int y, const int prisoner_frame) const;
   Sprite GetSpriteFloor(const int x, const int y) const;
   Sprite GetSpritePlayer() const;
 
@@ -113,7 +117,8 @@ Game CreateTestGame1();
 Sprite GetSpriteAboveFloor(
   const int x,
   const int y,
-  const Maze& maze
+  const Maze& maze,
+  const int prisoner_frame
 );
 
 Sprite GetSpriteFloor(

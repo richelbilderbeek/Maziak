@@ -23,6 +23,9 @@ struct Terminal
 
   const Game& GetGame() const noexcept { return m_game; }
 
+  /// 0: first animation frame, 1: second animation frame
+  int GetPrisonerFrame() const noexcept { return m_prisoner_frame; }
+
   ///The heigh of the view displayed, in number of blocks
   int GetViewHeight() const noexcept { return 20; }
 

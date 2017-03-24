@@ -28,7 +28,7 @@ namespace ribi {
 namespace maziak {
 
 
-class QtDisplay : public QWidget, public Display
+class QtDisplay : public QWidget
 {
   Q_OBJECT //!OCLINT
 
@@ -42,21 +42,24 @@ public:
   ~QtDisplay() {}
 
   ///Show the main dialog's state
-  void DoDisplay(const MainDialog& main_dialog) override;
+  //void DoDisplay(const MainDialog& main_dialog);
 
   const auto& GetSprites() const noexcept { return m_sprites; }
 
   ///The heigh of the view displayed, in number of blocks
-  int GetViewHeight() const noexcept override { return 9; }
+  int GetViewHeight() const noexcept { return 9; }
 
   ///The width of the view displayed, in number of blocks
-  int GetViewWidth() const noexcept override { return 9; }
+  int GetViewWidth() const noexcept { return 9; }
 
-  bool MustAnimateEnemiesAndPrisoners() noexcept override;
+  bool MustAnimateEnemiesAndPrisoners() noexcept;
 
-  std::set<Key> RequestKeys() override;
+  std::set<Key> RequestKeys();
 
 private:
+
+  ///The game logic
+  Game m_game;
 
   //Will be painted
   QImage m_image;
@@ -68,12 +71,12 @@ private:
   Stopwatch m_timer_show_solution;
 
 
-  void DisplaySpritesFloor(const MainDialog& main_dialog);
-  void DisplaySpritesAboveFloor(const MainDialog& main_dialog);
-  void DisplayPlayer(const MainDialog& main_dialog);
+  void DisplaySpritesFloor();
+  void DisplaySpritesAboveFloor();
+  void DisplayPlayer();
 
 
-  bool GetDoShowSolution() override;
+  bool GetDoShowSolution();
 
   void OnGameOver();
   void OnGameWon();

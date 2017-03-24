@@ -3,7 +3,6 @@
 #include <cassert>
 #include <iostream>
 #include <sstream>
-#include "textcanvas.h"
 #include "maziakgame.h"
 #include "maziaksprites.h"
 
@@ -21,11 +20,15 @@ ribi::maziak::Terminal ribi::maziak::CreateTestTerminal1()
 
 void ribi::maziak::Terminal::Execute()
 {
-  while (1)
+
+  for (int t{0}; ; ++t)
   {
     std::cout << *this << '\n';
     std::cout << '\n';
     m_game.PressKeys(RequestKeys());
+
+    if (t % 4 == 1) this->TogglePrisoners();
+    if (t % 4 == 2) this->TogglePrisoners();
   }
 }
 
@@ -88,7 +91,7 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
     return os;
   }
 
-  TextCanvas canvas(11,11);
+  //TextCanvas canvas(11,11);
   const int view_height = 11;
   const int view_width = 11;
   //Draw maze
@@ -100,6 +103,42 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
         //xVector and yVector are the indices in the non-visual maze 2D std::vector
         const int xVector = t.GetGame().GetX() - (view_width  / 2) + x;
         const int yVector = t.GetGame().GetY() - (view_height / 2) + y;
+
+        //Is there something?
+        if (!t.GetGame().CanGet(xVector,yVector))
+        {
+          os << MazeSquare::msWall;
+          continue;
+        }
+
+        //Draw the player on top
+        if (xVector == t.GetGame().GetX() && yVector == t.GetGame().GetY())
+        {
+          os << to_char(
+            GetSpritePlayer(
+              t.GetGame().GetPlayerDirection(),
+              t.GetGame().GetPlayerMove(),
+              t.GetGame().GetPlayerHasSword(),
+              t.GetGame().GetPlayerFightingFrame()
+            )
+          );
+          continue;
+        }
+
+        //Draw what's moving or standing on the floor
+        const Sprite sprite_above_floor {
+          GetSpriteAboveFloor(
+            xVector,
+            yVector,
+            t.GetGame().GetMaze(),
+            t.GetPrisonerFrame())
+        };
+        if (sprite_above_floor != Sprite::transparent)
+        {
+          os << to_char(sprite_above_floor);
+          continue;
+        }
+
         //Draw the floor tile
         const char pixmap_floor {
           to_char(
@@ -112,23 +151,14 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
             )
           )
         };
-        canvas.PutChar(x,y,pixmap_floor);
-        //Draw what's moving or standing on the floor
-        const Sprite sprite_above_floor {
-          GetSpriteAboveFloor(xVector,yVector,t.GetGame().GetMaze())
-        };
-        if (sprite_above_floor != Sprite::transparent)
-        {
-          const char pixmap_above_floor {
-            to_char(sprite_above_floor)
-          };
-          canvas.PutChar(x,y,pixmap_above_floor);
-        }
+        os << pixmap_floor;
       }
+      os << '\n';
     }
   }
 
   //Draw player
+  /*
   {
     const char player {
       to_char(
@@ -144,5 +174,6 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
     canvas.PutChar(view_width/2,view_height / 2,player);
   }
   os << canvas;
+  */
   return os;
 }
