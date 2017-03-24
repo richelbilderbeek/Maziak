@@ -24,3 +24,20 @@ BOOST_AUTO_TEST_CASE(terminal_TogglePrisoners_must_animate)
   BOOST_CHECK_NE(before_again, after);
   BOOST_CHECK_EQUAL(before_again, before);
 }
+
+BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
+{
+  Terminal t{CreateTestTerminal1()};
+  BOOST_CHECK(!t.GetDoShowSolution());
+  t.PressKey(Key::down);
+  t.PressKey(Key::down);
+  t.PressKey(Key::left);
+  t.PressKey(Key::left);
+  t.PressKey(Key::left);
+  t.PressKey(Key::left);
+  t.PressKey(Key::up);
+  t.PressKey(Key::up);
+  BOOST_CHECK(!t.GetDoShowSolution());
+  t.RespondToCurrentSquare();
+  BOOST_CHECK(t.GetDoShowSolution());
+}

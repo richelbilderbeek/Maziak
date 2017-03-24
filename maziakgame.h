@@ -57,7 +57,8 @@ struct Game
   int GetX() const noexcept { return m_x; }
   int GetY() const noexcept { return m_y; }
 
-  ///Press an active key
+  ///Press a key and move the player directly if possible
+  ///Call 'RespondToCurrentSquare' to let the player respond to the current square
   void PressKey(const Key keys);
   ///Press all active keys
   void PressKeys(const std::set<Key>& keys);

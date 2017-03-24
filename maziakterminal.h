@@ -35,7 +35,12 @@ struct Terminal
   ///Every turn, the animation must take place
   bool MustAnimateEnemiesAndPrisoners() noexcept { return true; }
 
+  ///Press a key
+  void PressKey(const Key key) { m_game.PressKey(key); }
+
   std::set<Key> RequestKeys();
+
+  void RespondToCurrentSquare() { m_game.RespondToCurrentSquare(); }
 
   void StartShowSolution() { m_do_show_solution_cnt = 20; }
 
