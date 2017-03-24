@@ -2,10 +2,11 @@
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
-#include "maziakmaindialog.h"
+#include "maziakgame.h"
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 #include <boost/timer.hpp>
 #include "maziakkey.h"
 #include "maziakmaze.h"
@@ -19,10 +20,9 @@
 
 #pragma GCC diagnostic pop
 
-ribi::maziak::MainDialog::MainDialog(
+ribi::maziak::Game::Game(
   const Maze& maze)
   : m_direction(PlayerDirection::pdDown),
-    m_display{nullptr},
     m_distances{CreateDistancesMaze(maze.GetIntMaze(), maze.FindExit())},
     m_do_show_solution{false},
     m_fighting_frame(0),
@@ -43,7 +43,7 @@ ribi::maziak::MainDialog::MainDialog(
   m_solution = CreateNewSolution();
 }
 
-void ribi::maziak::MainDialog::AnimateEnemiesAndPrisoners(
+void ribi::maziak::Game::AnimateEnemiesAndPrisoners(
   const int view_width,
   const int view_height
 ) noexcept
@@ -57,7 +57,7 @@ void ribi::maziak::MainDialog::AnimateEnemiesAndPrisoners(
   );
 }
 
-void ribi::maziak::MainDialog::AnimateFighting() noexcept
+void ribi::maziak::Game::AnimateFighting() noexcept
 {
   if (m_fighting_frame > 0)
   {
@@ -67,7 +67,6 @@ void ribi::maziak::MainDialog::AnimateFighting() noexcept
       if (!m_has_sword)
       {
         m_state = GameState::game_over;
-        m_display->SetGameState(m_state);
         return;
       }
       m_fighting_frame = 0;
@@ -76,24 +75,15 @@ void ribi::maziak::MainDialog::AnimateFighting() noexcept
   }
 }
 
-ribi::maziak::MainDialog ribi::maziak::CreateTestMainDialog1()
+ribi::maziak::Game ribi::maziak::CreateTestGame1()
 {
-  return MainDialog{CreateTestMaze1()};
+  return Game{CreateTestMaze1()};
 }
 
-ribi::maziak::SolutionMaze ribi::maziak::MainDialog::CreateNewSolution() noexcept
+ribi::maziak::SolutionMaze ribi::maziak::Game::CreateNewSolution() noexcept
 {
   SolutionMaze solution(m_distances,m_x,m_y);
   return solution;
-}
-
-
-void ribi::maziak::MainDialog::Execute() noexcept
-{
-  while (1)
-  {
-    Tick();
-  }
 }
 
 ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
@@ -143,7 +133,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   return Sprite::transparent;
 }
 
-ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteFloor(
+ribi::maziak::Sprite ribi::maziak::Game::GetSpriteFloor(
   const int x, const int y) const
 {
   return ::ribi::maziak::GetSpriteFloor(
@@ -154,13 +144,13 @@ ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteFloor(
     m_solution);
 }
 
-ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpriteAboveFloor(
+ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
   const int x, const int y) const
 {
   return ribi::maziak::GetSpriteAboveFloor(x,y,m_maze);
 }
 
-ribi::maziak::Sprite ribi::maziak::MainDialog::GetSpritePlayer() const
+ribi::maziak::Sprite ribi::maziak::Game::GetSpritePlayer() const
 {
   return ::ribi::maziak::GetSpritePlayer(
     m_direction,
@@ -307,7 +297,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting(
   return Sprite::transparent;
 }
 
-void ribi::maziak::MainDialog::PressKey(const Key key)
+void ribi::maziak::Game::PressKey(const Key key)
 {
   switch (key)
   {
@@ -320,7 +310,7 @@ void ribi::maziak::MainDialog::PressKey(const Key key)
   }
 }
 
-void ribi::maziak::MainDialog::PressKeyDown()
+void ribi::maziak::Game::PressKeyDown()
 {
   m_direction = PlayerDirection::pdDown;
   if (!m_maze.CanMoveTo(m_x,m_y+1,m_has_sword,m_do_show_solution))
@@ -333,7 +323,7 @@ void ribi::maziak::MainDialog::PressKeyDown()
   ++m_y;
 }
 
-void ribi::maziak::MainDialog::PressKeyLeft()
+void ribi::maziak::Game::PressKeyLeft()
 {
   m_direction = PlayerDirection::pdLeft;
   if (!m_maze.CanMoveTo(m_x-1,m_y,m_has_sword,m_do_show_solution))
@@ -346,7 +336,7 @@ void ribi::maziak::MainDialog::PressKeyLeft()
   --m_x;
 }
 
-void ribi::maziak::MainDialog::PressKeyRight()
+void ribi::maziak::Game::PressKeyRight()
 {
   m_direction = PlayerDirection::pdRight;
   if (!m_maze.CanMoveTo(m_x+1,m_y,m_has_sword,m_do_show_solution))
@@ -359,7 +349,7 @@ void ribi::maziak::MainDialog::PressKeyRight()
   ++m_x;
 }
 
-void ribi::maziak::MainDialog::PressKeyUp()
+void ribi::maziak::Game::PressKeyUp()
 {
   m_direction = PlayerDirection::pdUp;
   if (!m_maze.CanMoveTo(m_x,m_y-1,m_has_sword,m_do_show_solution))
@@ -372,7 +362,7 @@ void ribi::maziak::MainDialog::PressKeyUp()
   --m_y;
 }
 
-void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
+void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 {
   if (m_fighting_frame > 0) return;
   if (keys.empty()) { m_move_now = PlayerMove::none; return; }
@@ -383,24 +373,7 @@ void ribi::maziak::MainDialog::PressKeys(const std::set<Key>& keys)
   }
 }
 
-void ribi::maziak::MainDialog::Profile() noexcept
-{
-  boost::timer t;
-  while (1)
-  {
-    const auto now = t.elapsed(); //seconds
-    if (now > 10.0) break;
-    Tick();
-  }
-}
-
-void ribi::maziak::MainDialog::SetDisplay(Display * const display)
-{
-
-  m_display = display;
-}
-
-void ribi::maziak::MainDialog::RespondToCurrentSquare()
+void ribi::maziak::Game::RespondToCurrentSquare()
 {
   assert(m_maze.CanGet(m_x,m_y));
   switch (m_maze.Get(m_x,m_y))
@@ -419,9 +392,7 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       m_solution = CreateNewSolution();
       assert(IsSquare(m_solution));
-      this->m_display->StartShowSolution();
       m_do_show_solution = true;
-      m_display->StartShowSolution();
       return;
     case MazeSquare::msSword:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
@@ -430,7 +401,6 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
     case MazeSquare::msExit:
     {
       m_state = GameState::has_won;
-      m_display->SetGameState(GameState::has_won);
       return;
     }
     default:
@@ -440,9 +410,9 @@ void ribi::maziak::MainDialog::RespondToCurrentSquare()
   assert(!"Should not get here"); //!OCLINT accepted idiom
 }
 
-void ribi::maziak::MainDialog::Tick()
+/*
+void ribi::maziak::Game::Tick()
 {
-  m_display->DoDisplay(*this);
   if (this->GetState() == GameState::game_over) return;
   if (this->GetState() == GameState::has_won) return;
 
@@ -457,23 +427,35 @@ void ribi::maziak::MainDialog::Tick()
     }
   }
 
-  m_do_show_solution = m_display->GetDoShowSolution();
+  if (m_display) m_do_show_solution = m_display->GetDoShowSolution();
 
   RespondToCurrentSquare();
 
-  const int view_width  = m_display->GetViewWidth(); //Was 20
-  const int view_height = m_display->GetViewHeight(); //Was 20
-  if (m_display->MustAnimateEnemiesAndPrisoners())
+  if (m_display)
   {
-    AnimateEnemiesAndPrisoners(view_width,view_height);
+    const int view_width  = m_display->GetViewWidth(); //Was 20
+    const int view_height = m_display->GetViewHeight(); //Was 20
+    if (m_display->MustAnimateEnemiesAndPrisoners())
+    {
+      AnimateEnemiesAndPrisoners(view_width,view_height);
+    }
   }
   if(m_fighting_frame > 0)
   {
     AnimateFighting();
   }
 }
+*/
 
-std::ostream& ribi::maziak::operator<<(std::ostream& os, const MainDialog& d) noexcept
+
+std::string ribi::maziak::to_str(const Game& d) noexcept
+{
+  std::stringstream s;
+  s << d;
+  return s.str();
+}
+
+std::ostream& ribi::maziak::operator<<(std::ostream& os, const Game& d) noexcept
 {
   os
     << "Direction: " << d.m_direction << '\n'

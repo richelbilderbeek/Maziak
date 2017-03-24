@@ -6,11 +6,6 @@
 #include "maziakfwd.h"
 #include "maziakmazesquare.h"
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#include <boost/shared_ptr.hpp>
-#pragma GCC diagnostic pop
-
 namespace ribi {
 namespace maziak {
 

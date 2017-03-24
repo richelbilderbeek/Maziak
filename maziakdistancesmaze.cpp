@@ -1,5 +1,6 @@
 #include "maziakdistancesmaze.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <iterator>

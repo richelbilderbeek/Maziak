@@ -13,14 +13,14 @@ SOURCES += \
     $$PWD/maziakmaze.cpp \
     $$PWD/maziakdistancesmaze.cpp \
     $$PWD/maziaksolutionmaze.cpp \
-    $$PWD/maziakmaindialog.cpp \
     $$PWD/maziakkey.cpp \
     $$PWD/maziakreceiver.cpp \
     $$PWD/maziakdisplay.cpp \
     $$PWD/maziakgamestate.cpp \
     $$PWD/maziakterminal.cpp \
     $$PWD/maziakspritegrid.cpp \
-    $$PWD/maziakintgrid.cpp
+    $$PWD/maziakintgrid.cpp \
+    $$PWD/maziakgame.cpp
 
 HEADERS  += \
     $$PWD/maziakmenudialog.h \
@@ -36,14 +36,14 @@ HEADERS  += \
     $$PWD/maziakmaze.h \
     $$PWD/maziakdistancesmaze.h \
     $$PWD/maziaksolutionmaze.h \
-    $$PWD/maziakmaindialog.h \
     $$PWD/maziakkey.h \
     $$PWD/maziakreceiver.h \
     $$PWD/maziakdisplay.h \
     $$PWD/maziakgamestate.h \
     $$PWD/maziakterminal.h \
     $$PWD/maziakspritegrid.h \
-    $$PWD/maziakintgrid.h
+    $$PWD/maziakintgrid.h \
+    $$PWD/maziakgame.h
 
 RESOURCES += \
     $$PWD/Maziak.qrc

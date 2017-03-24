@@ -7,13 +7,6 @@
 
 #include "maziakfwd.h"
 #include "maziakkey.h"
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
-#include <boost/shared_ptr.hpp>
-#include <boost/signals2.hpp>
 #include "maziakdistancesmaze.h"
 #include "maziakmaze.h"
 #include "maziakgamestate.h"
@@ -21,25 +14,24 @@
 #include "maziakplayerdirection.h"
 #include "maziakplayermove.h"
 #include "maziaksprite.h"
-//#include "widget.h"
-#pragma GCC diagnostic pop
 
 namespace ribi {
 namespace maziak {
 
 struct Display;
 
-struct MainDialog
+/// Game contains all the logic:
+///  * the IntMaze: contains all walls and roads
+///  * the Maze: contains the maze, enemies, swords, prisoners, exit
+///  * the solutionMaze: shows the road to the exit
+///  * the game state: is the game running, over or won?
+struct Game
 {
-  MainDialog(const Maze& maze);
+  Game(const Maze& maze);
 
   void AnimateEnemiesAndPrisoners(const int view_width, const int view_height) noexcept;
 
   void AnimateFighting() noexcept;
-
-
-  ///Play the game
-  void Execute() noexcept;
 
   const Maze& GetMaze() const noexcept { return m_maze; }
   bool GetDoShowSolution() const noexcept { return m_do_show_solution; }
@@ -55,6 +47,7 @@ struct MainDialog
   Sprite GetSpriteFloor(const int x, const int y) const;
   Sprite GetSpritePlayer() const;
 
+  /// Get the state of the game
   GameState GetState() const noexcept { return m_state; }
 
   int GetX() const noexcept { return m_x; }
@@ -65,19 +58,16 @@ struct MainDialog
   ///Press all active keys
   void PressKeys(const std::set<Key>& keys);
 
-
-  ///Play the game for profiling
-  void Profile() noexcept;
-
+  ///Let the game respond to the current square the player is
+  /// * If at a prisoner: show the solution
+  /// * If at an enemy: start fighting animation
+  /// * If at a sword: take the sword
+  /// * If at the exit: game is done
   void RespondToCurrentSquare();
-
-  ///Set how the game is displayed
-  void SetDisplay(Display * const display);
 
   private:
 
   PlayerDirection m_direction;
-  Display * m_display;
   DistancesMaze m_distances;
 
   ///Shows the solution. This really is a member variable of this class,
@@ -92,7 +82,11 @@ struct MainDialog
   std::mt19937 m_rng_engine;
   SolutionMaze m_solution;
   GameState m_state;
+
+  ///The player its x coordinat
   int m_x;
+
+  ///The player its y coordinat
   int m_y;
 
   SolutionMaze CreateNewSolution() noexcept;
@@ -109,14 +103,11 @@ struct MainDialog
   ///Key up is pressed
   void PressKeyUp();
 
-  ///Main game loop
-  void Tick();
-
-  friend std::ostream& operator<<(std::ostream& os, const MainDialog& d) noexcept;
+  friend std::ostream& operator<<(std::ostream& os, const Game& d) noexcept;
 };
 
 ///Creates a MainDialog with TestMaze1
-MainDialog CreateTestMainDialog1();
+Game CreateTestGame1();
 
 /// Get the sprite above the floor, e.g. Enemy
 Sprite GetSpriteAboveFloor(
@@ -165,7 +156,9 @@ Sprite GetSpritePlayerFighting(
   const bool has_sword
 );
 
-std::ostream& operator<<(std::ostream& os, const MainDialog& d) noexcept;
+std::string to_str(const Game& d) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const Game& d) noexcept;
 
 } //namespace maziak
 } //namespace ribi

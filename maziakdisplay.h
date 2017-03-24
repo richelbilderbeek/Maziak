@@ -9,7 +9,7 @@
 namespace ribi {
 namespace maziak {
 
-struct MainDialog;
+struct Game;
 
 /*
 enum class DisplayType { terminal, qt };
@@ -44,7 +44,7 @@ struct Display
   virtual ~Display() {}
 
   //Put the MainDialog on screen, where the screen may be a terminal, QWidget or NDS screen
-  virtual void DoDisplay(const MainDialog& main_dialog) = 0;
+  virtual void DoDisplay(const Game& main_dialog) = 0;
 
   ///Still showing the solution? Can be no after a certain amount
   ///of ticks or seconds after StartShowSolution

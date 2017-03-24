@@ -5,7 +5,7 @@
 #include <sstream>
 #include <stdexcept>
 
-#include "maziakmaindialog.h"
+#include "maziakgame.h"
 #include "maziakterminal.h"
 
 ribi::maziak::MenuDialog::MenuDialog()
@@ -22,10 +22,13 @@ int ribi::maziak::MenuDialog::ExecuteSpecific(const std::vector<std::string>& ar
     return 0;
   }
 
-  MainDialog dialog{7 + (4 * 2)};
-  Terminal terminal;
-  dialog.SetDisplay(&terminal);
-  dialog.Execute();
+  //Game dialog{7 + (4 * 2)};
+  Terminal terminal{CreateTestGame1()};
+  terminal.Execute();
+  //std::cout << terminal << '\n';
+  //dialog.Tick();
+
+  //std::cout << terminal << '\n';
   return 0;
 
 }

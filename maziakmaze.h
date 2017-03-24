@@ -75,6 +75,25 @@ std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
 );
 
 /// Minimal complete maze
+/*
+
+  XXXXXXXXXXXXXXX
+  X  +X+    X+  X
+  X XXXXX XXXXX X
+  X    ZX X  +X X
+  XXX XXX X XXX X
+  X:X X.X   XZ  X
+  X X X X XXXXX X
+  X             X
+  XXXXX X X XXX X
+  X     X X  ZX X
+  X XXX X X XXXXX
+  X   X X!X   X X
+  XXX X XXXXX X X
+  X   X     X   X
+  XXXXXXXXXXXXXXX
+
+*/
 Maze CreateTestMaze1() noexcept;
 
 

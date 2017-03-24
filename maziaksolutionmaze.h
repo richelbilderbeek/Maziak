@@ -6,8 +6,6 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
-#include <boost/shared_ptr.hpp>
-
 #include "maziakintmaze.h"
 #include "maziakfwd.h"
 #pragma GCC diagnostic pop

@@ -96,3 +96,6 @@ BOOST_AUTO_TEST_CASE(maziak_CreateTestMaze1_must_reproduce_same_maze_each_time)
   const Maze n{CreateTestMaze1()};
   BOOST_CHECK_EQUAL(m, n);
 }
+
+
+
