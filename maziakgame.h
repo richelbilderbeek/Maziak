@@ -38,12 +38,14 @@ struct Game
   bool CanGet(const int x, const int y) const noexcept;
 
   const Maze& GetMaze() const noexcept { return m_maze; }
+  MazeSquare Get(const int x, const int y) const noexcept { return m_maze.Get(x, y); }
   bool GetDoShowSolution() const noexcept { return m_do_show_solution; }
 
   PlayerDirection GetPlayerDirection() const noexcept { return m_direction; }
   int GetPlayerFightingFrame() const noexcept { return m_fighting_frame; }
   bool GetPlayerHasSword() const noexcept { return m_has_sword; }
   PlayerMove GetPlayerMove() const noexcept { return m_move_now; }
+  MazeSquare GetPlayerSquare() const noexcept { return Get(m_x, m_y); }
 
   const SolutionMaze& GetSolution() const noexcept { return m_solution; }
 

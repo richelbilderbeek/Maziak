@@ -71,6 +71,17 @@ std::set<ribi::maziak::Key> ribi::maziak::Terminal::RequestKeys()
 
 }
 
+void ribi::maziak::Terminal::RespondToCurrentSquare()
+{
+  const bool show_solution_before = m_game.GetDoShowSolution();
+  m_game.RespondToCurrentSquare();
+  const bool show_solution_after = m_game.GetDoShowSolution();
+  if (!show_solution_before && show_solution_after)
+  {
+    m_do_show_solution_cnt = 20;
+  }
+}
+
 std::string ribi::maziak::to_str(const Terminal& t)
 {
   std::stringstream s;

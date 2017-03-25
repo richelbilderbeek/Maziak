@@ -4,7 +4,7 @@
 
 #define BOOST_TEST_DYN_LINK // Defines a main function
 
-#define BOOST_TEST_MODULE test_pbd_module
+#define BOOST_TEST_MODULE maziak_tests
 #include <boost/test/unit_test.hpp>
 
 #pragma GCC diagnostic pop

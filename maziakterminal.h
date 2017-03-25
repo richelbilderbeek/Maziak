@@ -23,6 +23,8 @@ struct Terminal
 
   const Game& GetGame() const noexcept { return m_game; }
 
+  MazeSquare GetPlayerSquare() const noexcept { return m_game.GetPlayerSquare(); }
+
   /// 0: first animation frame, 1: second animation frame
   int GetPrisonerFrame() const noexcept { return m_prisoner_frame; }
 
@@ -40,7 +42,7 @@ struct Terminal
 
   std::set<Key> RequestKeys();
 
-  void RespondToCurrentSquare() { m_game.RespondToCurrentSquare(); }
+  void RespondToCurrentSquare();
 
   void StartShowSolution() { m_do_show_solution_cnt = 20; }
 

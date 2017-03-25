@@ -396,7 +396,6 @@ void ribi::maziak::Game::RespondToCurrentSquare()
     case MazeSquare::msPrisoner:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       m_solution = CreateNewSolution();
-      assert(IsSquare(m_solution));
       m_do_show_solution = true;
       return;
     case MazeSquare::msSword:
