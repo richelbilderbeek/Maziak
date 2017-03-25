@@ -39,6 +39,7 @@ std::vector<std::pair<int,int>> CollectDeadEnds(const IntGrid& grid) noexcept;
 ///Collect all dead ends
 std::vector<std::pair<int,int>> CollectDeadEnds(const IntMaze& maze) noexcept;
 
+
 ///Count the occurance of i in the IntMaze
 int Count(const int i, const IntMaze& m);
 
@@ -56,9 +57,8 @@ DistancesMaze CreateDistancesMaze(
 
 IntMaze CreateIntMaze(const int size, const int seed);
 
-int GetSize(const IntMaze& m) noexcept;
-
-bool IsSquare(const IntMaze& m);
+int get_n_cols(const IntMaze& m) noexcept;
+int get_n_rows(const IntMaze& m) noexcept;
 
 bool operator==(const IntMaze& lhs, const IntMaze& rhs) noexcept;
 

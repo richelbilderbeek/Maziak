@@ -31,6 +31,19 @@ public:
     const int goal_y
   );
 
+  DistancesMaze(
+    const Maze& maze,
+    const int goal_x,
+    const int goal_y
+  );
+
+  DistancesMaze(
+    const Maze& maze,
+    const std::pair<int,int> goal
+  );
+
+
+
   bool CanGet(const int x, const int y) const noexcept;
   const auto& Get() const noexcept { return m_distances; }
   int Get(const int x, const int y) const noexcept;
@@ -49,7 +62,13 @@ std::vector<std::vector<int>> CalculateDistances(
   const int y
 ) noexcept;
 
-int GetSize(const DistancesMaze& m) noexcept;
+std::vector<std::vector<int>> CalculateDistances(
+  const Maze& maze,
+  const int x,
+  const int y
+) noexcept;
+
+int get_n_rows(const DistancesMaze& m) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const DistancesMaze& m) noexcept;
 

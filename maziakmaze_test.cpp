@@ -12,8 +12,8 @@ BOOST_AUTO_TEST_CASE(maziak_Maze_size)
 {
   const auto sz = 11;
   const Maze m(sz);
-  BOOST_CHECK(IsSquare(m));
-  BOOST_CHECK_EQUAL(GetSize(m), sz);
+  BOOST_CHECK_EQUAL(get_n_rows(m), sz);
+  BOOST_CHECK_EQUAL(get_n_cols(m), sz);
 }
 
 
@@ -21,9 +21,8 @@ BOOST_AUTO_TEST_CASE(maziak_Maze_mMaze)
 {
   const auto sz = 11;
   const Maze m(sz);
-  BOOST_CHECK(IsSquare(m.Get()));
-  BOOST_CHECK_GT(m.FindExit().first , -1);
-  BOOST_CHECK_GT(m.FindStart().first, -1);
+  BOOST_CHECK_GT(FindExit(m).first , -1);
+  BOOST_CHECK_GT(FindStart(m).first, -1);
 }
 
 BOOST_AUTO_TEST_CASE(maziak_Maze_get_and_set_must_be_symmetrical)

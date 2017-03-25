@@ -86,7 +86,13 @@ ribi::maziak::IntGrid
   return maze;
 }
 
-int ribi::maziak::GetSize(const IntGrid& g) noexcept
+int ribi::maziak::get_n_cols(const IntGrid& g) noexcept
+{
+  assert(get_n_rows(g));
+  return static_cast<int>(g[0].size());
+}
+
+int ribi::maziak::get_n_rows(const IntGrid& g) noexcept
 {
   return static_cast<int>(g.size());
 }

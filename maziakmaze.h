@@ -37,22 +37,15 @@ struct Maze
   bool CanMoveTo(
     const int x, const int y,
     const bool hasSword,
-    const bool showSolution) const noexcept;
-
-  std::pair<int,int> FindExit() const noexcept;
-  std::pair<int,int> FindStart() const noexcept;
+    const bool showSolution
+  ) const noexcept;
 
   MazeSquare Get(const int x, const int y) const;
   const auto& Get() const noexcept { return m_maze; }
 
-  const IntMaze& GetIntMaze() const noexcept { return m_int_maze; }
-
   void Set(const int x, const int y, const MazeSquare s);
 
   private:
-
-  ///Locations of walls and moving places, used for finding the solution
-  const IntMaze m_int_maze;
 
   ///Locations of walls, swords, prisoners, enemies
   std::vector<std::vector<MazeSquare>> m_maze;
@@ -73,6 +66,9 @@ std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
   const IntMaze& int_maze,
   const int rng_seed
 );
+
+///Collect all dead ends
+std::vector<std::pair<int,int>> CollectDeadEnds(const Maze& maze) noexcept;
 
 /// Minimal complete maze
 /*
@@ -102,10 +98,16 @@ std::vector<std::vector<MazeSquare>> ConvertMaze(
   const IntMaze& int_maze
 ) noexcept;
 
-int GetSize(const Maze& m) noexcept;
+DistancesMaze CreateDistancesMaze(
+  const Maze& m,
+  const std::pair<int, int>& target
+);
 
+std::pair<int,int> FindExit(const Maze& m);
+std::pair<int,int> FindStart(const Maze& m);
 
-bool IsSquare(const Maze& m);
+int get_n_cols(const Maze& m) noexcept;
+int get_n_rows(const Maze& m) noexcept;
 
 std::string to_str(const Maze& m) noexcept;
 std::string to_str(const std::vector<std::vector<MazeSquare>>& m) noexcept;

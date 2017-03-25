@@ -14,7 +14,8 @@ using IntGrid = std::vector<std::vector<int>>;
 // 1 : wall
 IntGrid CreateIntGrid(const int sz, const int rng_seed);
 
-int GetSize(const IntGrid& g) noexcept;
+int get_n_cols(const IntGrid& g) noexcept;
+int get_n_rows(const IntGrid& g) noexcept;
 
 ///Determine if the size if good to make a maze from
 bool IsValidSize(const int sz) noexcept;

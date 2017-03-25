@@ -23,7 +23,7 @@
 ribi::maziak::Game::Game(
   const Maze& maze)
   : m_direction(PlayerDirection::pdDown),
-    m_distances{CreateDistancesMaze(maze.GetIntMaze(), maze.FindExit())},
+    m_distances(maze, FindExit(maze)),
     m_do_show_solution{false},
     m_fighting_frame(0),
     m_has_sword(true),
@@ -36,7 +36,7 @@ ribi::maziak::Game::Game(
     m_y(-1)
 {
   {
-    const std::pair<int,int> start = m_maze.FindStart();
+    const std::pair<int,int> start = FindStart(m_maze);
     m_x = start.first;
     m_y = start.second;
   }
@@ -99,7 +99,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   const SolutionMaze& solution
 )
 {
-  assert(do_show_solution == false || GetSize(solution) == GetSize(maze));
+  assert(do_show_solution == false || get_n_rows(solution) == get_n_rows(maze));
   if (!maze.CanGet(x,y)) { return Sprite::wall; }
   else if (do_show_solution
     && solution.Get(x,y) == 1

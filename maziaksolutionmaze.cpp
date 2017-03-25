@@ -57,14 +57,9 @@ int ribi::maziak::SolutionMaze::Get(const int x, const int y) const noexcept
   return m_maze.Get(x,y);
 }
 
-int ribi::maziak::GetSize(const SolutionMaze& m) noexcept
+int ribi::maziak::get_n_rows(const SolutionMaze& m) noexcept
 {
-  return GetSize(m.Get());
-}
-
-bool ribi::maziak::IsSquare(const SolutionMaze& m)
-{
-  return IsSquare(m.Get());
+  return get_n_rows(m.Get());
 }
 
 std::ostream& ribi::maziak::operator<<(

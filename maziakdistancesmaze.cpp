@@ -7,6 +7,7 @@
 #include <numeric>
 
 #include "maziakintmaze.h"
+#include "maziakmaze.h"
 
 ribi::maziak::DistancesMaze::DistancesMaze()
   : m_distances{}
@@ -24,15 +25,33 @@ ribi::maziak::DistancesMaze::DistancesMaze(
 
 }
 
+ribi::maziak::DistancesMaze::DistancesMaze(
+  const Maze& maze,
+  const int x,
+  const int y
+  )
+  : m_distances(CalculateDistances(maze,x,y))
+{
+
+}
+
+ribi::maziak::DistancesMaze::DistancesMaze(
+  const Maze& maze,
+  const std::pair<int, int> p
+  )
+  : m_distances(CalculateDistances(maze,p.first,p.second))
+{
+
+}
+
 std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   const IntMaze& maze,
   const int x, const int y) noexcept
 {
   //Assume maze is square
-  assert(IsSquare(maze));
   assert(maze.Get(x,y) == 0); //Assume starting point is no wall
 
-  const int size = GetSize(maze);
+  const int size = get_n_rows(maze);
   const int area = size * size;
   const int maxDistance = area;
   std::vector<std::vector<int> > distances(size, std::vector<int>(size,maxDistance));
@@ -88,6 +107,69 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   return distances;
 }
 
+std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
+  const Maze& maze,
+  const int x, const int y) noexcept
+{
+  //Assume maze is square
+  assert(maze.Get(x,y) != MazeSquare::msWall); //Assume starting point is no wall
+
+  const int size = get_n_rows(maze);
+  const int area = size * size;
+  const int maxDistance = area;
+  std::vector<std::vector<int> > distances(size, std::vector<int>(size,maxDistance));
+  {
+    //Calculate the distances
+    int distance = 0;
+    distances[y][x] = 0; //Set final point
+    std::vector< std::pair<int,int> > found;
+    found.push_back(std::make_pair(x,y));
+
+    while(found.empty() == false)
+    {
+      ++distance;
+      std::vector< std::pair<int,int> > newFound;
+
+      const std::vector< std::pair<int,int> >::iterator j = found.end();
+      for (std::vector< std::pair<int,int> >::iterator i = found.begin(); i!=j; ++i)
+      {
+        const int x_here{(*i).first};
+        const int y_here{(*i).second};
+
+        if (maze.Get(x_here,y_here-1) != MazeSquare::msWall
+          && distances[y_here-1][x_here] == maxDistance) //Not already in solution
+        {
+          distances[y_here-1][x_here] = distance;
+          newFound.push_back(std::make_pair(x_here,y_here-1));
+        }
+        if (maze.Get(x_here,y_here+1) != MazeSquare::msWall
+          && distances[y_here+1][x_here] == maxDistance) //Not already in solution
+        {
+          distances[y_here+1][x_here] = distance;
+          newFound.push_back(std::make_pair(x_here,y_here+1));
+        }
+
+        if (maze.Get(x_here+1,y_here) != MazeSquare::msWall
+          && distances[y_here][x_here+1] == maxDistance) //Not already in solution
+        {
+          distances[y_here][x_here+1] = distance;
+          newFound.push_back(std::make_pair(x_here+1,y_here));
+        }
+
+        if (maze.Get(x_here-1,y_here) != MazeSquare::msWall
+          && distances[y_here][x_here-1] == maxDistance) //Not already in solution
+        {
+          distances[y_here][x_here-1] = distance;
+          newFound.push_back(std::make_pair(x_here-1,y_here));
+        }
+
+      }
+      found = newFound;
+    }
+  }
+  return distances;
+}
+
 bool ribi::maziak::DistancesMaze::CanGet(const int x, const int y) const noexcept
 {
   return x >= 0 && x < GetSize()
@@ -102,10 +184,10 @@ int ribi::maziak::DistancesMaze::Get(const int x, const int y) const noexcept
 
 int ribi::maziak::DistancesMaze::GetSize() const noexcept
 {
-  return ::ribi::maziak::GetSize(*this);
+  return ::ribi::maziak::get_n_rows(*this);
 }
 
-int ribi::maziak::GetSize(const DistancesMaze& m) noexcept
+int ribi::maziak::get_n_rows(const DistancesMaze& m) noexcept
 {
   return static_cast<int>(m.Get().size());
 }

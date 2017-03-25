@@ -44,7 +44,8 @@ struct Terminal
 
   void RespondToCurrentSquare();
 
-  void StartShowSolution() { m_do_show_solution_cnt = 20; }
+  ///Wait one turn
+  void Tick();
 
   ///Toggles the prisoner animation
   void TogglePrisoners() { m_prisoner_frame = (m_prisoner_frame + 1) % 2;  }
@@ -57,6 +58,9 @@ struct Terminal
 
   /// 0: first animation frame, 1: second animation frame
   int m_prisoner_frame;
+
+  ///Timepoint, in number of ticks
+  int m_t;
 };
 
 Terminal CreateTestTerminal1();

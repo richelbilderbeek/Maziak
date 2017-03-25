@@ -5,41 +5,19 @@
 #include <iterator>
 #include <sstream>
 #include <gsl/gsl_assert>
-//#include "ribi_random.h"
 
 #include "maziakhelper.h"
 #include "maziakintmaze.h"
 
-/*
-template <class Source, class Target>
-    const std::vector<std::vector<Target> > ConvertMatrix(
-        const std::vector<std::vector<Source> >& v)
-{
-  const int maxy = static_cast<int>(v.size());
-  assert(maxy>0);
-  const int maxx = static_cast<int>(v[0].size());
-  std::vector<std::vector<Target> > t(maxy,std::vector<Target>(maxx));
-  for (int y=0; y!=maxy; ++y)
-  {
-    for (int x=0; x!=maxx; ++x)
-    {
-      t[y][x] = static_cast<Target>(v[y][x]);
-    }
-  }
-  return t;
-}
-*/
-
 ribi::maziak::Maze::Maze(
   const int size,
   const int rng_seed
-) : m_int_maze{CreateIntMaze(size, rng_seed)},
-    m_maze{}
+) : //m_int_maze{CreateIntMaze(size, rng_seed)},
+    m_maze{CreatePopulatedMaze(CreateIntMaze(size, rng_seed), rng_seed)}
 {
-  m_maze = CreatePopulatedMaze(m_int_maze, rng_seed);
-  Ensures(IsSquare(m_maze));
-  Ensures(FindExit().first  >= 0);
-  Ensures(FindStart().first >= 0);
+  //m_maze = CreatePopulatedMaze(m_int_maze, rng_seed);
+  Ensures(FindExit(*this).first  >= 0);
+  Ensures(FindStart(*this).first >= 0);
 }
 
 void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
@@ -54,28 +32,28 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
   const int minx = std::max(0,x - view_width );
   const int miny = std::max(0,y - view_height);
   assert(IsSquare(m_maze));
-  const int maxy = std::min(GetSize(*this),y + view_height);
-  const int maxx = std::min(GetSize(*this),x + view_width);
+  const int maxy = std::min(get_n_rows(*this),y + view_height);
+  const int maxx = std::min(get_n_rows(*this),x + view_width);
   assert(miny >= 0);
-  assert(miny <= GetSize(*this));
+  assert(miny <= get_n_rows(*this));
   assert(maxy >= 0);
-  assert(maxy <= GetSize(*this));
+  assert(maxy <= get_n_rows(*this));
   assert(minx >= 0);
-  assert(minx <= GetSize(*this));
+  assert(minx <= get_n_rows(*this));
   assert(maxx >= 0);
-  assert(maxx <= GetSize(*this));
+  assert(maxx <= get_n_rows(*this));
   assert(miny <= maxy);
   assert(minx <= maxx);
   for (int row=miny; row!=maxy; ++row)
   {
     assert(row >= 0);
-    assert(row < GetSize(*this));
+    assert(row < get_n_rows(*this));
     for (int col=minx; col!=maxx; ++col)
     {
       //msEnemy1 changes to msEnemy2
       //Only msEnemy2 moves, after moving turning to msEnemy1
       assert(col >= 0);
-      assert(col < GetSize(*this));
+      assert(col < get_n_rows(*this));
       const MazeSquare s = Get(col,row);
 
       if (s == MazeSquare::msEnemy1)
@@ -106,8 +84,8 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
 
 bool ribi::maziak::Maze::CanGet(const int x, const int y) const noexcept
 {
-  return x >= 0 && x < GetSize(*this)
-    && y >= 0 && y < GetSize(*this);
+  return x >= 0 && x < get_n_rows(*this)
+    && y >= 0 && y < get_n_rows(*this);
 }
 
 bool ribi::maziak::Maze::CanMoveTo(
@@ -182,7 +160,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   const IntMaze& int_maze,
   std::mt19937& rng_engine)
 {
-  const int sz = GetSize(int_maze);
+  const int sz = get_n_rows(int_maze);
   std::vector<std::vector<MazeSquare>> maze {
     ConvertMaze(int_maze)
   };
@@ -276,6 +254,31 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   return maze;
 }
 
+std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
+  const Maze& m) noexcept
+{
+  const int size = m.Get().size();
+
+  std::vector<std::pair<int,int>> dead_ends;
+
+  for (int y=1; y!=size-1; ++y)
+  {
+    for (int x=1; x!=size-1; ++x)
+    {
+      if (m.Get(x, y) == MazeSquare::msWall) continue;
+      //if (m[y][x] != 0) continue; //Continue if here is a wall
+      const int nWalls
+        = (m.Get(x    , y + 1) == MazeSquare::msWall ? 1 : 0)
+        + (m.Get(x    , y - 1) == MazeSquare::msWall ? 1 : 0)
+        + (m.Get(x + 1, y    ) == MazeSquare::msWall ? 1 : 0)
+        + (m.Get(x - 1, y    ) == MazeSquare::msWall ? 1 : 0);
+      if (nWalls == 3) dead_ends.push_back( { x,y } );
+
+    }
+  }
+  return dead_ends;
+}
+
 ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
 {
   const auto sz = 15;
@@ -283,21 +286,31 @@ ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
   return Maze{sz, rng_seed};
 }
 
-std::pair<int,int> ribi::maziak::Maze::FindExit() const noexcept
+std::pair<int,int> ribi::maziak::FindExit(const Maze& m)
 {
-  for (std::pair<int,int> p: CollectDeadEnds(GetIntMaze()))
+  const int n_cols{get_n_cols(m)};
+  const int n_rows{get_n_rows(m)};
+  for (int row{1}; row<n_rows; row+=2)
   {
-    if (Get(p.first,p.second) == MazeSquare::msExit) return p;
+    for (int col{1}; col<n_cols; col+=2)
+    {
+      if (m.Get(col,row) == MazeSquare::msExit) return { col, row};
+    }
   }
   assert(!"Maze guarantees to have an exit");
   return {0, 0};
 }
 
-std::pair<int,int> ribi::maziak::Maze::FindStart() const noexcept
+std::pair<int,int> ribi::maziak::FindStart(const Maze& m)
 {
-  for (std::pair<int,int> p: CollectDeadEnds(GetIntMaze()))
+  const int n_cols{get_n_cols(m)};
+  const int n_rows{get_n_rows(m)};
+  for (int row{1}; row<n_rows; row+=2)
   {
-    if (Get(p.first,p.second) == MazeSquare::msStart) return p;
+    for (int col{1}; col<n_cols; col+=2)
+    {
+      if (m.Get(col,row) == MazeSquare::msStart) return { col, row};
+    }
   }
   assert(!"Maze guarantees to have a start");
   return {0, 0};
@@ -310,14 +323,15 @@ ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
   return m_maze[y][x];
 }
 
-int ribi::maziak::GetSize(const Maze& m) noexcept
+int ribi::maziak::get_n_cols(const Maze& m) noexcept
 {
-  return GetSize(m.GetIntMaze());
+  assert(get_n_rows(m));
+  return static_cast<int>(m.Get()[0].size());
 }
 
-bool ribi::maziak::IsSquare(const Maze& m)
+int ribi::maziak::get_n_rows(const Maze& m) noexcept
 {
-  return IsSquare(m.GetIntMaze());
+  return static_cast<int>(m.Get().size());
 }
 
 void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s)
@@ -330,7 +344,6 @@ void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s)
 std::ostream& ribi::maziak::operator<<(
   std::ostream& os, const Maze& m) noexcept
 {
-  os << "IntMaze:\n" << m.m_int_maze << '\n';
   os << "Maze:\n" << m.m_maze;
   return os;
 }

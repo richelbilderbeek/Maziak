@@ -52,7 +52,7 @@ IntMaze CreateSolution(
   const int y
 );
 
-int GetSize(const SolutionMaze& m) noexcept;
+int get_n_rows(const SolutionMaze& m) noexcept;
 
 bool IsSquare(const SolutionMaze& m);
 

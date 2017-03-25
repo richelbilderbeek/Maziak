@@ -42,3 +42,23 @@ BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
   t.RespondToCurrentSquare();
   BOOST_CHECK(t.GetDoShowSolution());
 }
+
+BOOST_AUTO_TEST_CASE(terminal_solution_must_reveal_temporarily)
+{
+  Terminal t{CreateTestTerminal1()};
+  t.PressKey(Key::down);
+  t.PressKey(Key::down);
+  t.PressKey(Key::left);
+  t.PressKey(Key::left);
+  t.PressKey(Key::left);
+  t.PressKey(Key::left);
+  t.PressKey(Key::up);
+  t.PressKey(Key::up);
+  t.RespondToCurrentSquare();
+  assert(t.GetDoShowSolution());
+  for (int i=0; i!=100; ++i)
+  {
+    t.Tick();
+  }
+  assert(!t.GetDoShowSolution());
+}

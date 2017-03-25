@@ -32,8 +32,8 @@ ribi::maziak::IntMaze::IntMaze(
 
 bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
 {
-  return x >= 0 && x < GetSize(*this)
-      && y >= 0 && y < GetSize(*this);
+  return x >= 0 && x < get_n_rows(*this)
+      && y >= 0 && y < get_n_rows(*this);
 }
 
 std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
@@ -65,6 +65,7 @@ std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
   }
   return dead_ends;
 }
+
 
 int ribi::maziak::Count(const int i, const IntMaze& m)
 {
@@ -100,15 +101,15 @@ ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
   return CreateDistancesMaze(m, target.first, target.second);
 }
 
-int ribi::maziak::GetSize(const IntMaze& m) noexcept
+int ribi::maziak::get_n_cols(const IntMaze& m) noexcept
 {
-  assert(IsSquare(m));
-  return static_cast<int>(m.Get().size());
+  assert(get_n_rows(m));
+  return static_cast<int>(m.Get()[0].size());
 }
 
-bool ribi::maziak::IsSquare(const IntMaze& m)
+int ribi::maziak::get_n_rows(const IntMaze& m) noexcept
 {
-  return IsSquare(m.Get());
+  return static_cast<int>(m.Get().size());
 }
 
 bool ribi::maziak::operator==(const IntMaze& lhs, const IntMaze& rhs) noexcept

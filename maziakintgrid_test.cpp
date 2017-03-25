@@ -11,8 +11,8 @@ BOOST_AUTO_TEST_CASE(maziak_CreateIntGrid)
   const auto sz = 15;
   const int rng_seed{145};
   const auto m = CreateIntGrid(sz, rng_seed);
-  BOOST_CHECK(IsSquare(m));
-  BOOST_CHECK_EQUAL(GetSize(m), sz);
+  BOOST_CHECK_EQUAL(get_n_cols(m), sz);
+  BOOST_CHECK_EQUAL(get_n_rows(m), sz);
 }
 
 BOOST_AUTO_TEST_CASE(maziak_IsValidSize)

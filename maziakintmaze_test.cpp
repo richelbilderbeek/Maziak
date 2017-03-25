@@ -11,8 +11,8 @@ BOOST_AUTO_TEST_CASE(maziak_IntMaze_size)
 {
   const auto sz = 11;
   const IntMaze m(sz);
-  BOOST_CHECK(IsSquare(m));
-  BOOST_CHECK_EQUAL(GetSize(m), sz);
+  BOOST_CHECK_EQUAL(get_n_cols(m), sz);
+  BOOST_CHECK_EQUAL(get_n_rows(m), sz);
 }
 
 BOOST_AUTO_TEST_CASE(maziak_IntMaze_CanGet)
@@ -33,8 +33,8 @@ BOOST_AUTO_TEST_CASE(maziak_CreateIntMaze)
   const auto sz = 11;
   const int rng_seed{42};
   const auto m = CreateIntMaze(sz, rng_seed);
-  BOOST_CHECK(IsSquare(m));
-  BOOST_CHECK_EQUAL(GetSize(m), sz);
+  BOOST_CHECK_EQUAL(get_n_cols(m), sz);
+  BOOST_CHECK_EQUAL(get_n_rows(m), sz);
 }
 
 

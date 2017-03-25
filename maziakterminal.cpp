@@ -8,7 +8,8 @@
 
 ribi::maziak::Terminal::Terminal(const Game& game)
   : m_do_show_solution_cnt{0}, m_game{game},
-    m_prisoner_frame{0}
+    m_prisoner_frame{0},
+    m_t{0}
 {
 
 }
@@ -20,15 +21,12 @@ ribi::maziak::Terminal ribi::maziak::CreateTestTerminal1()
 
 void ribi::maziak::Terminal::Execute()
 {
-
-  for (int t{0}; ; ++t)
+  while (1)
   {
     std::cout << *this << '\n';
     std::cout << '\n';
     m_game.PressKeys(RequestKeys());
-
-    if (t % 4 == 1) this->TogglePrisoners();
-    if (t % 4 == 2) this->TogglePrisoners();
+    Tick();
   }
 }
 
@@ -80,6 +78,15 @@ void ribi::maziak::Terminal::RespondToCurrentSquare()
   {
     m_do_show_solution_cnt = 20;
   }
+}
+
+void ribi::maziak::Terminal::Tick()
+{
+  ++m_t;
+  if (m_t % 4 == 1) this->TogglePrisoners();
+  if (m_t % 4 == 2) this->TogglePrisoners();
+  --m_do_show_solution_cnt;
+  m_game.SetDoShowSolution(m_do_show_solution_cnt >= 0);
 }
 
 std::string ribi::maziak::to_str(const Terminal& t)
