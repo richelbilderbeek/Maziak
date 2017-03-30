@@ -13,6 +13,7 @@
 #include "maziakmazesquare.h"
 #include "maziaksprite.h"
 #include "maziakdisplay.h"
+#include "maziakgame.h"
 #include "maziakfwd.h"
 #include "maziakkey.h"
 #include "qtmaziaksprites.h"
@@ -71,9 +72,9 @@ private:
   Stopwatch m_timer_show_solution;
 
 
-  void DisplaySpritesFloor();
-  void DisplaySpritesAboveFloor();
-  void DisplayPlayer();
+  //void DisplaySpritesFloor();
+  //void DisplaySpritesAboveFloor();
+  //void DisplayPlayer();
 
 
   bool GetDoShowSolution();

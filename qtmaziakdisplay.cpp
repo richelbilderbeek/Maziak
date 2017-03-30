@@ -29,13 +29,12 @@
 #include "qtmaziakgamewondialog.h"
 #include "qtgraphics.h"
 #include "maziaksolutionmaze.h"
-#include "maziakmaindialog.h"
-
 
 #pragma GCC diagnostic pop
 
 ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
   : QWidget(parent),
+    m_game{CreateTestGame1()},
     m_image{QtGraphics().CreateImage(9 * 24, 9 * 24)},
     m_keys{},
     m_sprites{},
@@ -68,7 +67,8 @@ ribi::maziak::CreateDefaultKeys() noexcept
   return m;
 }
 
-void ribi::maziak::QtDisplay::DoDisplay(const MainDialog& main_dialog)
+/*
+void ribi::maziak::QtDisplay::DoDisplay()
 {
   Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
   Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
@@ -172,7 +172,7 @@ void ribi::maziak::QtDisplay::DisplayPlayer(const MainDialog& main_dialog)
     ((view_height / 2) * block_height) + 0
   );
 }
-
+*/
 bool ribi::maziak::QtDisplay::GetDoShowSolution()
 {
   return m_timer_show_solution.GetElapsedSecs() < 5.0;
