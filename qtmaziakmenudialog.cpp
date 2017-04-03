@@ -254,9 +254,6 @@ void ribi::maziak::QtMaziakMenuDialog::OnInstructions()
 void ribi::maziak::QtMaziakMenuDialog::OnStart()
 {
   QtDisplay d;
-  {
-    QRect screen = QApplication::desktop()->screenGeometry();
-    d.move( screen.center() - d.rect().center() );
-  }
-  d.show();
+  d.showFullScreen();
+  d.exec();
 }

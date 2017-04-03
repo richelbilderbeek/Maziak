@@ -33,7 +33,7 @@
 #pragma GCC diagnostic pop
 
 ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
-  : QWidget(parent),
+  : QDialog(parent),
     m_game{CreateTestGame1()},
     m_image{QtGraphics().CreateImage(9 * 24, 9 * 24)},
     m_keys{},
@@ -51,9 +51,9 @@ ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
   #endif
 
   //Put the dialog in the screen center at 75% of fullscreen size
-  const QRect screen = QApplication::desktop()->screenGeometry();
-  this->setGeometry(0,0,screen.width() * 75 / 100,screen.height() * 75 / 100);
-  this->move( screen.center() - this->rect().center() );
+  //const QRect screen = QApplication::desktop()->screenGeometry();
+  //this->setGeometry(0,0,screen.width() * 75 / 100,screen.height() * 75 / 100);
+  //this->move( screen.center() - this->rect().center() );
 }
 
 std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key>

@@ -29,7 +29,8 @@ namespace ribi {
 namespace maziak {
 
 
-class QtDisplay : public QWidget
+//class QtDisplay : public QWidget
+class QtDisplay : public QDialog
 {
   Q_OBJECT //!OCLINT
 
