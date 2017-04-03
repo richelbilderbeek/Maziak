@@ -180,9 +180,6 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayer(
     case PlayerDirection::pdRight: return GetSpritePlayerRight(move, has_sword);
     case PlayerDirection::pdDown: return GetSpritePlayerDown(move, has_sword);
     case PlayerDirection::pdLeft: return GetSpritePlayerLeft(move, has_sword);
-    default:
-      assert(!"Should not get here"); //!OCLINT accepted idiom
-      break;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::transparent;
@@ -275,7 +272,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerUp(
 }
 
 
-ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting(
+ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting( //!OCLINT cannot lower cyclomatic complexity without impairing readability
   const int fighting_frame,
   const bool has_sword
 )
@@ -407,9 +404,6 @@ void ribi::maziak::Game::RespondToCurrentSquare()
       m_state = GameState::has_won;
       return;
     }
-    default:
-      assert(!"Should not get here"); //!OCLINT accepted idiom
-      return;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
 }
