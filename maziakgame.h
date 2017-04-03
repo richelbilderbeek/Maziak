@@ -72,7 +72,7 @@ struct Game
   /// * If at the exit: game is done
   void RespondToCurrentSquare();
 
-  void SetDoShowSolution(const bool do_show_solution) noexcept { m_do_show_solution = do_show_solution; }
+  void SetDoShowSolution(const bool do_show) noexcept { m_do_show_solution = do_show; }
 
   private:
 

@@ -1,8 +1,6 @@
 #include "qtmaziakdisplay_test.h"
 #include "qtmaziakdisplay.h"
-#include "maziakmaindialog.h"
-
-
+#include "maziakgame.h"
 
 void ribi::maziak::QtDisplay_test::view_width_is_nine()
 {
@@ -15,8 +13,6 @@ void ribi::maziak::QtDisplay_test::view_width_is_nine()
 void ribi::maziak::QtDisplay_test::display()
 {
   QtDisplay q;
-  MainDialog d(7);
-  d.SetDisplay(&q);
   q.show();
 }
 

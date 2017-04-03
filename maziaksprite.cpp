@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 
-char ribi::maziak::to_char(const ribi::maziak::Sprite sprite) noexcept
+char ribi::maziak::to_char(const ribi::maziak::Sprite sprite) noexcept //!OCLINT cannot lower cyclomatic complexity without impairing readability
 {
   switch (sprite)
   {
@@ -57,7 +57,7 @@ char ribi::maziak::to_char(const ribi::maziak::Sprite sprite) noexcept
   return '\0';
 }
 
-std::string ribi::maziak::to_str(const Sprite sprite) noexcept
+std::string ribi::maziak::to_str(const Sprite sprite) noexcept //!OCLINT cannot lower cyclomatic complexity without impairing readability
 {
   switch (sprite)
   {

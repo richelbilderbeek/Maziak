@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 
-std::string ribi::maziak::to_str(const PlayerMove m) noexcept
+std::string ribi::maziak::to_str(const PlayerMove m) noexcept //!OCLINT cannot lower cyclomatic complexity without impairing readability
 {
   switch (m)
   {

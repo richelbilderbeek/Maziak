@@ -32,7 +32,8 @@ void ribi::maziak::Terminal::Execute()
 
 std::set<ribi::maziak::Key> ribi::maziak::Terminal::RequestKeys()
 {
-  while (1)
+  std::set<Key> keys;
+  while (keys.empty())
   {
     std::string s;
     std::getline(std::cin,s);
@@ -50,7 +51,6 @@ std::set<ribi::maziak::Key> ribi::maziak::Terminal::RequestKeys()
         << std::endl;
       continue;
     }
-    std::set<Key> keys;
     for (const auto c: s)
     {
 
@@ -64,9 +64,8 @@ std::set<ribi::maziak::Key> ribi::maziak::Terminal::RequestKeys()
         default: keys.insert(Key::none); break;
       }
     }
-    return keys;
   }
-
+  return keys;
 }
 
 void ribi::maziak::Terminal::RespondToCurrentSquare()
@@ -109,7 +108,6 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
     return os;
   }
 
-  //TextCanvas canvas(11,11);
   const int view_height = 11;
   const int view_width = 11;
   //Draw maze
@@ -174,24 +172,5 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
       os << '\n';
     }
   }
-
-  //Draw player
-  /*
-  {
-    const char player {
-      to_char(
-        GetSpritePlayer(
-          t.GetGame().GetPlayerDirection(),
-          t.GetGame().GetPlayerMove(),
-          t.GetGame().GetPlayerHasSword(),
-          t.GetGame().GetPlayerFightingFrame()
-        )
-      )
-    };
-    assert(player);
-    canvas.PutChar(view_width/2,view_height / 2,player);
-  }
-  os << canvas;
-  */
   return os;
 }

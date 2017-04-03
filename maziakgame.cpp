@@ -414,6 +414,7 @@ void ribi::maziak::Game::RespondToCurrentSquare()
   assert(!"Should not get here"); //!OCLINT accepted idiom
 }
 
+
 /*
 void ribi::maziak::Game::Tick()
 {
