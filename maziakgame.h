@@ -107,7 +107,8 @@ struct Game
   /// * If at the exit: game is done
   void RespondToCurrentSquare();
 
-  void SetDoShowSolution(const bool do_show) noexcept { m_do_show_solution = do_show; }
+  ///Start showing the solution from the player's current square
+  void SetDoShowSolution(const bool do_show) noexcept;
 
   private:
 

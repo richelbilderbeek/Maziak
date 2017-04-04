@@ -112,7 +112,8 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   if (do_show_solution
     && solution.Get(x,y) == 1
     && ( s == MazeSquare::msEmpty
-      || s == MazeSquare::msEnemy)
+      || s == MazeSquare::msEnemy
+      || s == MazeSquare::msStart)
     )
   {
     return Sprite::path;
@@ -427,8 +428,7 @@ void ribi::maziak::Game::RespondToCurrentSquare()
       return;
     case MazeSquare::msPrisoner:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
-      m_solution = CreateNewSolution();
-      m_do_show_solution = true;
+      SetDoShowSolution(true);
       return;
     case MazeSquare::msSword:
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
@@ -441,6 +441,15 @@ void ribi::maziak::Game::RespondToCurrentSquare()
     }
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
+}
+
+void ribi::maziak::Game::SetDoShowSolution(const bool do_show) noexcept
+{
+  m_do_show_solution = do_show;
+  if (m_do_show_solution)
+  {
+    m_solution = CreateNewSolution();
+  }
 }
 
 
@@ -492,13 +501,7 @@ std::string ribi::maziak::to_str(const Game& d) noexcept
 std::ostream& ribi::maziak::operator<<(std::ostream& os, const Game& d) noexcept
 {
   os
-    << "Direction: " << d.m_direction << '\n'
-  //;
-  //if (d.m_display)
-  //{
-  //  os << (*d.m_display) << '\n'
-  //}
-  //os
+    << "direction: " << d.m_direction << '\n'
     << "distances: " << d.m_distances << '\n'
     << "do_show_solution: " << d.m_do_show_solution << '\n'
     << "fighting_frame: " << d.m_fighting_frame << '\n'

@@ -47,7 +47,6 @@ ribi::maziak::IntMaze ribi::maziak::CreateSolution(
       if ( y!=size-1 && distances.Get(x,y+1) == distance ) { ++y; --distance; continue; }
     }
   }
-
   const IntMaze maze(solution);
   return maze;
 }
