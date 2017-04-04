@@ -56,13 +56,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
       assert(col < get_n_rows(*this));
       const MazeSquare s = Get(col,row);
 
-      if (s == MazeSquare::msEnemy1)
-      {
-        //msEnemy1 changes to msEnemy2
-        Set(col,row,MazeSquare::msEnemy2);
-        continue;
-      }
-      else if (s == MazeSquare::msEnemy2)
+      if (s == MazeSquare::msEnemy)
       {
         //msEnemy 2 tries to walk and becomes msEnemy1
         std::vector<std::pair<int,int> > moves;
@@ -74,7 +68,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
         if (!moves.empty())
         {
           std::shuffle(std::begin(moves),std::end(moves), rng_engine);
-          Set(moves[0].first,moves[0].second,MazeSquare::msEnemy1);
+          Set(moves[0].first,moves[0].second,MazeSquare::msEnemy);
           Set(col,row,MazeSquare::msEmpty);
         }
       }
@@ -247,7 +241,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
       const int x = (*deadEndIterator).first;
       const int y = (*deadEndIterator).second;
       assert(maze[y][x] == MazeSquare::msEmpty);
-      maze[y][x] = MazeSquare::msEnemy1;
+      maze[y][x] = MazeSquare::msEnemy;
       ++deadEndIterator;
     }
   }

@@ -112,8 +112,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   if (do_show_solution
     && solution.Get(x,y) == 1
     && ( s == MazeSquare::msEmpty
-      || s == MazeSquare::msEnemy1
-      || s == MazeSquare::msEnemy2)
+      || s == MazeSquare::msEnemy)
     )
   {
     return Sprite::path;
@@ -126,6 +125,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   const int x,
   const int y,
   const Maze& maze,
+  const int enemy_frame,
   const int prisoner_frame
 )
 {
@@ -133,15 +133,13 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   //What else here?
   switch(maze.Get(x,y))
   {
-    case MazeSquare::msStart     :
-    case MazeSquare::msEmpty     : return Sprite::transparent;
-    case MazeSquare::msWall      : return Sprite::wall;
-    case MazeSquare::msEnemy1    : return Sprite::enemy1;
-    case MazeSquare::msEnemy2    : return Sprite::enemy2;
-    case MazeSquare::msPrisoner  : return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
-    case MazeSquare::msSword     : return Sprite::sword;
-    case MazeSquare::msExit      : return Sprite::exit;
-    //default:
+    case MazeSquare::msStart   :
+    case MazeSquare::msEmpty   : return Sprite::transparent;
+    case MazeSquare::msWall    : return Sprite::wall;
+    case MazeSquare::msEnemy   : return enemy_frame % 2 == 0 ? Sprite::enemy1 : Sprite::enemy2;
+    case MazeSquare::msPrisoner: return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
+    case MazeSquare::msSword   : return Sprite::sword;
+    case MazeSquare::msExit    : return Sprite::exit;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::transparent;
@@ -159,9 +157,19 @@ ribi::maziak::Sprite ribi::maziak::Game::GetSpriteFloor(
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
-  const int x, const int y, const int prisoner_frame) const
+  const int x,
+  const int y,
+  const int enemy_frame,
+  const int prisoner_frame
+) const
 {
-  return ribi::maziak::GetSpriteAboveFloor(x,y,m_maze,prisoner_frame);
+  return ribi::maziak::GetSpriteAboveFloor(
+    x,
+    y,
+    m_maze,
+    enemy_frame,
+    prisoner_frame
+  );
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpritePlayer() const
@@ -312,13 +320,14 @@ std::vector<ribi::maziak::Sprite>
 ribi::maziak::Game::GetSprites(
   const int x,
   const int y,
+  const int enemy_frame,
   const int prisoner_frame
 ) const
 {
   std::vector<Sprite> v;
   if (!CanGet(x, y)) { return { Sprite::wall }; }
   v.push_back(this->GetSpriteFloor(x,y));
-  v.push_back(this->GetSpriteAboveFloor(x, y, prisoner_frame));
+  v.push_back(this->GetSpriteAboveFloor(x, y, enemy_frame, prisoner_frame));
   const auto new_end = boost::range::remove(v, Sprite::transparent);
   v.erase(new_end, std::end(v));
   if (v.size() >= 2 && v[0] == Sprite::empty) v.erase(std::begin(v));
@@ -412,7 +421,7 @@ void ribi::maziak::Game::RespondToCurrentSquare()
     case MazeSquare::msWall:
       assert(!"Should not get here"); //!OCLINT accepted idiom
       return;
-    case MazeSquare::msEnemy1: case MazeSquare::msEnemy2:
+    case MazeSquare::msEnemy:
       m_fighting_frame = 1;
       m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
       return;

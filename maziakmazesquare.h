@@ -12,8 +12,7 @@ enum class MazeSquare
 {
   msEmpty,
   msWall,
-  msEnemy1,
-  msEnemy2,
+  msEnemy,
   msPrisoner,
   msSword,
   msExit,
@@ -26,8 +25,7 @@ constexpr std::initializer_list<MazeSquare> get_all_maze_squares()
   {
     MazeSquare::msEmpty,
     MazeSquare::msWall,
-    MazeSquare::msEnemy1,
-    MazeSquare::msEnemy2,
+    MazeSquare::msEnemy,
     MazeSquare::msPrisoner,
     MazeSquare::msSword,
     MazeSquare::msExit,

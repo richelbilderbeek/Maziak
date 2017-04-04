@@ -147,7 +147,9 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
             xVector,
             yVector,
             t.GetGame().GetMaze(),
-            t.GetPrisonerFrame())
+            t.GetPrisonerFrame(), //Enemy frame equals the prisoner frame
+            t.GetPrisonerFrame()
+          )
         };
         if (sprite_above_floor != Sprite::transparent)
         {

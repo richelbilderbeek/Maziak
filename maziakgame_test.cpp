@@ -92,8 +92,9 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites)
   }
   //Prisoner 1
   {
+    const int enemy_frame{0};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(1, 5, prisoner_frame);
+    const auto measured = g.GetSprites(1, 5, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::prisoner1 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -102,8 +103,9 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites)
   }
   //Prisoner 2
   {
+    const int enemy_frame{0};
     const int prisoner_frame{1};
-    const auto measured = g.GetSprites(1, 5, prisoner_frame);
+    const auto measured = g.GetSprites(1, 5, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::prisoner2 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -112,8 +114,9 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites)
   }
   //Enemy 1
   {
+    const int enemy_frame{0};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(5, 3, prisoner_frame);
+    const auto measured = g.GetSprites(5, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::enemy1 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -122,8 +125,9 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites)
   }
   //Enemy 2
   {
-    const int prisoner_frame{1};
-    const auto measured = g.GetSprites(5, 3, prisoner_frame);
+    const int enemy_frame{1};
+    const int prisoner_frame{0};
+    const auto measured = g.GetSprites(5, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::enemy2 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
