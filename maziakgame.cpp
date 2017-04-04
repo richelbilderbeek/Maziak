@@ -316,6 +316,7 @@ ribi::maziak::Game::GetSprites(
 ) const
 {
   std::vector<Sprite> v;
+  if (!CanGet(x, y)) { return { Sprite::wall }; }
   v.push_back(this->GetSpriteFloor(x,y));
   v.push_back(this->GetSpriteAboveFloor(x, y, prisoner_frame));
   const auto new_end = boost::range::remove(v, Sprite::transparent);

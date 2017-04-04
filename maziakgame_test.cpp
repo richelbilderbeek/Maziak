@@ -54,30 +54,84 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites)
 
 */
   const auto g = CreateTestGame1();
+  //Wall in maze
   {
-    const auto measured = g.GetSprites(0,0);
+    const auto measured = g.GetSprites(2, 2);
     const auto expected = { Sprite::wall };
-    std::copy(std::begin(measured), std::end(measured),
-      std::ostream_iterator<Sprite>(std::cerr, ", "));
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
       std::begin(measured), std::end(measured)
     );
   }
+  //Wall out of maze
   {
-    const auto measured = g.GetSprites(1,1);
+    const auto measured = g.GetSprites(-2, -2);
+    const auto expected = { Sprite::wall };
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+      std::begin(expected), std::end(expected),
+      std::begin(measured), std::end(measured)
+    );
+  }
+  //Road
+  {
+    const auto measured = g.GetSprites(1, 1);
     const auto expected = { Sprite::empty };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
       std::begin(measured), std::end(measured)
     );
   }
+  //Sword
   {
-    const auto measured = g.GetSprites(3,1);
+    const auto measured = g.GetSprites(3, 1);
     const auto expected = { Sprite::sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
       std::begin(measured), std::end(measured)
     );
   }
+  //Prisoner 1
+  {
+    const int prisoner_frame{0};
+    const auto measured = g.GetSprites(1, 5, prisoner_frame);
+    const auto expected = { Sprite::prisoner1 };
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+      std::begin(expected), std::end(expected),
+      std::begin(measured), std::end(measured)
+    );
+  }
+  //Prisoner 2
+  {
+    const int prisoner_frame{1};
+    const auto measured = g.GetSprites(1, 5, prisoner_frame);
+    const auto expected = { Sprite::prisoner2 };
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+      std::begin(expected), std::end(expected),
+      std::begin(measured), std::end(measured)
+    );
+  }
+  //Enemy 1
+  {
+    const int prisoner_frame{0};
+    const auto measured = g.GetSprites(5, 3, prisoner_frame);
+    const auto expected = { Sprite::enemy1 };
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+      std::begin(expected), std::end(expected),
+      std::begin(measured), std::end(measured)
+    );
+  }
+  //Enemy 2
+  {
+    const int prisoner_frame{1};
+    const auto measured = g.GetSprites(5, 3, prisoner_frame);
+    const auto expected = { Sprite::enemy2 };
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+      std::begin(expected), std::end(expected),
+      std::begin(measured), std::end(measured)
+    );
+  }
+
+
+  //std::copy(std::begin(measured), std::end(measured),
+  // std::ostream_iterator<Sprite>(std::cerr, ", "));
 }
