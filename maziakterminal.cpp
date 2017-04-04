@@ -26,6 +26,7 @@ void ribi::maziak::Terminal::Execute()
     std::cout << *this << '\n';
     std::cout << '\n';
     m_game.PressKeys(RequestKeys());
+    m_game.RespondToCurrentSquare();
     Tick();
   }
 }
@@ -119,7 +120,10 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
         //xVector and yVector are the indices in the non-visual maze 2D std::vector
         const int xVector = t.GetGame().GetX() - (view_width  / 2) + x;
         const int yVector = t.GetGame().GetY() - (view_height / 2) + y;
-
+        #define NEW_SCHOOL
+        #ifdef NEW_SCHOOL
+        os << to_char(t.GetGame().GetSprites(xVector, yVector, t.GetPrisonerFrame(), t.GetPrisonerFrame()));
+        #else //CLASSIC
         //Is there something?
         if (!t.GetGame().CanGet(xVector,yVector))
         {
@@ -170,6 +174,7 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
           )
         };
         os << pixmap_floor;
+        #endif // CLASSIC
       }
       os << '\n';
     }

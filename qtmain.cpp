@@ -28,7 +28,8 @@ int main(int argc, char *argv[])
   if (argc == 2 && std::string(argv[1]) == "--profile")
   {
     ribi::maziak::QtDisplay d;
-    d.show();
+    d.showFullScreen();
+    d.exec();
     a.exit(0);
   }
   else

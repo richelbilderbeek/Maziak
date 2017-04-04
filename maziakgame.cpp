@@ -326,7 +326,10 @@ ribi::maziak::Game::GetSprites(
 ) const
 {
   std::vector<Sprite> v;
+  //Out of screen
   if (!CanGet(x, y)) { return { Sprite::wall }; }
+  //Player is always on top
+  if (this->m_x == x && this->m_y == y) { return { GetSpritePlayer() }; }
   v.push_back(this->GetSpriteFloor(x,y));
   v.push_back(this->GetSpriteAboveFloor(x, y, enemy_frame, prisoner_frame));
   const auto new_end = boost::range::remove(v, Sprite::transparent);

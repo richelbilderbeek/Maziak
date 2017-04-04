@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <string>
+#include <vector>
 #include <initializer_list>
 
 namespace ribi {
@@ -115,6 +116,9 @@ constexpr std::initializer_list<Sprite> get_all_sprites() noexcept
 
 ///ASCII art
 char to_char(const Sprite s) noexcept;
+
+///ASCII art, probably show top one
+char to_char(const std::vector<Sprite>& s) noexcept;
 
 ///To full word
 std::string to_str(const Sprite) noexcept;

@@ -90,11 +90,11 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
       std::begin(measured), std::end(measured)
     );
   }
-  //Start should not be visible
+  //Start should not be visible, but player on it is
   {
     assert(g.GetMaze().Get(5, 5) == MazeSquare::msStart);
     const auto measured = g.GetSprites(5, 5);
-    const auto expected = { Sprite::empty };
+    const auto expected = { Sprite::player_look_down_sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
       std::begin(measured), std::end(measured)
@@ -230,11 +230,12 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
       std::begin(measured), std::end(measured)
     );
   }
-  //Start should not be visible, but solution should be shown
+  //Start should not be visible, but solution should be shown, would not
+  //the player stand on it
   {
     assert(g.GetMaze().Get(5, 5) == MazeSquare::msStart);
     const auto measured = g.GetSprites(5, 5);
-    const auto expected = { Sprite::path };
+    const auto expected = { Sprite::player_look_down_sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
       std::begin(measured), std::end(measured)
