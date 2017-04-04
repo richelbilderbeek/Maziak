@@ -119,7 +119,7 @@ char to_char(const Sprite s) noexcept;
 ///To full word
 std::string to_str(const Sprite) noexcept;
 
-std::iostream& operator<<(std::iostream& os, const Sprite& s) noexcept;
+std::ostream& operator<<(std::ostream& os, const Sprite& s) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

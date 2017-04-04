@@ -42,6 +42,7 @@ std::string to_str(const MazeSquare s) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const MazeSquare s) noexcept;
 
+
 } //~namespace maziak
 } //~namespace ribi
 

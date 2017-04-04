@@ -53,6 +53,18 @@ struct Game
   Sprite GetSpriteFloor(const int x, const int y) const;
   Sprite GetSpritePlayer() const;
 
+  ///Get the sprites at the coordinat.
+  ///Sprite that needs to be drawn first (usually the floor) is at the first index.
+  ///Sprite that needs to be drawn last (for example the player) is at the last index.
+  /// @param x column index of the maze
+  /// @param y row index of the maze
+  /// @param prisoner_frame index in the prisoner animation. Prisoners have two
+  ///   sprites, so any odd number gives one sprite, any even number the other
+  std::vector<Sprite> GetSprites(
+    const int x,
+    const int y,
+    const int prisoner_frame = 0) const;
+
   /// Get the state of the game
   GameState GetState() const noexcept { return m_state; }
 

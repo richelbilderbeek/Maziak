@@ -111,7 +111,7 @@ std::string ribi::maziak::to_str(const Sprite sprite) noexcept //!OCLINT cannot 
   return "";
 }
 
-std::iostream& ribi::maziak::operator<<(std::iostream& os, const Sprite& s) noexcept
+std::ostream& ribi::maziak::operator<<(std::ostream& os, const Sprite& s) noexcept
 {
   os << to_char(s);
   return os;

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include <boost/timer.hpp>
+#include <boost/range/algorithm/remove.hpp>
 #include "maziakkey.h"
 #include "maziakmaze.h"
 #include "maziakdisplay.h"
@@ -100,16 +101,24 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
 )
 {
   assert(do_show_solution == false || get_n_rows(solution) == get_n_rows(maze));
-  if (!maze.CanGet(x,y)) { return Sprite::wall; }
-  else if (do_show_solution
+
+  //Outside of the maze are only walls
+  if (!maze.CanGet(x,y))
+  {
+    return Sprite::wall;
+  }
+  const MazeSquare s{maze.Get(x,y)};
+  //Show golden road
+  if (do_show_solution
     && solution.Get(x,y) == 1
-    && ( maze.Get(x,y) == MazeSquare::msEmpty
-      || maze.Get(x,y) == MazeSquare::msEnemy1
-      || maze.Get(x,y) == MazeSquare::msEnemy2)
+    && ( s == MazeSquare::msEmpty
+      || s == MazeSquare::msEnemy1
+      || s == MazeSquare::msEnemy2)
     )
   {
     return Sprite::path;
   }
+  //Show normal road
   return Sprite::empty;
 }
 
@@ -297,6 +306,22 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting( //!OCLINT cannot low
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::transparent;
+}
+
+std::vector<ribi::maziak::Sprite>
+ribi::maziak::Game::GetSprites(
+  const int x,
+  const int y,
+  const int prisoner_frame
+) const
+{
+  std::vector<Sprite> v;
+  v.push_back(this->GetSpriteFloor(x,y));
+  v.push_back(this->GetSpriteAboveFloor(x, y, prisoner_frame));
+  const auto new_end = boost::range::remove(v, Sprite::transparent);
+  v.erase(new_end, std::end(v));
+  if (v.size() >= 2 && v[0] == Sprite::empty) v.erase(std::begin(v));
+  return v;
 }
 
 void ribi::maziak::Game::PressKey(const Key key)
