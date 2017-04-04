@@ -28,8 +28,7 @@ struct QTimer;
 namespace ribi {
 namespace maziak {
 
-
-//class QtDisplay : public QWidget
+///
 class QtDisplay : public QDialog
 {
   Q_OBJECT //!OCLINT
@@ -38,52 +37,47 @@ public:
 
   typedef unsigned int WORD;
 
-  explicit QtDisplay(QWidget *parent = 0);
-  QtDisplay(const QtDisplay&) = delete;
-  QtDisplay& operator=(const QtDisplay&) = delete;
-  ~QtDisplay() {}
+  explicit QtDisplay(
+    const int view_height,
+    const int view_width,
+    QWidget *parent = 0
+  );
 
-  ///Show the main dialog's state
-  //void DoDisplay(const MainDialog& main_dialog);
+public slots:
 
-  const auto& GetSprites() const noexcept { return m_sprites; }
+  ///Process the keys and movements. Must result in a speed that can be
+  ///followed by a human
+  void Respond();
 
-  ///The heigh of the view displayed, in number of blocks
-  int GetViewHeight() const noexcept { return 9; }
+  ///The heartbeat of the game, shows the game state,
+  ///must be called 60 times per second
+  void Tick();
 
-  ///The width of the view displayed, in number of blocks
-  int GetViewWidth() const noexcept { return 9; }
-
-  bool MustAnimateEnemiesAndPrisoners() noexcept;
-
-  std::set<Key> RequestKeys();
 
 private:
 
   ///The game logic
   Game m_game;
 
-  //Will be painted
-  QImage m_image;
-
+  ///The keys that are pressed
   std::set<Key> m_keys;
 
   const Sprites m_sprites;
   Stopwatch m_timer_animate_enemies_and_prisoners;
   Stopwatch m_timer_show_solution;
 
+  ///The number of blocks the player can view, vertically
+  const int m_view_height;
 
-  //void DisplaySpritesFloor();
-  //void DisplaySpritesAboveFloor();
-  //void DisplayPlayer();
-
+  ///The number of blocks the player can view, horizontally
+  const int m_view_width;
 
   bool GetDoShowSolution();
+  int GetEnemiesAndPrisonersFrame() noexcept;
 
   void OnGameOver();
   void OnGameWon();
   void OnTimerStartShowingSolution();
-  void Paint(QPainter& painter, const QRect& target);
   void StartShowSolution();
 
   void resizeEvent(QResizeEvent*);

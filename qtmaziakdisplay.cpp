@@ -32,28 +32,31 @@
 
 #pragma GCC diagnostic pop
 
-ribi::maziak::QtDisplay::QtDisplay(QWidget *parent)
-  : QDialog(parent),
+ribi::maziak::QtDisplay::QtDisplay(
+  const int view_height,
+  const int view_width,
+  QWidget *parent
+) : QDialog(parent),
     m_game{CreateTestGame1()},
-    m_image{QtGraphics().CreateImage(9 * 24, 9 * 24)},
     m_keys{},
     m_sprites{},
     m_timer_animate_enemies_and_prisoners{},
-    m_timer_show_solution{}
+    m_timer_show_solution{},
+    m_view_height{view_height},
+    m_view_width{view_width}
 {
-  #ifdef DO_CALL_VIRTUAL_FUNCTIONS_IN_CONSTRUCRTOR
   {
-    const int view_height{GetViewHeight()}; //Classic value is 9
-    const int view_width{GetViewWidth()};
-    assert(m_image.height() == m_sprites.GetHeight() * view_height);
-    assert(m_image.width() == m_sprites.GetWidth() * view_width);
+    QTimer * const timer{new QTimer(this)};
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(Tick()));
+    timer->setInterval(1000 / 60);
+    timer->start();
   }
-  #endif
-
-  //Put the dialog in the screen center at 75% of fullscreen size
-  //const QRect screen = QApplication::desktop()->screenGeometry();
-  //this->setGeometry(0,0,screen.width() * 75 / 100,screen.height() * 75 / 100);
-  //this->move( screen.center() - this->rect().center() );
+  {
+    QTimer * const timer{new QTimer(this)};
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(Respond()));
+    timer->setInterval(100);
+    timer->start();
+  }
 }
 
 std::map<ribi::maziak::QtDisplay::WORD,ribi::maziak::Key>
@@ -67,112 +70,6 @@ ribi::maziak::CreateDefaultKeys() noexcept
   return m;
 }
 
-/*
-void ribi::maziak::QtDisplay::DoDisplay()
-{
-  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
-  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
-  DisplaySpritesFloor(main_dialog);
-  DisplaySpritesAboveFloor(main_dialog);
-  DisplayPlayer(main_dialog);
-  this->repaint();
-  qApp->processEvents();
-}
-
-void ribi::maziak::QtDisplay::DisplaySpritesFloor(
-  const MainDialog& main_dialog)
-{
-  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
-  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
-  const int view_height{GetViewHeight()}; //Classic value is 9
-  const int view_width{GetViewWidth()}; //Classic value is 9
-  const int block_height{GetSpriteHeight()};
-  const int block_width{GetSpriteWidth()};
-  //Draw maze
-  {
-    for (int y=0; y!=view_height; ++y)
-    {
-      for (int x=0; x!=view_width; ++x)
-      {
-        //xVector and yVector are the indices in the non-visual maze 2D std::vector
-        const int xVector = main_dialog.GetX() - (view_width  / 2) + x;
-        const int yVector = main_dialog.GetY() - (view_height / 2) + y;
-        //Draw the floor tile
-        const auto pixmap_floor = m_sprites.Get(
-          main_dialog.GetSpriteFloor(
-            xVector,
-            yVector
-          )
-        );
-         QtGraphics().DrawImage(
-          m_image,
-          pixmap_floor.toImage(),
-          (x * block_width )+0,
-          (y * block_height)+0
-        );
-      }
-    }
-  }
-}
-
-void ribi::maziak::QtDisplay::DisplaySpritesAboveFloor(
-  const MainDialog& main_dialog)
-{
-  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
-  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
-  const int view_height{GetViewHeight()}; //Classic value is 9
-  const int view_width{GetViewWidth()}; //Classic value is 9
-  const int block_height{GetSpriteHeight()}; //Classic value is 24
-  const int block_width{GetSpriteWidth()};
-  {
-    for (int y=0; y!=view_height; ++y)
-    {
-      for (int x=0; x!=view_width; ++x)
-      {
-        //xVector and yVector are the indices in the non-visual maze 2D std::vector
-        const int xVector = main_dialog.GetX() - (view_width  / 2) + x;
-        const int yVector = main_dialog.GetY() - (view_height / 2) + y;
-
-        //Draw what's moving or standing on the floor
-        const auto sprite_above_floor = main_dialog.GetSpriteAboveFloor(
-          xVector,
-          yVector
-        );
-        if (sprite_above_floor == Sprite::transparent) continue;
-        const auto pixmap_above_floor = m_sprites.Get(sprite_above_floor);
-        assert(IsValidFormat(pixmap_above_floor.toImage().format()));
-        QtGraphics().DrawImage(
-          m_image,
-          pixmap_above_floor.toImage(),
-          (x * block_width )+0,
-          (y * block_height)+0
-        );
-      }
-    }
-  }
-
-}
-
-void ribi::maziak::QtDisplay::DisplayPlayer(const MainDialog& main_dialog)
-{
-  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
-  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
-  const int view_height{GetViewHeight()}; //Classic value is 9
-  const int view_width{GetViewWidth()}; //Classic value is 9
-  const int block_height{GetSpriteHeight()};
-  const int block_width{GetSpriteWidth()};
-
-  const auto player = m_sprites.Get(
-    main_dialog.GetSpritePlayer()
-  );
-  QtGraphics().DrawImage(
-    m_image,
-    player.toImage(),
-    ((view_width  / 2) * block_width ) + 0,
-    ((view_height / 2) * block_height) + 0
-  );
-}
-*/
 bool ribi::maziak::QtDisplay::GetDoShowSolution()
 {
   return m_timer_show_solution.GetElapsedSecs() < 5.0;
@@ -192,6 +89,7 @@ void ribi::maziak::QtDisplay::keyPressEvent(QKeyEvent* e)
     case Qt::Key_Down : m_keys.insert(Key::down ); break;
     case Qt::Key_Left : m_keys.insert(Key::left ); break;
   }
+  Respond();
 }
 
 void ribi::maziak::QtDisplay::keyReleaseEvent(QKeyEvent * e)
@@ -205,32 +103,61 @@ void ribi::maziak::QtDisplay::keyReleaseEvent(QKeyEvent * e)
   }
 }
 
-bool ribi::maziak::QtDisplay::MustAnimateEnemiesAndPrisoners() noexcept
+int ribi::maziak::QtDisplay::GetEnemiesAndPrisonersFrame() noexcept
 {
+  static int frame = 0;
   if (m_timer_animate_enemies_and_prisoners.GetElapsedSecs() > 0.9)
   {
+    ++frame;
     m_timer_animate_enemies_and_prisoners = Stopwatch();
-    return true;
+    m_game.AnimateEnemiesAndPrisoners(m_view_width,m_view_height);
   }
-  return false;
+  return frame;
 }
 
 void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
 {
   QPainter painter(this);
-  Paint(painter, this->rect());
-}
-
-void ribi::maziak::QtDisplay::Paint(QPainter& painter, const QRect& target)
-{
-  //TODO: Use spritegrid here
-  painter.drawImage(target,m_image);
+  const int block_width{rect().width() / m_view_width};
+  const int block_height{rect().height() / m_view_height};
+  //Draw maze
+  {
+    for (int row=0; row!=m_view_height; ++row)
+    {
+      for (int col=0; col!=m_view_width; ++col)
+      {
+        //col_maze and row_maze are the indices in the true/'non-visual' maze
+        const int col_maze{m_game.GetX() - (m_view_width  / 2) + col};
+        const int row_maze{m_game.GetY() - (m_view_height / 2) + row};
+        const auto sprites = m_game.GetSprites(
+          col_maze,
+          row_maze,
+          GetEnemiesAndPrisonersFrame(),
+          GetEnemiesAndPrisonersFrame()
+        );
+        const QRect target_rect(
+          col * block_width,
+          row * block_height,
+          block_width,
+          block_height
+        );
+        for (const auto& s: sprites)
+        {
+          painter.drawPixmap(
+            target_rect,
+            m_sprites.Get(s)
+          );
+        }
+      }
+    }
+  }
 }
 
 void ribi::maziak::QtDisplay::OnGameOver()
 {
   this->hide();
-  std::unique_ptr<QtMaziakGameOverDialog> f(new QtMaziakGameOverDialog(0));
+  QtMaziakGameOverDialog * const f{new QtMaziakGameOverDialog(this)};
+  f->show();
   f->exec();
   close();
 }
@@ -238,18 +165,36 @@ void ribi::maziak::QtDisplay::OnGameOver()
 void ribi::maziak::QtDisplay::OnGameWon()
 {
   this->hide();
-  std::unique_ptr<QtMaziakGameWonDialog> f(new QtMaziakGameWonDialog);
+  QtMaziakGameWonDialog * const f{new QtMaziakGameWonDialog(this)};
   this->hide();
+  f->show();
   f->exec();
   close();
 }
 
-std::set<ribi::maziak::Key> ribi::maziak::QtDisplay::RequestKeys()
+void ribi::maziak::QtDisplay::Respond()
 {
-  return m_keys;
+  m_game.RespondToCurrentSquare();
+  m_game.PressKeys(m_keys);
+  m_game.RespondToCurrentSquare();
+  if (m_game.GetState() == GameState::has_won)
+  {
+    OnGameWon();
+    return;
+  }
+  if (m_game.GetState() == GameState::game_over)
+  {
+    OnGameOver();
+    return;
+  }
 }
 
 void ribi::maziak::QtDisplay::StartShowSolution()
 {
   m_timer_show_solution = Stopwatch();
+}
+
+void ribi::maziak::QtDisplay::Tick()
+{
+  this->repaint();
 }

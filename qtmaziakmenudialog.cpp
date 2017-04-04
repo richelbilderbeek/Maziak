@@ -253,7 +253,7 @@ void ribi::maziak::QtMaziakMenuDialog::OnInstructions()
 
 void ribi::maziak::QtMaziakMenuDialog::OnStart()
 {
-  QtDisplay d;
+  QtDisplay d(11, 11);
   d.showFullScreen();
   d.exec();
 }

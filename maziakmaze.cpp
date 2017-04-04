@@ -12,10 +12,8 @@
 ribi::maziak::Maze::Maze(
   const int size,
   const int rng_seed
-) : //m_int_maze{CreateIntMaze(size, rng_seed)},
-    m_maze{CreatePopulatedMaze(CreateIntMaze(size, rng_seed), rng_seed)}
+) : m_maze{CreatePopulatedMaze(CreateIntMaze(size, rng_seed), rng_seed)}
 {
-  //m_maze = CreatePopulatedMaze(m_int_maze, rng_seed);
   Ensures(FindExit(*this).first  >= 0);
   Ensures(FindStart(*this).first >= 0);
 }
