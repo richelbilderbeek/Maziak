@@ -33,8 +33,8 @@
 #pragma GCC diagnostic pop
 
 ribi::maziak::QtDisplay::QtDisplay(
-  const int view_height,
   const int view_width,
+  const int view_height,
   QWidget *parent
 ) : QDialog(parent),
     m_game{CreateTestGame1()},

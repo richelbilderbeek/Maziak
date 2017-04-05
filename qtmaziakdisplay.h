@@ -38,10 +38,17 @@ public:
   typedef unsigned int WORD;
 
   explicit QtDisplay(
-    const int view_height,
     const int view_width,
+    const int view_height,
     QWidget *parent = 0
   );
+
+  ///The number of blocks the player can view, vertically
+  auto GetViewHeight() const noexcept { return m_view_height; }
+
+  ///The number of blocks the player can view, horizontally
+  auto GetViewWidth() const noexcept { return m_view_width; }
+
 
 public slots:
 

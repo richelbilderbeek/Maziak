@@ -4,15 +4,17 @@
 
 void ribi::maziak::QtDisplay_test::view_width_is_nine()
 {
-  QtDisplay q;
+  const int view_width{11};
+  const int view_height{13};
+  QtDisplay q(view_width, view_height);
   //Cannot test this in constructor: never call virtual functions in a class constructor
-  assert(q.GetViewHeight() == 9);
-  assert(q.GetViewWidth() == 9);
+  QVERIFY(q.GetViewHeight() == view_height);
+  QVERIFY(q.GetViewWidth() == view_width);
 }
 
 void ribi::maziak::QtDisplay_test::display()
 {
-  QtDisplay q;
+  QtDisplay q(13,15);
   q.show();
 }
 
