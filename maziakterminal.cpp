@@ -119,7 +119,9 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
         //xVector and yVector are the indices in the non-visual maze 2D std::vector
         const int xVector = t.GetGame().GetX() - (view_width  / 2) + x;
         const int yVector = t.GetGame().GetY() - (view_height / 2) + y;
-        os << to_char(t.GetGame().GetSprites(xVector, yVector, t.GetPrisonerFrame(), t.GetPrisonerFrame()));
+        os << to_char(t.GetGame().GetSprites(
+          xVector, yVector, t.GetPrisonerFrame(), t.GetPrisonerFrame())
+        );
       }
       os << '\n';
     }

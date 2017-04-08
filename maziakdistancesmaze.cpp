@@ -77,8 +77,11 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
         };
         for (const auto& d: deltas)
         {
-          if (maze.Get(x_here + d.first,y_here + d.second) == 0                //No wall
-            && distances[y_here + d.second][x_here + d.first] == maxDistance) //Not already in solution
+          //No wall and
+          //not already in solution
+          if (maze.Get(x_here + d.first,y_here + d.second) == 0
+            && distances[y_here + d.second][x_here + d.first] == maxDistance)
+
           {
             distances[y_here + d.second][x_here + d.first] = distance;
             newFound.push_back(std::make_pair(x_here + d.first,y_here + d.second));
@@ -101,7 +104,7 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   const int size = get_n_rows(maze);
   const int area = size * size;
   const int maxDistance = area;
-  std::vector<std::vector<int> > distances(size, std::vector<int>(size,maxDistance));
+  std::vector<std::vector<int>> distances(size, std::vector<int>(size,maxDistance));
   {
     //Calculate the distances
     int distance = 0;

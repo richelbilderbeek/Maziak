@@ -141,13 +141,15 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   //What else here?
   switch(maze.Get(x,y))
   {
-    case MazeSquare::msStart   :
-    case MazeSquare::msEmpty   : return Sprite::empty;
-    case MazeSquare::msWall    : return Sprite::wall;
-    case MazeSquare::msEnemy   : return enemy_frame % 2 == 0 ? Sprite::enemy1 : Sprite::enemy2;
-    case MazeSquare::msPrisoner: return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
-    case MazeSquare::msSword   : return Sprite::sword;
-    case MazeSquare::msExit    : return Sprite::exit;
+    case MazeSquare::msStart:
+    case MazeSquare::msEmpty: return Sprite::empty;
+    case MazeSquare::msWall: return Sprite::wall;
+    case MazeSquare::msEnemy:
+      return enemy_frame % 2 == 0 ? Sprite::enemy1 : Sprite::enemy2;
+    case MazeSquare::msPrisoner:
+      return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
+    case MazeSquare::msSword: return Sprite::sword;
+    case MazeSquare::msExit: return Sprite::exit;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::empty;
@@ -316,9 +318,9 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting( //!OCLINT cannot low
     case 10: return has_sword ? Sprite::fight_won2 : Sprite::fight_lost2;
     case 11: return has_sword ? Sprite::fight_won1 : Sprite::fight_lost1;
     case 12: return has_sword ? Sprite::fight_won2 : Sprite::fight_lost2;
-    case  0:
-    case 13:
-    default: assert(!"Should not get here"); //!OCLINT accepted idiom
+    case  0: break;
+    case 13: break;
+    default: break;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::empty;
