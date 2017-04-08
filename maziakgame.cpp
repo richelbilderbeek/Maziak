@@ -142,7 +142,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   switch(maze.Get(x,y))
   {
     case MazeSquare::msStart   :
-    case MazeSquare::msEmpty   : return Sprite::transparent;
+    case MazeSquare::msEmpty   : return Sprite::empty;
     case MazeSquare::msWall    : return Sprite::wall;
     case MazeSquare::msEnemy   : return enemy_frame % 2 == 0 ? Sprite::enemy1 : Sprite::enemy2;
     case MazeSquare::msPrisoner: return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
@@ -150,7 +150,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
     case MazeSquare::msExit    : return Sprite::exit;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpriteFloor(
@@ -207,7 +207,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayer(
     case PlayerDirection::pdLeft: return GetSpritePlayerLeft(move, has_sword);
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 ribi::maziak::Sprite ribi::maziak::GetSpritePlayerDown(
@@ -228,7 +228,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerDown(
       break;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 ribi::maziak::Sprite ribi::maziak::GetSpritePlayerLeft(
@@ -249,7 +249,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerLeft(
       break;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 
@@ -271,7 +271,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerRight(
       break;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 
@@ -293,7 +293,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerUp(
       break;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 
@@ -321,7 +321,7 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting( //!OCLINT cannot low
     default: assert(!"Should not get here"); //!OCLINT accepted idiom
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
-  return Sprite::transparent;
+  return Sprite::empty;
 }
 
 std::vector<ribi::maziak::Sprite>
@@ -339,9 +339,8 @@ ribi::maziak::Game::GetSprites(
   if (this->m_x == x && this->m_y == y) { return { GetSpritePlayer() }; }
   v.push_back(this->GetSpriteFloor(x,y));
   v.push_back(this->GetSpriteAboveFloor(x, y, enemy_frame, prisoner_frame));
-  const auto new_end = boost::range::remove(v, Sprite::transparent);
-  v.erase(new_end, std::end(v));
   if (v.size() >= 2 && v[0] == Sprite::empty) v.erase(std::begin(v));
+  if (v.size() >= 2 && v[0] == Sprite::path && v[1] == Sprite::empty) v.erase(std::begin(v) + 1);
   return v;
 }
 

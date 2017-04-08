@@ -15,7 +15,6 @@ enum class Sprite
   empty, // A road
   wall,
   path, // The golden road to the exit
-  transparent,
   //Player sprites
   player_look_down,
   player_look_down_sword,
@@ -69,7 +68,6 @@ constexpr std::initializer_list<Sprite> get_all_sprites() noexcept
     Sprite::empty,
     Sprite::wall,
     Sprite::path,
-    Sprite::transparent,
     Sprite::player_look_down,
     Sprite::player_look_down_sword,
     Sprite::player_look_left,

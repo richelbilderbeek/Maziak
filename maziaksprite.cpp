@@ -10,7 +10,6 @@ char ribi::maziak::to_char(const ribi::maziak::Sprite sprite) noexcept //!OCLINT
     case Sprite::empty: return ' ';
     case Sprite::wall: return 'X';
     case Sprite::path: return '.';
-    case Sprite::transparent: return ' ';
     case Sprite::player_look_down: return 'v';
     case Sprite::player_look_down_sword: return 'w';
     case Sprite::player_look_left: return '<';
@@ -64,7 +63,6 @@ std::string ribi::maziak::to_str(const Sprite sprite) noexcept //!OCLINT cannot 
     case Sprite::empty: return "empty";
     case Sprite::wall: return "wall";
     case Sprite::path: return "path";
-    case Sprite::transparent: return "transparent";
     case Sprite::player_look_down: return "player_look_down";
     case Sprite::player_look_down_sword: return "player_look_down_sword";
     case Sprite::player_look_left: return "player_look_left";
