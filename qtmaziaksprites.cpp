@@ -6,7 +6,6 @@
 #include <gsl/gsl_assert>
 #include <QPixmap>
 #include <QImage>
-#include "maziaksprites.h"
 #include "maziakhelper.h"
 #include "qtgraphics.h"
 

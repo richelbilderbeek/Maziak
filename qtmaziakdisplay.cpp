@@ -23,7 +23,6 @@
 #include "maziakhelper.h"
 #include "maziakintmaze.h"
 #include "maziakmaze.h"
-#include "maziaksprites.h"
 #include "qtmaziaksprites.h"
 #include "qtmaziakgameoverdialog.h"
 #include "qtmaziakgamewondialog.h"

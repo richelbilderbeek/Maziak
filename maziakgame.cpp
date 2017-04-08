@@ -11,13 +11,10 @@
 #include <boost/range/algorithm/remove.hpp>
 #include "maziakkey.h"
 #include "maziakmaze.h"
-#include "maziakdisplay.h"
 #include "maziakintmaze.h"
 #include "maziakdistancesmaze.h"
 #include "maziakreceiver.h"
 #include "maziaksolutionmaze.h"
-#include "maziaksprites.h"
-
 
 #pragma GCC diagnostic pop
 

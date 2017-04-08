@@ -1,8 +1,6 @@
 #ifndef MAZIAKTERMINAL_H
 #define MAZIAKTERMINAL_H
 
-//#include "maziakdisplay.h"
-
 #include "maziakgame.h"
 
 namespace ribi {

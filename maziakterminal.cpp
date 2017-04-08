@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include "maziakgame.h"
-#include "maziaksprites.h"
 
 ribi::maziak::Terminal::Terminal(const Game& game)
   : m_do_show_solution_cnt{0}, m_game{game},

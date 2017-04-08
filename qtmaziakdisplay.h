@@ -12,7 +12,6 @@
 #include "qthideandshowdialog.h"
 #include "maziakmazesquare.h"
 #include "maziaksprite.h"
-#include "maziakdisplay.h"
 #include "maziakgame.h"
 #include "maziakfwd.h"
 #include "maziakkey.h"
