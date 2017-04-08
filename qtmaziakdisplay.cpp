@@ -163,7 +163,7 @@ void ribi::maziak::QtDisplay::OnGameOver()
 void ribi::maziak::QtDisplay::OnGameWon()
 {
   this->hide();
-  QtMaziakGameWonDialog * const f{new QtMaziakGameWonDialog(this)};
+  QtGameWonDialog * const f{new QtGameWonDialog(this)};
   this->hide();
   f->show();
   f->exec();

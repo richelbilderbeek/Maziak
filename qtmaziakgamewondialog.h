@@ -1,11 +1,7 @@
 #ifndef QTMAZIAKGAMEWONDIALOG_H
 #define QTMAZIAKGAMEWONDIALOG_H
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#include <boost/shared_ptr.hpp>
-#include "qthideandshowdialog.h"
-#pragma GCC diagnostic pop
+#include <QDialog>
 
 struct QTimer;
 
@@ -14,16 +10,17 @@ namespace Ui {
 }
 
 namespace ribi {
+namespace maziak {
 
-class QtMaziakGameWonDialog : public QtHideAndShowDialog
+class QtGameWonDialog : public QDialog
 {
   Q_OBJECT //!OCLINT
 
 public:
-  explicit QtMaziakGameWonDialog(QWidget *parent = 0);
-  QtMaziakGameWonDialog(const QtMaziakGameWonDialog&) = delete;
-  QtMaziakGameWonDialog& operator=(const QtMaziakGameWonDialog&) = delete;
-  ~QtMaziakGameWonDialog() noexcept;
+  explicit QtGameWonDialog(QWidget *parent = 0);
+  QtGameWonDialog(const QtGameWonDialog&) = delete;
+  QtGameWonDialog& operator=(const QtGameWonDialog&) = delete;
+  ~QtGameWonDialog() noexcept;
 
 protected:
   void paintEvent(QPaintEvent*);
@@ -32,13 +29,14 @@ protected:
 
 private:
   Ui::QtMaziakGameWonDialog *ui;
-  boost::shared_ptr<QTimer> m_timer;
+  QTimer * const m_timer; //Owned by this dialog
   bool m_allow_close;
 
   private slots:
   void onTimer();
 };
 
+} //~namespace maziak
 } //~namespace ribi
 
 #endif // QTMAZIAKGAMEWONDIALOG_H

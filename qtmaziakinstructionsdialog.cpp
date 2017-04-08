@@ -1,19 +1,14 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-
 #include "qtmaziakinstructionsdialog.h"
 #include "ui_qtmaziakinstructionsdialog.h"
 
-#pragma GCC diagnostic pop
-
-ribi::QtMaziakInstructionsDialog::QtMaziakInstructionsDialog(QWidget *parent) :
-    QtHideAndShowDialog(parent),
+ribi::maziak::QtInstructionsDialog::QtInstructionsDialog(QWidget *parent) :
+    QDialog(parent),
     ui(new Ui::QtMaziakInstructionsDialog)
 {
   ui->setupUi(this);
 }
 
-ribi::QtMaziakInstructionsDialog::~QtMaziakInstructionsDialog() noexcept
+ribi::maziak::QtInstructionsDialog::~QtInstructionsDialog() noexcept
 {
   delete ui;
 }

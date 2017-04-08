@@ -247,7 +247,7 @@ void ribi::maziak::QtMenuDialog::OnAbout()
 
 void ribi::maziak::QtMenuDialog::OnInstructions()
 {
-  std::unique_ptr<QtMaziakInstructionsDialog> d(new QtMaziakInstructionsDialog);
+  std::unique_ptr<QtInstructionsDialog> d(new QtInstructionsDialog);
   d->exec();
 }
 

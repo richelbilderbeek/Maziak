@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   }
   else
   {
-    ribi::maziak::QtMaziakMenuDialog w;
+    ribi::maziak::QtMenuDialog w;
     w.show();
     return a.exec();
   }

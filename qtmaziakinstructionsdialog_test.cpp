@@ -3,7 +3,6 @@
 
 void ribi::maziak::QtInstructionsDialog_test::display()
 {
-  QtMaziakInstructionsDialog d;
+  QtInstructionsDialog d;
   d.show();
-
 }

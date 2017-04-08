@@ -1,31 +1,30 @@
 #ifndef QTMAZIAKINSTRUCTIONSDIALOG_H
 #define QTMAZIAKINSTRUCTIONSDIALOG_H
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#include "qthideandshowdialog.h"
-#pragma GCC diagnostic pop
+#include <QDialog>
 
 namespace Ui {
     class QtMaziakInstructionsDialog;
 }
 
 namespace ribi {
+namespace maziak {
 
-class QtMaziakInstructionsDialog : public QtHideAndShowDialog
+class QtInstructionsDialog : public QDialog
 {
     Q_OBJECT //!OCLINT
 
 public:
-    explicit QtMaziakInstructionsDialog(QWidget *parent = 0);
-    QtMaziakInstructionsDialog(const QtMaziakInstructionsDialog&) = delete;
-    QtMaziakInstructionsDialog& operator=(const QtMaziakInstructionsDialog&) = delete;
-    ~QtMaziakInstructionsDialog() noexcept;
+    explicit QtInstructionsDialog(QWidget *parent = 0);
+    QtInstructionsDialog(const QtInstructionsDialog&) = delete;
+    QtInstructionsDialog& operator=(const QtInstructionsDialog&) = delete;
+    ~QtInstructionsDialog() noexcept;
 
 private:
     Ui::QtMaziakInstructionsDialog *ui;
 };
 
+} //~namespace maziak
 } //~namespace ribi
 
 #endif // QTMAZIAKINSTRUCTIONSDIALOG_H

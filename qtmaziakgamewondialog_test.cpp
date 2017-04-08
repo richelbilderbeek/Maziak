@@ -3,6 +3,6 @@
 
 void ribi::maziak::QtGameWonDialog_test::display()
 {
-  QtMaziakGameWonDialog d;
+  QtGameWonDialog d;
   d.show();
 }
