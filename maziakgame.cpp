@@ -13,7 +13,7 @@
 #include "maziakmaze.h"
 #include "maziakintmaze.h"
 #include "maziakdistancesmaze.h"
-#include "maziakreceiver.h"
+
 #include "maziaksolutionmaze.h"
 
 #pragma GCC diagnostic pop

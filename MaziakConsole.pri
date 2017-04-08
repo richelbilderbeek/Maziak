@@ -13,7 +13,6 @@ SOURCES += \
     $$PWD/maziakdistancesmaze.cpp \
     $$PWD/maziaksolutionmaze.cpp \
     $$PWD/maziakkey.cpp \
-    $$PWD/maziakreceiver.cpp \
     $$PWD/maziakgamestate.cpp \
     $$PWD/maziakterminal.cpp \
     $$PWD/maziakspritegrid.cpp \
@@ -34,7 +33,6 @@ HEADERS  += \
     $$PWD/maziakdistancesmaze.h \
     $$PWD/maziaksolutionmaze.h \
     $$PWD/maziakkey.h \
-    $$PWD/maziakreceiver.h \
     $$PWD/maziakgamestate.h \
     $$PWD/maziakterminal.h \
     $$PWD/maziakspritegrid.h \
