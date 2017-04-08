@@ -20,7 +20,12 @@ class QtMenuDialog : public QDialog
   Q_OBJECT //!OCLINT
 
 public:
-  explicit QtMenuDialog(QWidget *parent = 0);
+  /// @param rng_seed Random number generator seed. Use a negative value for
+  ///   a random seed, use a positive value to set the seed
+  explicit QtMenuDialog(
+    const int rng_seed,
+    QWidget *parent = 0
+  );
   QtMenuDialog(const QtMenuDialog&) = delete;
   QtMenuDialog& operator=(const QtMenuDialog&) = delete;
   ~QtMenuDialog() noexcept;
@@ -35,6 +40,8 @@ private:
   void OnStart();
   void OnInstructions();
   void OnAbout();
+
+  const int m_rng_seed;
 };
 
 } //~namespace maziak

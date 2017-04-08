@@ -159,6 +159,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
 
 
   std::vector<std::pair<int,int>> dead_ends = CollectDeadEnds(int_maze);
+  std::shuffle(std::begin(dead_ends), std::end(dead_ends), rng_engine);
   const int nDeadEnds = dead_ends.size();
   std::uniform_int_distribution<int> distribution(0,nDeadEnds-1); //Inclusive max
   assert(nDeadEnds >= 2);

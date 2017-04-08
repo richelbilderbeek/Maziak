@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
   if (argc == 2 && std::string(argv[1]) == "--profile")
   {
-    ribi::maziak::QtDisplay d(31, 31);
+    ribi::maziak::QtDisplay d(11, 11, 42, 31, 31);
     QTimer::singleShot(10000, &d, SLOT(close()));
     d.showFullScreen();
     d.exec();
@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
   }
   else
   {
-    ribi::maziak::QtMenuDialog w;
+    const int no_rng_seed{-1};
+    ribi::maziak::QtMenuDialog w(no_rng_seed);
     w.show();
     return a.exec();
   }

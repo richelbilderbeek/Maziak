@@ -31,11 +31,14 @@
 #pragma GCC diagnostic pop
 
 ribi::maziak::QtDisplay::QtDisplay(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed,
   const int view_width,
   const int view_height,
   QWidget *parent
 ) : QDialog(parent),
-    m_game{CreateTestGame1()},
+    m_game(Maze(n_cols, n_rows, rng_seed)),
     m_keys{},
     m_sprites{},
     m_timer_animate_enemies_and_prisoners{},

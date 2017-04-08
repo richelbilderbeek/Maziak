@@ -37,6 +37,9 @@ public:
   typedef unsigned int WORD;
 
   explicit QtDisplay(
+    const int n_cols,
+    const int n_rows,
+    const int rng_seed,
     const int view_width,
     const int view_height,
     QWidget *parent = 0

@@ -25,10 +25,14 @@
 
 #pragma GCC diagnostic pop
 
-ribi::maziak::QtMenuDialog::QtMenuDialog(QWidget *parent) :
+ribi::maziak::QtMenuDialog::QtMenuDialog(
+  const int rng_seed,
+  QWidget *parent
+) :
     QDialog(parent),
     ui(new Ui::QtMaziakMenuDialog),
-    m_difficulty(Difficulty::easy)
+    m_difficulty(Difficulty::easy),
+    m_rng_seed{rng_seed}
 {
   ui->setupUi(this);
 
@@ -261,7 +265,13 @@ void ribi::maziak::QtMenuDialog::OnInstructions()
 void ribi::maziak::QtMenuDialog::OnStart()
 {
   this->hide();
-  QtDisplay d(11, 11);
+  QtDisplay d(
+    GetMazeSize(),
+    GetMazeSize(),
+    m_rng_seed >= 0 ? m_rng_seed : std::random_device()(),
+    11,
+    11
+  );
   d.showFullScreen();
   d.exec();
   this->show();
