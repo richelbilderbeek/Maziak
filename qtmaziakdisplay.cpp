@@ -154,7 +154,7 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
 void ribi::maziak::QtDisplay::OnGameOver()
 {
   this->hide();
-  QtMaziakGameOverDialog * const f{new QtMaziakGameOverDialog(this)};
+  QtGameOverDialog * const f{new QtGameOverDialog(this)};
   f->show();
   f->exec();
   close();
