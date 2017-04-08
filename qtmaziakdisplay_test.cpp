@@ -17,13 +17,3 @@ void ribi::maziak::QtDisplay_test::display()
   QtDisplay q(13,15);
   q.show();
 }
-
-/*
-void ribi::maziak::QtDisplay_test::display()
-{
-  QtDisplay q;
-  const auto sprites = q.GetSprites();
-  Expects(m_image.height() == GetSpriteHeight() * GetViewHeight());
-  Expects(m_image.width() == GetSpriteWidth() * GetViewWidth());
-}
-*/
