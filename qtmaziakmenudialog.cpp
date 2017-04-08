@@ -25,8 +25,8 @@
 
 #pragma GCC diagnostic pop
 
-ribi::maziak::QtMaziakMenuDialog::QtMaziakMenuDialog(QWidget *parent) :
-    QtHideAndShowDialog(parent),
+ribi::maziak::QtMenuDialog::QtMenuDialog(QWidget *parent) :
+    QDialog(parent),
     ui(new Ui::QtMaziakMenuDialog),
     m_difficulty(Difficulty::easy)
 {
@@ -37,12 +37,12 @@ ribi::maziak::QtMaziakMenuDialog::QtMaziakMenuDialog(QWidget *parent) :
   this->move( screen.center() - this->rect().center() );
 }
 
-ribi::maziak::QtMaziakMenuDialog::~QtMaziakMenuDialog() noexcept
+ribi::maziak::QtMenuDialog::~QtMenuDialog() noexcept
 {
   delete ui;
 }
 
-void ribi::maziak::QtMaziakMenuDialog::mousePressEvent(QMouseEvent * event)
+void ribi::maziak::QtMenuDialog::mousePressEvent(QMouseEvent * event)
 {
   if (ui->widget_easy->geometry().contains(
     event->x(), event->y()))
@@ -89,7 +89,7 @@ void ribi::maziak::QtMaziakMenuDialog::mousePressEvent(QMouseEvent * event)
   }
 }
 
-void ribi::maziak::QtMaziakMenuDialog::keyPressEvent(QKeyEvent * event)
+void ribi::maziak::QtMenuDialog::keyPressEvent(QKeyEvent * event)
 {
   switch (event->key())
   {
@@ -124,7 +124,7 @@ void ribi::maziak::QtMaziakMenuDialog::keyPressEvent(QKeyEvent * event)
   }
 }
 
-void ribi::maziak::QtMaziakMenuDialog::paintEvent(QPaintEvent*)
+void ribi::maziak::QtMenuDialog::paintEvent(QPaintEvent*)
 {
   QPainter painter(this);
   {
@@ -225,7 +225,7 @@ void ribi::maziak::QtMaziakMenuDialog::paintEvent(QPaintEvent*)
 
 }
 
-int ribi::maziak::QtMaziakMenuDialog::GetMazeSize() const
+int ribi::maziak::QtMenuDialog::GetMazeSize() const
 {
   switch (m_difficulty)
   {
@@ -238,20 +238,20 @@ int ribi::maziak::QtMaziakMenuDialog::GetMazeSize() const
   throw std::logic_error("Unsupported value of mDifficulty");
 }
 
-void ribi::maziak::QtMaziakMenuDialog::OnAbout()
+void ribi::maziak::QtMenuDialog::OnAbout()
 {
   About a = MenuDialog().GetAbout();
   std::unique_ptr<QtAboutDialog> d(new QtAboutDialog(a));
-  this->ShowChild(d.get());
+  d->exec();
 }
 
-void ribi::maziak::QtMaziakMenuDialog::OnInstructions()
+void ribi::maziak::QtMenuDialog::OnInstructions()
 {
   std::unique_ptr<QtMaziakInstructionsDialog> d(new QtMaziakInstructionsDialog);
-  this->ShowChild(d.get());
+  d->exec();
 }
 
-void ribi::maziak::QtMaziakMenuDialog::OnStart()
+void ribi::maziak::QtMenuDialog::OnStart()
 {
   QtDisplay d(11, 11);
   d.showFullScreen();

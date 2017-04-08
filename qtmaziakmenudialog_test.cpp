@@ -3,6 +3,6 @@
 
 void ribi::maziak::QtMenuDialog_test::display()
 {
-  QtMaziakMenuDialog d;
+  QtMenuDialog d;
   d.show();
 }

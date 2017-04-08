@@ -1,13 +1,8 @@
 #ifndef QTMAZIAKMENUDIALOG2_H
 #define QTMAZIAKMENUDIALOG2_H
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
-#include "qthideandshowdialog.h"
+#include <QDialog>
 #include "maziakdifficulty.h"
-#pragma GCC diagnostic pop
 
 struct QKeyPressEvent;
 struct QMouseEvent;
@@ -20,15 +15,15 @@ namespace Ui {
 namespace ribi {
 namespace maziak {
 
-class QtMaziakMenuDialog : public QtHideAndShowDialog
+class QtMenuDialog : public QDialog
 {
   Q_OBJECT //!OCLINT
 
 public:
-  explicit QtMaziakMenuDialog(QWidget *parent = 0);
-  QtMaziakMenuDialog(const QtMaziakMenuDialog&) = delete;
-  QtMaziakMenuDialog& operator=(const QtMaziakMenuDialog&) = delete;
-  ~QtMaziakMenuDialog() noexcept;
+  explicit QtMenuDialog(QWidget *parent = 0);
+  QtMenuDialog(const QtMenuDialog&) = delete;
+  QtMenuDialog& operator=(const QtMenuDialog&) = delete;
+  ~QtMenuDialog() noexcept;
 
 private:
   Ui::QtMaziakMenuDialog *ui;
