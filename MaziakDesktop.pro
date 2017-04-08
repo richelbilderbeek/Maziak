@@ -4,18 +4,7 @@ include(../RibiClasses/CppMenuDialog/CppMenuDialog.pri)
 include(../RibiClasses/CppQtAboutDialog/CppQtAboutDialog.pri)
 include(../RibiClasses/CppQtHideAndShowDialog/CppQtHideAndShowDialog.pri)
 include(gsl.pri)
-
-#Specific, console
-#include(../DotMatrix/DotMatrix.pri)
-#include(../plane/plane.pri)
-#include(../RibiClasses/CppContainer/CppContainer.pri)
-#include(../RibiClasses/CppGeometry/CppGeometry.pri)
-#include(../RibiClasses/CppFuzzy_equal_to/CppFuzzy_equal_to.pri)
 include(../RibiClasses/CppStopwatch/CppStopwatch.pri)
-#include(../RibiClasses/CppWidget/CppWidget.pri)
-
-#Specific, desktop
-include(../RibiClasses/CppQtGraphics/CppQtGraphics.pri)
 include(MaziakConsole.pri)
 include(MaziakDesktop.pri)
 

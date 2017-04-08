@@ -2,12 +2,12 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <stdexcept>
 #include <gsl/gsl_assert>
 #include <QPixmap>
 #include <QImage>
 #include "maziakhelper.h"
-#include "qtgraphics.h"
 
 template <class T, class P>
 bool all(const T& v, const P& p)
@@ -35,13 +35,7 @@ std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::CreateSprites() noexcept
       ":/images/" + spritename + ".png"
     };
     QPixmap pixmap{filename.c_str()};
-    if (!IsValidFormat(pixmap.toImage().format()))
-    {
-      pixmap = QPixmap::fromImage(
-        pixmap.toImage().convertToFormat(QImage::Format::Format_ARGB32),
-        Qt::NoFormatConversion);
-    }
-    m.insert(std::make_pair(sprite,pixmap));
+    m.insert( { sprite,pixmap });
   }
   return m;
 }

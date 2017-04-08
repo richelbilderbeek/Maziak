@@ -26,7 +26,6 @@
 #include "qtmaziaksprites.h"
 #include "qtmaziakgameoverdialog.h"
 #include "qtmaziakgamewondialog.h"
-#include "qtgraphics.h"
 #include "maziaksolutionmaze.h"
 
 #pragma GCC diagnostic pop
