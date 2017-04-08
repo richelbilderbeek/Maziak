@@ -12,3 +12,18 @@ ribi::maziak::QtInstructionsDialog::~QtInstructionsDialog() noexcept
 {
   delete ui;
 }
+
+void ribi::maziak::QtInstructionsDialog::showEvent(QShowEvent *)
+{
+  //Rescale the pixmaps in a blocky retro way
+  for (auto p : { ui->label } )
+  {
+    p->setPixmap(
+      p->pixmap()->scaled(
+        p->width(),
+        p->height(),
+        Qt::KeepAspectRatio, Qt::FastTransformation
+      )
+    );
+  }
+}

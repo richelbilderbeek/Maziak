@@ -44,29 +44,6 @@ void ribi::maziak::QtGameWonDialog::onTimer()
   m_timer->stop();
 }
 
-void ribi::maziak::QtGameWonDialog::paintEvent(QPaintEvent*)
-{
-  QPainter painter(this);
-  {
-    //Top
-    QPixmap pixmap(":/images/Congratulations.png");
-    assert(!pixmap.isNull());
-    painter.drawPixmap(ui->widget_top->geometry(),pixmap);
-  }
-  {
-    //Center
-    QPixmap pixmap(":/images/PlayerWon1.png");
-    assert(!pixmap.isNull());
-    painter.drawPixmap(ui->widget_center->geometry(),pixmap);
-  }
-  {
-    //Bottom
-    QPixmap pixmap(":/images/Congratulations.png");
-    assert(!pixmap.isNull());
-    painter.drawPixmap(ui->widget_bottom->geometry(),pixmap);
-  }
-}
-
 void ribi::maziak::QtGameWonDialog::mousePressEvent(QMouseEvent*)
 {
   if (m_allow_close) close();
@@ -76,4 +53,21 @@ void ribi::maziak::QtGameWonDialog::keyPressEvent(QKeyEvent*)
 {
   if (m_allow_close) close();
 }
+
+void ribi::maziak::QtGameWonDialog::showEvent(QShowEvent *)
+{
+  //Rescale the pixmaps in a blocky retro way
+  for (auto p : { ui->label_picture, ui->label_text } )
+  {
+    p->setPixmap(
+      p->pixmap()->scaled(
+        p->width(),
+        p->height(),
+        Qt::KeepAspectRatio, Qt::FastTransformation
+      )
+    );
+  }
+}
+
+
 

@@ -20,6 +20,9 @@ public:
     QtInstructionsDialog& operator=(const QtInstructionsDialog&) = delete;
     ~QtInstructionsDialog() noexcept;
 
+protected:
+  void showEvent(QShowEvent *);
+
 private:
     Ui::QtMaziakInstructionsDialog *ui;
 };

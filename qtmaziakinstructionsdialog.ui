@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>305</width>
-    <height>300</height>
+    <width>780</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: url(:/images/MaziakBackground.png) no-repeat center center fixed;</string>
+   <string notr="true">background: url(:/images/MaziakBackground.png) repeat center center fixed;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-struct QTimer;
+class QTimer;
 
 namespace Ui {
   class QtMaziakGameOverDialog;
@@ -23,9 +23,9 @@ public:
   ~QtGameOverDialog() noexcept;
 
 protected:
-  void paintEvent(QPaintEvent*);
   void mousePressEvent(QMouseEvent*);
   void keyPressEvent(QKeyEvent*);
+  void showEvent(QShowEvent *);
 
 private:
   Ui::QtMaziakGameOverDialog *ui;

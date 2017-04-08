@@ -32,43 +32,37 @@ ribi::maziak::QtGameOverDialog::~QtGameOverDialog() noexcept
   delete ui;
 }
 
-void ribi::maziak::QtGameOverDialog::onTimer()
+void ribi::maziak::QtGameOverDialog::keyPressEvent(QKeyEvent*)
 {
-  m_allow_close = true;
-  m_timer->stop();
+  if (m_allow_close) close();
 }
 
-void ribi::maziak::QtGameOverDialog::paintEvent(QPaintEvent*)
-{
-  QPainter painter(this);
-  {
-    //Top
-    QPixmap pixmap(":/images/GameOver.png");
-    assert(!pixmap.isNull());
-    painter.drawPixmap(ui->widget_top->geometry(),pixmap);
-  }
-  {
-    //Center
-    QPixmap pixmap(":/images/Rip.png");
-    assert(!pixmap.isNull());
-    painter.drawPixmap(ui->widget_center->geometry(),pixmap);
-  }
-  {
-    //Bottom
-    QPixmap pixmap(":/images/GameOver.png");
-    assert(!pixmap.isNull());
-    painter.drawPixmap(ui->widget_bottom->geometry(),pixmap);
-  }
-}
 
 void ribi::maziak::QtGameOverDialog::mousePressEvent(QMouseEvent*)
 {
   if (m_allow_close) close();
 }
 
-void ribi::maziak::QtGameOverDialog::keyPressEvent(QKeyEvent*)
+void ribi::maziak::QtGameOverDialog::onTimer()
 {
-  if (m_allow_close) close();
+  m_allow_close = true;
+  m_timer->stop();
 }
+
+void ribi::maziak::QtGameOverDialog::showEvent(QShowEvent *)
+{
+  //Rescale the pixmaps in a blocky retro way
+  for (auto p : { ui->label_picture, ui->label_text } )
+  {
+    p->setPixmap(
+      p->pixmap()->scaled(
+        p->width(),
+        p->height(),
+        Qt::KeepAspectRatio, Qt::FastTransformation
+      )
+    );
+  }
+}
+
 
 

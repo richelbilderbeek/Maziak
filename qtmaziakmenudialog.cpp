@@ -240,20 +240,29 @@ int ribi::maziak::QtMenuDialog::GetMazeSize() const
 
 void ribi::maziak::QtMenuDialog::OnAbout()
 {
+  this->hide();
   About a = MenuDialog().GetAbout();
   std::unique_ptr<QtAboutDialog> d(new QtAboutDialog(a));
+  d->setStyleSheet(
+    "background: url(:/images/MaziakBackground.png) repeat center center fixed;"
+  );
   d->exec();
+  this->show();
 }
 
 void ribi::maziak::QtMenuDialog::OnInstructions()
 {
+  this->hide();
   std::unique_ptr<QtInstructionsDialog> d(new QtInstructionsDialog);
   d->exec();
+  this->show();
 }
 
 void ribi::maziak::QtMenuDialog::OnStart()
 {
+  this->hide();
   QtDisplay d(11, 11);
   d.showFullScreen();
   d.exec();
+  this->show();
 }
