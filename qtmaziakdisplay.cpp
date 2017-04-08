@@ -76,6 +76,16 @@ bool ribi::maziak::QtDisplay::GetDoShowSolution()
   return m_timer_show_solution.GetElapsedSecs() < 5.0;
 }
 
+int ribi::maziak::get_n_cols(const QtDisplay& q) noexcept
+{
+  return get_n_cols(q.GetGame());
+}
+
+int ribi::maziak::get_n_rows(const QtDisplay& q) noexcept
+{
+  return get_n_rows(q.GetGame());
+}
+
 void ribi::maziak::QtDisplay::resizeEvent(QResizeEvent*)
 {
   this->repaint();

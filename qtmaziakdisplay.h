@@ -45,6 +45,8 @@ public:
     QWidget *parent = 0
   );
 
+  const auto& GetGame() const noexcept { return m_game; }
+
   ///The number of blocks the player can view, vertically
   auto GetViewHeight() const noexcept { return m_view_height; }
 
@@ -96,6 +98,9 @@ private:
 };
 
 std::map<QtDisplay::WORD,Key> CreateDefaultKeys() noexcept;
+
+int get_n_cols(const QtDisplay& q) noexcept;
+int get_n_rows(const QtDisplay& q) noexcept;
 
 } //~namespace maziak
 } //~namespace ribi

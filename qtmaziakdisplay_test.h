@@ -11,8 +11,8 @@ class QtDisplay_test : public QObject
     Q_OBJECT //!OCLINT
 
 private slots:
+  void constructor();
   void display();
-  void view_width_is_nine();
 };
 
 } //~namespace maziak

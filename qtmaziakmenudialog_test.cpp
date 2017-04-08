@@ -3,6 +3,7 @@
 
 void ribi::maziak::QtMenuDialog_test::display()
 {
-  QtMenuDialog d;
+  const int rng_seed{42};
+  QtMenuDialog d(rng_seed);
   d.show();
 }
