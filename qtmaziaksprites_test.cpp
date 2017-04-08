@@ -1,6 +1,5 @@
 #include "qtmaziaksprites_test.h"
 #include "qtmaziaksprites.h"
-#include "maziaksprites.h"
 #include "qtgraphics.h"
 
 void ribi::maziak::QtSprites_test::all_sprites_are_present()
