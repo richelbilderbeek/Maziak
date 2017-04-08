@@ -89,6 +89,16 @@ ribi::maziak::SolutionMaze ribi::maziak::Game::CreateNewSolution() noexcept
   return solution;
 }
 
+int ribi::maziak::get_n_cols(const Game& g) noexcept
+{
+  return get_n_cols(g.GetMaze());
+}
+
+int ribi::maziak::get_n_rows(const Game& g) noexcept
+{
+  return get_n_rows(g.GetMaze());
+}
+
 ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   const Maze& maze,
   const int x,

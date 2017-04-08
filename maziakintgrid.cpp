@@ -9,15 +9,18 @@
 #include "maziakhelper.h"
 
 ribi::maziak::IntGrid
-  ribi::maziak::CreateIntGrid(const int sz,
+  ribi::maziak::CreateIntGrid(
+  const int n_cols,
+  const int n_rows,
   const int rng_seed
 )
 {
-  Expects(IsValidSize(sz));
+  Expects(IsValidSize(n_cols));
+  Expects(IsValidSize(n_rows));
   std::mt19937 rng_engine{rng_seed};
 
   //Start with a wall-only maze
-  std::vector<std::vector<int> > maze(sz, std::vector<int>(sz,1));
+  std::vector<std::vector<int> > maze(n_rows, std::vector<int>(n_cols,1));
 
   //Prepare maze, remove paths
   // XXXXXXX    1111111
@@ -29,20 +32,21 @@ ribi::maziak::IntGrid
   // XXXXXXX    1111111
 
   //Draw open spaces
-  for (int y=1; y<sz; y+=2)
+  for (int y=1; y<n_rows; y+=2)
   {
-    for (int x=1; x<sz; x+=2)
+    for (int x=1; x<n_cols; x+=2)
     {
       maze[y][x] = 2; //2: unexplored
     }
   }
 
-  const int mid = sz/2;
+  const int mid_x = n_cols/2;
+  const int mid_y = n_rows/2;
 
-  maze[mid][mid] = 0;
+  maze[mid_x][mid_y] = 0;
 
   std::vector<std::pair<int,int> > v;
-  v.push_back(std::make_pair(mid,mid));
+  v.push_back(std::make_pair(mid_x,mid_y));
   while (!v.empty())
   {
     std::uniform_int_distribution<int> d_next_explorer(0, v.size() - 1); //-1 as this is inclusive
@@ -59,8 +63,8 @@ ribi::maziak::IntGrid
     std::vector<std::pair<int,int> > next;
     if (x > 0 + 2 && maze[y][x-2] == 2) next.push_back(std::make_pair(x-2,y));
     if (y > 0 + 2 && maze[y-2][x] == 2) next.push_back(std::make_pair(x,y-2));
-    if (x < sz - 2 && maze[y][x+2] == 2) next.push_back(std::make_pair(x+2,y));
-    if (y < sz - 2 && maze[y+2][x] == 2) next.push_back(std::make_pair(x,y+2));
+    if (x < n_cols - 2 && maze[y][x+2] == 2) next.push_back(std::make_pair(x+2,y));
+    if (y < n_rows - 2 && maze[y+2][x] == 2) next.push_back(std::make_pair(x,y+2));
     //Dead end?
     if (next.empty())
     {

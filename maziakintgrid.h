@@ -12,7 +12,11 @@ using IntGrid = std::vector<std::vector<int>>;
 //Creates a binary maze
 // 0 : path
 // 1 : wall
-IntGrid CreateIntGrid(const int sz, const int rng_seed);
+IntGrid CreateIntGrid(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed
+);
 
 int get_n_cols(const IntGrid& g) noexcept;
 int get_n_rows(const IntGrid& g) noexcept;

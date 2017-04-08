@@ -154,6 +154,10 @@ struct Game
 ///Creates a MainDialog with TestMaze1
 Game CreateTestGame1();
 
+int get_n_cols(const Game& g) noexcept;
+int get_n_rows(const Game& g) noexcept;
+
+
 /// Get the sprite above the floor, e.g. Enemy
 /// @param x column index of the maze
 /// @param y row index of the maze

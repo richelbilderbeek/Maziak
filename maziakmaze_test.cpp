@@ -10,17 +10,20 @@ using namespace ribi::maziak;
 
 BOOST_AUTO_TEST_CASE(maziak_Maze_size)
 {
-  const auto sz = 11;
-  const Maze m(sz);
-  BOOST_CHECK_EQUAL(get_n_rows(m), sz);
-  BOOST_CHECK_EQUAL(get_n_cols(m), sz);
+  const auto n_cols = 7;
+  const auto n_rows = 11;
+  const auto rng_seed = 42;
+  const Maze m(n_cols, n_rows, rng_seed);
+  BOOST_CHECK_EQUAL(get_n_rows(m), n_rows);
+  BOOST_CHECK_EQUAL(get_n_cols(m), n_cols);
 }
 
 
 BOOST_AUTO_TEST_CASE(maziak_Maze_mMaze)
 {
   const auto sz = 11;
-  const Maze m(sz);
+  const auto rng_seed = 42;
+  const Maze m(sz, sz, rng_seed);
   BOOST_CHECK_GT(FindExit(m).first , -1);
   BOOST_CHECK_GT(FindStart(m).first, -1);
 }
@@ -28,7 +31,8 @@ BOOST_AUTO_TEST_CASE(maziak_Maze_mMaze)
 BOOST_AUTO_TEST_CASE(maziak_Maze_get_and_set_must_be_symmetrical)
 {
   const auto sz = 11;
-  Maze m(sz);
+  const auto rng_seed = 42;
+  Maze m(sz, sz, rng_seed);
   assert(m.CanSet(3,4));
   m.Set(3,4,MazeSquare::msEmpty);
   BOOST_CHECK_EQUAL(m.Get(3,4), MazeSquare::msEmpty);
@@ -39,7 +43,8 @@ BOOST_AUTO_TEST_CASE(maziak_Maze_get_and_set_must_be_symmetrical)
 BOOST_AUTO_TEST_CASE(maziak_Maze_stream_out)
 {
   const auto sz = 11;
-  Maze m(sz);
+  const auto rng_seed = 42;
+  const Maze m(sz, sz, rng_seed);
   std::stringstream s;
   s << m;
   BOOST_CHECK(!s.str().empty());
@@ -51,7 +56,7 @@ BOOST_AUTO_TEST_CASE(maziak_ConvertMaze)
   const int rng_seed{42};
   /// 0 : path
   /// 1 : wall
-  const auto m = CreateIntMaze(sz, rng_seed);
+  const auto m = CreateIntMaze(sz, sz, rng_seed);
   // msEmpty,
   // msWall,
   const auto n = ConvertMaze(m);

@@ -1,15 +1,26 @@
 #include "maziakgame.h"
 
+#include <iostream>
 #include <boost/test/unit_test.hpp>
 
 #include "maziaksprite.h"
 
 using namespace ribi::maziak;
 
-BOOST_AUTO_TEST_CASE(maziak_MainDialog_construction)
+BOOST_AUTO_TEST_CASE(maziak_CreateTestGame1)
 {
-  const Game g{CreateTestMaze1()};
+  const Game g{CreateTestGame1()};
   BOOST_CHECK(!g.GetDoShowSolution());
+}
+
+BOOST_AUTO_TEST_CASE(maziak_Game_construction)
+{
+  const auto n_cols = 15;
+  const auto n_rows = 11;
+  const int rng_seed{145};
+  const Game g{Maze{n_cols, n_rows, rng_seed}};
+  BOOST_CHECK_EQUAL(n_cols, get_n_cols(g));
+  BOOST_CHECK_EQUAL(n_rows, get_n_rows(g));
 }
 
 BOOST_AUTO_TEST_CASE(maziak_MainDialog_stream_out)
@@ -184,7 +195,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
 */
   Game g{CreateTestGame1()};
   g.SetDoShowSolution(true);
-  std::cerr << '\n' << g << '\n';
+  //std::cerr << '\n' << g << '\n';
   //Wall in maze
   {
     const auto measured = g.GetSprites(2, 2);

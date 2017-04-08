@@ -10,9 +10,10 @@
 #include "maziakintmaze.h"
 
 ribi::maziak::Maze::Maze(
-  const int size,
+  const int n_cols,
+  const int n_rows,
   const int rng_seed
-) : m_maze{CreatePopulatedMaze(CreateIntMaze(size, rng_seed), rng_seed)}
+) : m_maze{CreatePopulatedMaze(CreateIntMaze(n_cols, n_rows, rng_seed), rng_seed)}
 {
   Ensures(FindExit(*this).first  >= 0);
   Ensures(FindStart(*this).first >= 0);
@@ -29,7 +30,6 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
   //Move them
   const int minx = std::max(0,x - view_width );
   const int miny = std::max(0,y - view_height);
-  assert(IsSquare(m_maze));
   const int maxy = std::min(get_n_rows(*this),y + view_height);
   const int maxx = std::min(get_n_rows(*this),x + view_width);
   assert(miny >= 0);
@@ -76,7 +76,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
 
 bool ribi::maziak::Maze::CanGet(const int x, const int y) const noexcept
 {
-  return x >= 0 && x < get_n_rows(*this)
+  return x >= 0 && x < get_n_cols(*this)
     && y >= 0 && y < get_n_rows(*this);
 }
 
@@ -275,7 +275,7 @@ ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
 {
   const auto sz = 15;
   const int rng_seed{145};
-  return Maze{sz, rng_seed};
+  return Maze{sz, sz, rng_seed};
 }
 
 std::pair<int,int> ribi::maziak::FindExit(const Maze& m)

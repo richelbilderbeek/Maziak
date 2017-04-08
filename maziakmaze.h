@@ -14,7 +14,11 @@ namespace maziak {
 
 struct Maze
 {
-  Maze(const int size, const int rng_seed = 42);
+  Maze(
+    const int n_cols,
+    const int n_rows,
+    const int rng_seed
+  );
 
   ///Animate the enemies and prisoners in sight
   ///(all others are just standing still)

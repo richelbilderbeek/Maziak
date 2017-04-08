@@ -15,11 +15,14 @@ ribi::maziak::IntMaze::IntMaze()
 
 }
 
-ribi::maziak::IntMaze::IntMaze(const int sz, const int rng_seed)
-  : m_int_grid{CreateIntGrid(sz, rng_seed)}
+ribi::maziak::IntMaze::IntMaze(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed
+) : m_int_grid{CreateIntGrid(n_cols, n_rows, rng_seed)}
 {
-  Expects(IsValidSize(sz));
-  //m_dead_ends = CollectDeadEnds(m_int_grid);
+  Expects(IsValidSize(n_cols));
+  Expects(IsValidSize(n_rows));
 }
 
 ribi::maziak::IntMaze::IntMaze(
@@ -72,10 +75,15 @@ int ribi::maziak::Count(const int i, const IntMaze& m)
   return Count(i, m.Get());
 }
 
-ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(const int size, const int seed)
+ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(
+  const int n_cols,
+  const int n_rows,
+  const int seed
+)
 {
-  Expects(IsValidSize(size));
-  return IntMaze{size, seed};
+  Expects(IsValidSize(n_cols));
+  Expects(IsValidSize(n_rows));
+  return IntMaze{n_cols, n_rows, seed};
 }
 
 int ribi::maziak::IntMaze::Get(const int x, const int y) const noexcept

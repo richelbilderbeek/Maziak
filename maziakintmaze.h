@@ -16,7 +16,11 @@ namespace maziak {
 struct IntMaze
 {
   explicit IntMaze();
-  explicit IntMaze(const int sz, const int rng_seed = 42);
+  explicit IntMaze(
+    const int n_cols,
+    const int n_rows,
+    const int rng_seed
+  );
   explicit IntMaze(const IntGrid& int_grid);
 
   ///Can I access this coordinat?
@@ -55,7 +59,11 @@ DistancesMaze CreateDistancesMaze(
   const std::pair<int, int>& target
 );
 
-IntMaze CreateIntMaze(const int size, const int seed);
+IntMaze CreateIntMaze(
+  const int n_cols,
+  const int n_rows,
+  const int seed
+);
 
 int get_n_cols(const IntMaze& m) noexcept;
 int get_n_rows(const IntMaze& m) noexcept;
