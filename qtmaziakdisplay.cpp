@@ -172,7 +172,7 @@ void ribi::maziak::QtDisplay::OnGameWon()
 
 void ribi::maziak::QtDisplay::Respond()
 {
-  m_game.RespondToCurrentSquare();
+  m_game.AnimateFighting();
   m_game.PressKeys(m_keys);
   m_game.RespondToCurrentSquare();
   if (m_game.GetState() == GameState::has_won)
