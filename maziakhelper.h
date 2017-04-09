@@ -6,6 +6,7 @@
 #include <numeric>
 #include <vector>
 #include <gsl/gsl_assert>
+#include "maziakcoordinat.h"
 #include "maziakmazesquare.h"
 
 namespace ribi {
@@ -37,7 +38,7 @@ int Count(const T i, const std::vector<std::vector<T>>& m)
 
 ///Get the coordinats where the end ends are
 //From http://www.richelbilderbeek.nl/CppGetDeadEnds.htm
-std::vector<std::pair<int,int>> GetDeadEnds(const std::vector<std::vector<int>>& maze);
+std::vector<Coordinat> GetDeadEnds(const std::vector<std::vector<int>>& maze);
 
 ///Get the distances it would be to travel from (x,y) to
 ///any location in the maze

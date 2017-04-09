@@ -72,7 +72,7 @@ std::vector<std::vector<MazeSquare>> CreatePopulatedMaze(
 );
 
 ///Collect all dead ends
-std::vector<std::pair<int,int>> CollectDeadEnds(const Maze& maze) noexcept;
+std::vector<Coordinat> CollectDeadEnds(const Maze& maze) noexcept;
 
 /// Minimal complete maze
 /*
@@ -105,14 +105,14 @@ std::vector<std::vector<MazeSquare>> ConvertMaze(
 
 DistancesMaze CreateDistancesMaze(
   const Maze& m,
-  const std::pair<int, int>& target
+  const Coordinat& target
 );
 
 ///Find a first maze square of the desired type
-std::pair<int,int> FindFirst(const Maze& m, const MazeSquare s);
+Coordinat FindFirst(const Maze& m, const MazeSquare s);
 
-std::pair<int,int> FindExit(const Maze& m);
-std::pair<int,int> FindStart(const Maze& m);
+Coordinat FindExit(const Maze& m);
+Coordinat FindStart(const Maze& m);
 
 
 int get_n_cols(const Maze& m) noexcept;

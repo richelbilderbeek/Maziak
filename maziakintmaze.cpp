@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iterator>
 #include <gsl/gsl_assert>
+#include "maziakcoordinat.h"
 #include "maziakdistancesmaze.h"
 #include "maziakhelper.h"
 
@@ -39,18 +40,18 @@ bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
       && y >= 0 && y < get_n_rows(*this);
 }
 
-std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
+std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const IntMaze& m) noexcept
 {
   return CollectDeadEnds(m.Get());
 }
 
-std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
+std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const std::vector<std::vector<int>>& grid) noexcept
 {
   const int size = grid.size();
 
-  std::vector<std::pair<int,int>> dead_ends;
+  std::vector<Coordinat> dead_ends;
 
   for (int y=1; y!=size-1; ++y)
   {
@@ -103,7 +104,7 @@ ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
 
 ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
   const IntMaze& m,
-  const std::pair<int, int>& target
+  const Coordinat& target
 )
 {
   return CreateDistancesMaze(m, target.first, target.second);

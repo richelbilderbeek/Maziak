@@ -4,6 +4,7 @@
 #include <iosfwd>
 #include <vector>
 
+#include "maziakcoordinat.h"
 #include "maziakfwd.h"
 #include "maziakintgrid.h"
 
@@ -38,10 +39,10 @@ struct IntMaze
 };
 
 ///Collect all dead ends
-std::vector<std::pair<int,int>> CollectDeadEnds(const IntGrid& grid) noexcept;
+std::vector<Coordinat> CollectDeadEnds(const IntGrid& grid) noexcept;
 
 ///Collect all dead ends
-std::vector<std::pair<int,int>> CollectDeadEnds(const IntMaze& maze) noexcept;
+std::vector<Coordinat> CollectDeadEnds(const IntMaze& maze) noexcept;
 
 
 ///Count the occurance of i in the IntMaze
@@ -56,7 +57,7 @@ DistancesMaze CreateDistancesMaze(
 
 DistancesMaze CreateDistancesMaze(
   const IntMaze& m,
-  const std::pair<int, int>& target
+  const Coordinat& target
 );
 
 IntMaze CreateIntMaze(

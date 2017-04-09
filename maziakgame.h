@@ -110,7 +110,7 @@ struct Game
   ///Start showing the solution from the player's current square
   void SetDoShowSolution(const bool do_show) noexcept;
 
-  void SetPlayerPosition(const std::pair<int, int> p);
+  void SetPlayerPosition(const Coordinat p);
 
   private:
 

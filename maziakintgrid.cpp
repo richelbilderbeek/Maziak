@@ -45,7 +45,7 @@ ribi::maziak::IntGrid
 
   maze[mid_x][mid_y] = 0;
 
-  std::vector<std::pair<int,int> > v;
+  std::vector<Coordinat > v;
   v.push_back(std::make_pair(mid_x,mid_y));
   while (!v.empty())
   {
@@ -60,7 +60,7 @@ ribi::maziak::IntGrid
     //Check possible adjacent squares
     const int x = v.back().first;
     const int y = v.back().second;
-    std::vector<std::pair<int,int> > next;
+    std::vector<Coordinat > next;
     if (x > 0 + 2 && maze[y][x-2] == 2) next.push_back(std::make_pair(x-2,y));
     if (y > 0 + 2 && maze[y-2][x] == 2) next.push_back(std::make_pair(x,y-2));
     if (x < n_cols - 2 && maze[y][x+2] == 2) next.push_back(std::make_pair(x+2,y));

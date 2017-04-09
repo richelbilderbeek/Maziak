@@ -37,7 +37,7 @@ ribi::maziak::DistancesMaze::DistancesMaze(
 
 ribi::maziak::DistancesMaze::DistancesMaze(
   const Maze& maze,
-  const std::pair<int, int> p
+  const Coordinat p
   )
   : m_distances(CalculateDistances(maze,p.first,p.second))
 {
@@ -58,18 +58,18 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
     //Calculate the distances
     int distance = 0;
     distances[y][x] = 0; //Set final point
-    std::vector<std::pair<int,int>> found = { {x,y} };
+    std::vector<Coordinat> found = { {x,y} };
 
     while(!found.empty())
     {
       ++distance;
-      std::vector< std::pair<int,int> > newFound;
+      std::vector< Coordinat > newFound;
 
       for (const auto& p: found)
       {
         const int x_here{p.first};
         const int y_here{p.second};
-        const std::vector<std::pair<int,int>> deltas = {
+        const std::vector<Coordinat> deltas = {
           {  0, +1 },
           { +1,  0 },
           {  0, -1 },
@@ -109,16 +109,16 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
     //Calculate the distances
     int distance = 0;
     distances[y][x] = 0; //Set final point
-    std::vector< std::pair<int,int> > found;
+    std::vector< Coordinat > found;
     found.push_back(std::make_pair(x,y));
 
     while(found.empty() == false)
     {
       ++distance;
-      std::vector< std::pair<int,int> > newFound;
+      std::vector< Coordinat > newFound;
 
-      const std::vector< std::pair<int,int> >::iterator j = found.end();
-      for (std::vector< std::pair<int,int> >::iterator i = found.begin(); i!=j; ++i)
+      const std::vector< Coordinat >::iterator j = found.end();
+      for (std::vector< Coordinat >::iterator i = found.begin(); i!=j; ++i)
       {
         const int x_here{(*i).first};
         const int y_here{(*i).second};

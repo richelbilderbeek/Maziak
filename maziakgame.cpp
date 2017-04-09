@@ -34,7 +34,7 @@ ribi::maziak::Game::Game(
     m_y(-1)
 {
   {
-    const std::pair<int,int> start = FindStart(m_maze);
+    const Coordinat start = FindStart(m_maze);
     m_x = start.first;
     m_y = start.second;
   }
@@ -463,12 +463,11 @@ void ribi::maziak::Game::SetDoShowSolution(const bool do_show) noexcept
   }
 }
 
-void ribi::maziak::Game::SetPlayerPosition(const std::pair<int, int> p)
+void ribi::maziak::Game::SetPlayerPosition(const Coordinat p)
 {
   m_x = p.first;
   m_y = p.second;
 }
-
 
 /*
 void ribi::maziak::Game::Tick()

@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "maziakcoordinat.h"
 #include "maziakfwd.h"
 #include "maziakmazesquare.h"
 
@@ -39,7 +40,7 @@ public:
 
   DistancesMaze(
     const Maze& maze,
-    const std::pair<int,int> goal
+    const Coordinat goal
   );
 
 

@@ -57,7 +57,7 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
       if (s == MazeSquare::enemy)
       {
         //msEnemy 2 tries to walk and becomes msEnemy1
-        std::vector<std::pair<int,int> > moves;
+        std::vector<Coordinat > moves;
         if (row > y && row >        1 && Get(col,row-1) == MazeSquare::empty) moves.push_back(std::make_pair(col,row-1));
         if (col < x && col < maxx - 1 && Get(col+1,row) == MazeSquare::empty) moves.push_back(std::make_pair(col+1,row));
         if (row < y && row < maxy - 1 && Get(col,row+1) == MazeSquare::empty) moves.push_back(std::make_pair(col,row+1));
@@ -158,7 +158,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   };
 
 
-  std::vector<std::pair<int,int>> dead_ends = CollectDeadEnds(int_maze);
+  std::vector<Coordinat> dead_ends = CollectDeadEnds(int_maze);
   std::shuffle(std::begin(dead_ends), std::end(dead_ends), rng_engine);
   const int nDeadEnds = dead_ends.size();
   std::uniform_int_distribution<int> distribution(0,nDeadEnds-1); //Inclusive max
@@ -210,7 +210,7 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   }
 
 
-  std::vector<std::pair<int,int> >::const_iterator deadEndIterator = dead_ends.begin() + 2;
+  std::vector<Coordinat >::const_iterator deadEndIterator = dead_ends.begin() + 2;
 
   {
     //Place swords in maze, only in dead ends
@@ -247,12 +247,12 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   return maze;
 }
 
-std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
+std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const Maze& m) noexcept
 {
   const int size = m.Get().size();
 
-  std::vector<std::pair<int,int>> dead_ends;
+  std::vector<Coordinat> dead_ends;
 
   for (int y=1; y!=size-1; ++y)
   {
@@ -282,13 +282,13 @@ ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
   return Maze{n_cols, n_rows, rng_seed};
 }
 
-std::pair<int,int> ribi::maziak::FindExit(const Maze& m)
+ribi::maziak::Coordinat ribi::maziak::FindExit(const Maze& m)
 {
   return FindFirst(m, MazeSquare::exit);
 }
 
 ///Find a first maze square of the desired type
-std::pair<int,int> ribi::maziak::FindFirst(const Maze& m, const MazeSquare s)
+ribi::maziak::Coordinat ribi::maziak::FindFirst(const Maze& m, const MazeSquare s)
 {
   const int n_cols{get_n_cols(m)};
   const int n_rows{get_n_rows(m)};
@@ -302,7 +302,7 @@ std::pair<int,int> ribi::maziak::FindFirst(const Maze& m, const MazeSquare s)
   throw std::invalid_argument("Could not find first maze square");
 }
 
-std::pair<int,int> ribi::maziak::FindStart(const Maze& m)
+ribi::maziak::Coordinat ribi::maziak::FindStart(const Maze& m)
 {
   return FindFirst(m, MazeSquare::start);
 }
