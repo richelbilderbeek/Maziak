@@ -7,13 +7,14 @@ SOURCES += \
     $$PWD/maziaksolutionmaze_test.cpp \
     $$PWD/maziakintgrid_test.cpp \
     $$PWD/maziakterminal_test.cpp \
-    maziakgamestate_test.cpp \
-    maziakmazesquare_test.cpp \
-    maziakplayerdirection_test.cpp \
-    maziakmenudialog_test.cpp \
-    maziakplayermove_test.cpp \
-    maziaksprite_test.cpp \
-    $$PWD/maziakgame_test.cpp
+    $$PWD/maziakgamestate_test.cpp \
+    $$PWD/maziakmazesquare_test.cpp \
+    $$PWD/maziakplayerdirection_test.cpp \
+    $$PWD/maziakmenudialog_test.cpp \
+    $$PWD/maziakplayermove_test.cpp \
+    $$PWD/maziaksprite_test.cpp \
+    $$PWD/maziakgame_test.cpp \
+    $$PWD/maziakcoordinat_test.cpp
 
 
 # $$PWD/qtmaziaksprites_test.cpp

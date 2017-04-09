@@ -141,9 +141,7 @@ void ribi::maziak::Player::PressKeys(
 std::ostream& ribi::maziak::operator<<(std::ostream& os, const Player& p) noexcept
 {
   os
-    << "coordinat: ("
-      << get_x(p.m_coordinat) << ", "
-      << get_y(p.m_coordinat) << ')' << '\n'
+    << "coordinat: " << p.m_coordinat << '\n'
     << "direction: " << p.m_direction << '\n'
     << "fighting_frame: " << p.m_fighting_frame << '\n'
     << "has_sword: " << p.m_has_sword << '\n'

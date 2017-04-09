@@ -38,7 +38,7 @@ bool ribi::maziak::IntMaze::CanGet(const Coordinat c) const noexcept
 {
   const auto x = get_x(c);
   const auto y = get_y(c);
-  return x >= 0 && x < get_n_rows(*this)
+  return x >= 0 && x < get_n_cols(*this)
       && y >= 0 && y < get_n_rows(*this);
 }
 
@@ -51,21 +51,31 @@ std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
 std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const std::vector<std::vector<int>>& grid) noexcept
 {
-  const int size = grid.size();
+  const auto n_rows = get_n_rows(grid);
+  const auto n_cols = get_n_cols(grid);
 
   std::vector<Coordinat> dead_ends;
 
-  for (int y=1; y!=size-1; ++y)
+  for (int y=1; y!=n_rows-1; ++y)
   {
-    for (int x=1; x!=size-1; ++x)
+    for (int x=1; x!=n_cols-1; ++x)
     {
       if (grid[y][x] != 0) continue; //Continue if here is a wall
-      const int nWalls
-        = (grid[y+1][x  ] == 1 ? 1 : 0)
-        + (grid[y-1][x  ] == 1 ? 1 : 0)
-        + (grid[y  ][x+1] == 1 ? 1 : 0)
-        + (grid[y  ][x-1] == 1 ? 1 : 0);
-      if (nWalls == 3) dead_ends.push_back(std::make_pair(x,y));
+      const auto adjacent = get_adjacent_4(Coordinat(x, y));
+      const auto n =
+        std::count_if(std::begin(adjacent), std::end(adjacent),
+        [grid](const Coordinat c)
+        {
+          assert(get_y(c) >= 0);
+          assert(get_x(c) >= 0);
+          assert(!grid.empty());
+          assert(get_y(c) < static_cast<int>(grid.size()));
+          assert(get_x(c) < static_cast<int>(grid[0].size()));
+          return grid[get_y(c)][get_x(c)] == 1;
+        }
+      );
+
+      if (n == 3) dead_ends.push_back(Coordinat(x,y));
 
     }
   }

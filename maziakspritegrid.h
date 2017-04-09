@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "maziaksprite.h"
+#include "maziakcoordinat.h"
 
 namespace ribi {
 namespace maziak {
@@ -24,7 +25,7 @@ struct SpriteGrid
 {
   SpriteGrid(const int ncols, const int nrows);
 
-  std::vector<Sprite> Get(const int x, const int y) const noexcept;
+  std::vector<Sprite> Get(const Coordinat c) const noexcept;
 
   private:
   std::vector<std::vector<std::vector<Sprite>>> m_v;

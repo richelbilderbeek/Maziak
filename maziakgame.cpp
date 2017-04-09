@@ -64,6 +64,11 @@ ribi::maziak::SolutionMaze ribi::maziak::Game::CreateNewSolution() noexcept
   return SolutionMaze(m_distances, GetPlayer().GetCoordinat());
 }
 
+ribi::maziak::Coordinat ribi::maziak::FindFirst(const Game& m, const MazeSquare s)
+{
+  return FindFirst(m.GetMaze(), s);
+}
+
 int ribi::maziak::get_n_cols(const Game& g) noexcept
 {
   return get_n_cols(g.GetMaze());
@@ -97,22 +102,29 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
 )
 {
   assert(do_show_solution == false || get_n_rows(solution) == get_n_rows(maze));
+  assert(do_show_solution == false || get_n_cols(solution) == get_n_cols(maze));
 
   //Outside of the maze are only walls
   if (!maze.CanGet(c))
   {
     return Sprite::wall;
   }
+  assert(maze.CanGet(c));
   const MazeSquare s{maze.Get(c)};
   //Show golden road
-  if (do_show_solution
-    && solution.Get(c) == 1
-    && ( s == MazeSquare::empty
-      || s == MazeSquare::enemy
-      || s == MazeSquare::start)
-    )
+  if (do_show_solution)
   {
-    return Sprite::path;
+    assert(get_n_rows(solution) == get_n_rows(maze));
+    assert(get_n_cols(solution) == get_n_cols(maze));
+    assert(solution.CanGet(c));
+    if (solution.Get(c) == 1
+      && ( s == MazeSquare::empty
+        || s == MazeSquare::enemy
+        || s == MazeSquare::start)
+      )
+    {
+      return Sprite::path;
+    }
   }
   //Show normal road
   return Sprite::empty;

@@ -3,8 +3,8 @@
 std::string ribi::maziak::CamelCasify(const std::string& s) noexcept
 {
   std::string t;
-  const std::size_t sz = s.size();
-  for(std::size_t i = 0;i!=sz;++i)
+  const auto sz = s.size();
+  for(auto i = 0u; i!=sz;++i)
   {
     const char c = s[i];
     if (s[i] == '_')

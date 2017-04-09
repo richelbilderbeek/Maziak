@@ -26,19 +26,9 @@ ribi::maziak::DistancesMaze::DistancesMaze(
 
 ribi::maziak::DistancesMaze::DistancesMaze(
   const Maze& maze,
-  const int x,
-  const int y
+  const Coordinat c
   )
-  : m_distances(CalculateDistances(maze,x,y))
-{
-
-}
-
-ribi::maziak::DistancesMaze::DistancesMaze(
-  const Maze& maze,
-  const Coordinat p
-  )
-  : m_distances(CalculateDistances(maze,p.first,p.second))
+  : m_distances(CalculateDistances(maze, c))
 {
 
 }
@@ -50,10 +40,11 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
 {
   assert(maze.Get(c) == 0); //Assume starting point is no wall
 
-  const int size = get_n_rows(maze);
-  const int area = size * size;
+  const int n_rows = get_n_rows(maze);
+  const int n_cols = get_n_rows(maze);
+  const int area = n_rows * n_cols;
   const int maxDistance = area;
-  std::vector<std::vector<int>> distances(size, std::vector<int>(size,maxDistance));
+  std::vector<std::vector<int>> distances(n_rows, std::vector<int>(n_cols, maxDistance));
   {
     //Calculate the distances
     int distance = 0;
@@ -91,60 +82,40 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
 
 std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   const Maze& maze,
-  const int x, const int y) noexcept
+  const Coordinat goal) noexcept
 {
-  //Assume maze is square
-  assert(maze.Get(x,y) != MazeSquare::wall); //Assume starting point is no wall
+  assert(maze.Get(goal) != MazeSquare::wall);
 
-  const int size = get_n_rows(maze);
-  const int area = size * size;
+  const int n_rows = get_n_rows(maze);
+  const int n_cols = get_n_cols(maze);
+  const int area = n_rows * n_cols;
   const int maxDistance = area;
-  std::vector<std::vector<int>> distances(size, std::vector<int>(size,maxDistance));
+  std::vector<std::vector<int>> distances(n_rows, std::vector<int>(n_cols,maxDistance));
   {
     //Calculate the distances
     int distance = 0;
-    distances[y][x] = 0; //Set final point
-    std::vector< Coordinat > found;
-    found.push_back(std::make_pair(x,y));
+    distances[get_y(goal)][get_x(goal)] = 0; //Set final point
+    std::vector<Coordinat> found;
+    found.push_back(goal);
 
     while(found.empty() == false)
     {
       ++distance;
-      std::vector< Coordinat > newFound;
+      std::vector<Coordinat> newFound;
 
-      const std::vector< Coordinat >::iterator j = found.end();
-      for (std::vector< Coordinat >::iterator i = found.begin(); i!=j; ++i)
+      for (const Coordinat c: found)
       {
-        const int x_here{(*i).first};
-        const int y_here{(*i).second};
-
-        if (maze.Get(x_here,y_here-1) != MazeSquare::wall
-          && distances[y_here-1][x_here] == maxDistance) //Not already in solution
+        const auto adjacent = get_adjacent_4(c);
+        for (const Coordinat d: adjacent)
         {
-          distances[y_here-1][x_here] = distance;
-          newFound.push_back(std::make_pair(x_here,y_here-1));
+          if (maze.CanGet(d)
+            && maze.Get(d) != MazeSquare::wall
+            && distances[get_y(d)][get_x(d)] == maxDistance) //Not already in solution
+          {
+            distances[get_y(d)][get_x(d)] = distance;
+            newFound.push_back(d);
+          }
         }
-        if (maze.Get(x_here,y_here+1) != MazeSquare::wall
-          && distances[y_here+1][x_here] == maxDistance) //Not already in solution
-        {
-          distances[y_here+1][x_here] = distance;
-          newFound.push_back(std::make_pair(x_here,y_here+1));
-        }
-
-        if (maze.Get(x_here+1,y_here) != MazeSquare::wall
-          && distances[y_here][x_here+1] == maxDistance) //Not already in solution
-        {
-          distances[y_here][x_here+1] = distance;
-          newFound.push_back(std::make_pair(x_here+1,y_here));
-        }
-
-        if (maze.Get(x_here-1,y_here) != MazeSquare::wall
-          && distances[y_here][x_here-1] == maxDistance) //Not already in solution
-        {
-          distances[y_here][x_here-1] = distance;
-          newFound.push_back(std::make_pair(x_here-1,y_here));
-        }
-
       }
       found = newFound;
     }
@@ -156,8 +127,9 @@ bool ribi::maziak::DistancesMaze::CanGet(const Coordinat c) const noexcept
 {
   const auto x = get_x(c);
   const auto y = get_y(c);
-  return x >= 0 && x < GetSize()
-      && y >= 0 && y < GetSize();
+  return x >= 0 && x < get_n_cols(*this)
+      && y >= 0 && y < get_n_rows(*this)
+  ;
 }
 
 int ribi::maziak::DistancesMaze::Get(const Coordinat c) const noexcept
@@ -168,9 +140,10 @@ int ribi::maziak::DistancesMaze::Get(const Coordinat c) const noexcept
   return m_distances[y][x];
 }
 
-int ribi::maziak::DistancesMaze::GetSize() const noexcept
+int ribi::maziak::get_n_cols(const DistancesMaze& m) noexcept
 {
-  return ::ribi::maziak::get_n_rows(*this);
+  assert(!m.Get().empty());
+  return static_cast<int>(m.Get()[0].size());
 }
 
 int ribi::maziak::get_n_rows(const DistancesMaze& m) noexcept

@@ -32,31 +32,22 @@ struct Maze
     ) noexcept;
 
   ///Can I get a value at (x,y)?
-  bool CanGet(const int x, const int y) const noexcept;
-  bool CanGet(const Coordinat& c) const noexcept { return CanGet(get_x(c), get_y(c)); }
+  bool CanGet(const Coordinat c) const noexcept;
 
   ///Can I set a value at (x,y)? Same as CanGet
-  bool CanSet(const int x, const int y) const noexcept { return CanGet(x,y); }
-  bool CanSet(const Coordinat& c) const noexcept { return CanGet(c); }
+  bool CanSet(const Coordinat c) const noexcept { return CanGet(c); }
 
   ///Can a player move to coordinat (x,y) ?
   bool CanMoveTo(
-    const int x, const int y,
-    const bool hasSword,
-    const bool showSolution
-  ) const noexcept;
-  bool CanMoveTo(
     const Coordinat c,
-    const bool hasSword,
-    const bool showSolution
-  ) const noexcept { return CanMoveTo(get_x(c), get_y(c), hasSword, showSolution); }
+    const bool has_sword,
+    const bool show_solution
+  ) const noexcept;
 
-  MazeSquare Get(const Coordinat c) const { return Get(get_x(c), get_y(c)); }
-  MazeSquare Get(const int x, const int y) const;
+  MazeSquare Get(const Coordinat c) const;
   const auto& Get() const noexcept { return m_maze; }
 
-  void Set(const int x, const int y, const MazeSquare s);
-  void Set(const Coordinat c, const MazeSquare s) { Set(get_x(c), get_y(c), s); }
+  void Set(const Coordinat c, const MazeSquare s);
 
   private:
 

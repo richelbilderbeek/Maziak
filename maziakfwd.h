@@ -4,12 +4,12 @@
 namespace ribi {
 namespace maziak {
 
-struct DistancesMaze;
-struct IntMaze;
-struct Game;
-struct Maze;
-struct Sprites;
-struct SolutionMaze;
+class DistancesMaze;
+class IntMaze;
+class Game;
+class Maze;
+class Sprites;
+class SolutionMaze;
 
 } //~namespace maziak
 } //~namespace ribi

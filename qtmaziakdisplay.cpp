@@ -141,8 +141,7 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
         const int col_maze{get_player_x(m_game) - (m_view_width  / 2) + col};
         const int row_maze{get_player_y(m_game) - (m_view_height / 2) + row};
         const auto sprites = m_game.GetSprites(
-          col_maze,
-          row_maze,
+          Coordinat(col_maze, row_maze),
           GetEnemiesAndPrisonersFrame(),
           GetEnemiesAndPrisonersFrame()
         );

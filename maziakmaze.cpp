@@ -66,38 +66,42 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
         if (!moves.empty())
         {
           std::shuffle(std::begin(moves),std::end(moves), rng_engine);
-          Set(moves[0].first,moves[0].second,MazeSquare::enemy);
-          Set(col,row,MazeSquare::empty);
+          Set(moves[0], MazeSquare::enemy);
+          Set(Coordinat(col,row), MazeSquare::empty);
         }
       }
     }
   }
 }
 
-bool ribi::maziak::Maze::CanGet(const int x, const int y) const noexcept
+bool ribi::maziak::Maze::CanGet(const Coordinat c) const noexcept
 {
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   return x >= 0 && x < get_n_cols(*this)
     && y >= 0 && y < get_n_rows(*this);
 }
 
 bool ribi::maziak::Maze::CanMoveTo(
-  const int x, const int y,
-  const bool hasSword,
-  const bool showSolution) const noexcept
+  const Coordinat c,
+  const bool has_sword,
+  const bool show_solution) const noexcept
 {
+  const auto x = get_x(c);
+  const auto y = get_y(c);
+
   //Bump into edge
   if (x < 0) return false;
   if (y < 0) return false;
-  const int maxy = static_cast<int>(m_maze.size());
-  if (y >= maxy) return false;
-  if (x >= static_cast<int>(m_maze[y].size())) return false;
+  if (y >= get_n_rows(*this)) return false;
+  if (x >= get_n_cols(*this)) return false;
   const MazeSquare s = m_maze[y][x];
   //Bump into wall
   if (s == MazeSquare::wall) return false;
   //Bump into sword
-  if (s == MazeSquare::sword && hasSword) return false;
+  if (s == MazeSquare::sword && has_sword) return false;
   //Bump into prisoner
-  if (showSolution && s == MazeSquare::prisoner) return false;
+  if (show_solution && s == MazeSquare::prisoner) return false;
   //Bump into empty/enemy/exit, so player can move there
   return true;
 }
@@ -247,22 +251,28 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
 std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const Maze& m) noexcept
 {
-  const int size = m.Get().size();
+  const auto n_cols = get_n_cols(m);
+  const auto n_rows = get_n_rows(m);
 
   std::vector<Coordinat> dead_ends;
 
-  for (int y=1; y!=size-1; ++y)
+  for (int y=1; y!=n_rows-1; ++y)
   {
-    for (int x=1; x!=size-1; ++x)
+    for (int x=1; x!=n_cols-1; ++x)
     {
-      if (m.Get(x, y) == MazeSquare::wall) continue;
+      const Coordinat here{x,y};
+      if (m.Get(here) == MazeSquare::wall) continue;
       //if (m[y][x] != 0) continue; //Continue if here is a wall
-      const int nWalls
-        = (m.Get(x    , y + 1) == MazeSquare::wall ? 1 : 0)
-        + (m.Get(x    , y - 1) == MazeSquare::wall ? 1 : 0)
-        + (m.Get(x + 1, y    ) == MazeSquare::wall ? 1 : 0)
-        + (m.Get(x - 1, y    ) == MazeSquare::wall ? 1 : 0);
-      if (nWalls == 3) dead_ends.push_back( { x,y } );
+      const auto adjacent = get_adjacent_4(here);
+      const auto n = std::count_if(
+        std::begin(adjacent), std::end(adjacent),
+        [m](const Coordinat c)
+        {
+          return m.Get(c) == MazeSquare::wall;
+        }
+      );
+      assert(n != 4);
+      if (n == 3) dead_ends.push_back( { x,y } );
 
     }
   }
@@ -271,9 +281,9 @@ std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
 
 ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
 {
-  const int n_cols = 19;
-  const int n_rows = 15;
-  const int rng_seed{2};
+  const int n_cols{19};
+  const int n_rows{15};
+  const int rng_seed{5};
   static_assert(IsValidSize(n_cols), "");
   static_assert(IsValidSize(n_rows), "");
   return Maze{n_cols, n_rows, rng_seed};
@@ -289,11 +299,16 @@ ribi::maziak::Coordinat ribi::maziak::FindFirst(const Maze& m, const MazeSquare 
 {
   const int n_cols{get_n_cols(m)};
   const int n_rows{get_n_rows(m)};
+  if (s == MazeSquare::wall)
+  {
+    assert(m.Get(Coordinat(2, 2)) == MazeSquare::wall);
+    return {2, 2};
+  }
   for (int row{1}; row<n_rows; row+=2)
   {
     for (int col{1}; col<n_cols; col+=2)
     {
-      if (m.Get(col,row) == s) return { col, row};
+      if (m.Get(Coordinat(col,row)) == s) return { col, row};
     }
   }
   throw std::invalid_argument("Could not find first maze square");
@@ -305,9 +320,11 @@ ribi::maziak::Coordinat ribi::maziak::FindStart(const Maze& m)
 }
 
 ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
-  const int x, const int y) const
+  const Coordinat c) const
 {
-  Expects(CanGet(x,y));
+  Expects(CanGet(c));
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   return m_maze[y][x];
 }
 
@@ -322,11 +339,13 @@ int ribi::maziak::get_n_rows(const Maze& m) noexcept
   return static_cast<int>(m.Get().size());
 }
 
-void ribi::maziak::Maze::Set(const int x, const int y, const MazeSquare s)
+void ribi::maziak::Maze::Set(const Coordinat c, const MazeSquare s)
 {
-  Expects(CanSet(x,y));
+  Expects(CanSet(c));
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   m_maze[y][x] = s;
-  Ensures(Get(x,y) == s);
+  Ensures(Get(c) == s);
 }
 
 std::ostream& ribi::maziak::operator<<(

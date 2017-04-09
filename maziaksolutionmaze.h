@@ -37,6 +37,7 @@ public:
     const Coordinat c
   );
 
+  bool CanGet(const Coordinat c) const noexcept;
   int Get(const Coordinat c) const noexcept;
 
   const auto& Get() const noexcept { return m_maze; }
@@ -50,6 +51,7 @@ IntMaze CreateSolution(
   const Coordinat& source
 );
 
+int get_n_cols(const SolutionMaze& m);
 int get_n_rows(const SolutionMaze& m) noexcept;
 
 bool IsSquare(const SolutionMaze& m);

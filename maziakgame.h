@@ -144,6 +144,8 @@ struct Game
 ///Creates a MainDialog with TestMaze1
 Game CreateTestGame1();
 
+Coordinat FindFirst(const Game& m, const MazeSquare s);
+
 int get_n_cols(const Game& g) noexcept;
 int get_n_rows(const Game& g) noexcept;
 
