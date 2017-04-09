@@ -266,7 +266,14 @@ void ribi::maziak::QtMenuDialog::OnInstructions()
 {
   this->hide();
   std::unique_ptr<QtInstructionsDialog> d(new QtInstructionsDialog);
-  d->exec();
+  if (m_allow_popups)
+  {
+    d->exec();
+  }
+  else
+  {
+    d->show();
+  }
   this->show();
 }
 
@@ -281,6 +288,13 @@ void ribi::maziak::QtMenuDialog::OnStart()
     11
   );
   d.showFullScreen();
-  d.exec();
+  if (m_allow_popups)
+  {
+    d.exec();
+  }
+  else
+  {
+    d.show();
+  }
   this->show();
 }
