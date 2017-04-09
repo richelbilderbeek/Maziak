@@ -74,21 +74,21 @@ BOOST_AUTO_TEST_CASE(maziak_CreateTestMaze1)
   BOOST_CHECK_EQUAL(Count(MazeSquare::msExit, m), 1);
   const std::string measured{to_str(m.Get())};
   const std::string expected{
-    "XXXXXXXXXXXXXXX\n"
-    "X  +X+    X+  X\n"
-    "X XXXXX XXXXX X\n"
-    "X    ZX X  +X X\n"
-    "XXX XXX X XXX X\n"
-    "X:X X.X   XZ  X\n"
-    "X X X X XXXXX X\n"
-    "X             X\n"
-    "XXXXX X X XXX X\n"
-    "X     X X  ZX X\n"
-    "X XXX X X XXXXX\n"
-    "X   X X!X   X X\n"
-    "XXX X XXXXX X X\n"
-    "X   X     X   X\n"
-    "XXXXXXXXXXXXXXX\n"
+    "XXXXXXXXXXXXXXXXXXX\n"
+    "X!  X X+X.      X X\n"
+    "XXX X X XXX XXXXX X\n"
+    "XZX X X XZ  X:X X X\n"
+    "X X X X XXX X X X X\n"
+    "X   X X         X X\n"
+    "X XXX XXX XXXXXXX X\n"
+    "X                 X\n"
+    "X X XXXXX XXX XXXXX\n"
+    "X X X X X  +X     X\n"
+    "X XXX XXX XXX XXXXX\n"
+    "X X         X     X\n"
+    "X X X X XXX XXXXX X\n"
+    "X X+X X+X    ZX   X\n"
+    "XXXXXXXXXXXXXXXXXXX\n"
   };
   BOOST_CHECK_EQUAL(measured.size(), expected.size());
   BOOST_CHECK_EQUAL(measured, expected);

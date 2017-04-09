@@ -17,6 +17,18 @@ BOOST_AUTO_TEST_CASE(maziak_CreateIntGrid)
 
 BOOST_AUTO_TEST_CASE(maziak_IsValidSize)
 {
+  static_assert(!IsValidSize(-1), "");
+  static_assert(!IsValidSize( 0), "");
+  static_assert(!IsValidSize( 1), "");
+  static_assert(!IsValidSize( 2), "");
+  static_assert(!IsValidSize( 3), "");
+  static_assert(!IsValidSize( 4), "");
+  static_assert(!IsValidSize( 5), "");
+  static_assert(!IsValidSize( 6), "");
+  static_assert( IsValidSize( 7), "");
+  static_assert( IsValidSize(11), "");
+  static_assert( IsValidSize(15), "");
+
   BOOST_CHECK(!IsValidSize(-1));
   BOOST_CHECK(!IsValidSize( 0));
   BOOST_CHECK(!IsValidSize( 1));

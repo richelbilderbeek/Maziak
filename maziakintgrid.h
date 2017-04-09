@@ -22,7 +22,10 @@ int get_n_cols(const IntGrid& g) noexcept;
 int get_n_rows(const IntGrid& g) noexcept;
 
 ///Determine if the size if good to make a maze from
-bool IsValidSize(const int sz) noexcept;
+constexpr bool IsValidSize(const int sz) noexcept
+{
+  return sz >= 7 && sz % 4 == 3;
+}
 
 std::ostream& operator<<(std::ostream& os, const IntGrid& v) noexcept;
 

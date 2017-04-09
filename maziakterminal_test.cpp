@@ -27,14 +27,37 @@ BOOST_AUTO_TEST_CASE(terminal_TogglePrisoners_must_animate)
 
 BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
 {
+/*
+    0123456789012345678
+
+ 0  XXXXXXXXXXXXXXXXXXX
+ 1  X!  X X+X.      X X
+ 2  XXX X X XXX XXXXX X
+ 3  XZX X X XZ  X:X X X
+ 4  X X X X XXX X X X X
+ 5  X   X X         X X
+ 6  X XXX XXX XXXXXXX X
+ 7  X                 X
+ 8  X X XXXXX XXX XXXXX
+ 9  X X X X X  +X     X
+10  X XXX XXX XXX XXXXX
+11  X X         X     X
+12  X X X X XXX XXXXX X
+13  X X+X X+X    ZX   X
+14  XXXXXXXXXXXXXXXXXXX
+
+*/
+
   Terminal t{CreateTestTerminal1()};
   BOOST_CHECK(!t.GetDoShowSolution());
+  t.PressKey(Key::right);
+  t.PressKey(Key::right);
   t.PressKey(Key::down);
   t.PressKey(Key::down);
-  t.PressKey(Key::left);
-  t.PressKey(Key::left);
-  t.PressKey(Key::left);
-  t.PressKey(Key::left);
+  t.PressKey(Key::down);
+  t.PressKey(Key::down);
+  t.PressKey(Key::right);
+  t.PressKey(Key::right);
   t.PressKey(Key::up);
   t.PressKey(Key::up);
   BOOST_CHECK(!t.GetDoShowSolution());
@@ -46,12 +69,14 @@ BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
 BOOST_AUTO_TEST_CASE(terminal_solution_must_reveal_temporarily)
 {
   Terminal t{CreateTestTerminal1()};
+  t.PressKey(Key::right);
+  t.PressKey(Key::right);
   t.PressKey(Key::down);
   t.PressKey(Key::down);
-  t.PressKey(Key::left);
-  t.PressKey(Key::left);
-  t.PressKey(Key::left);
-  t.PressKey(Key::left);
+  t.PressKey(Key::down);
+  t.PressKey(Key::down);
+  t.PressKey(Key::right);
+  t.PressKey(Key::right);
   t.PressKey(Key::up);
   t.PressKey(Key::up);
   t.RespondToCurrentSquare();

@@ -76,22 +76,23 @@ std::vector<std::pair<int,int>> CollectDeadEnds(const Maze& maze) noexcept;
 
 /// Minimal complete maze
 /*
+    0123456789012345678
 
-  XXXXXXXXXXXXXXX
-  X  +X+    X+  X
-  X XXXXX XXXXX X
-  X    ZX X  +X X
-  XXX XXX X XXX X
-  X:X X.X   XZ  X
-  X X X X XXXXX X
-  X             X
-  XXXXX X X XXX X
-  X     X X  ZX X
-  X XXX X X XXXXX
-  X   X X!X   X X
-  XXX X XXXXX X X
-  X   X     X   X
-  XXXXXXXXXXXXXXX
+ 0  XXXXXXXXXXXXXXXXXXX
+ 1  X!  X X+X.      X X
+ 2  XXX X X XXX XXXXX X
+ 3  XZX X X XZ  X:X X X
+ 4  X X X X XXX X X X X
+ 5  X   X X         X X
+ 6  X XXX XXX XXXXXXX X
+ 7  X                 X
+ 8  X X XXXXX XXX XXXXX
+ 9  X X X X X  +X     X
+10  X XXX XXX XXX XXXXX
+11  X X         X     X
+12  X X X X XXX XXXXX X
+13  X X+X X+X    ZX   X
+14  XXXXXXXXXXXXXXXXXXX
 
 */
 Maze CreateTestMaze1() noexcept;

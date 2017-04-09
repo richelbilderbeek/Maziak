@@ -101,10 +101,6 @@ int ribi::maziak::get_n_rows(const IntGrid& g) noexcept
   return static_cast<int>(g.size());
 }
 
-bool ribi::maziak::IsValidSize(const int sz) noexcept
-{
-  return sz >= 7 && sz % 4 == 3;
-}
 
 std::ostream& ribi::maziak::operator<<(
   std::ostream& os, const IntGrid& v) noexcept

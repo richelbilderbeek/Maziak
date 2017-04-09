@@ -45,25 +45,26 @@ BOOST_AUTO_TEST_CASE(maziak_CreateTestMainDialog1)
 BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
 {
 /*
+    0123456789012345678
 
-    012345678901234
-  0 XXXXXXXXXXXXXXX
-  1 X  +X+    X+  X
-  2 X XXXXX XXXXX X
-  3 X    ZX X  +X X
-  4 XXX XXX X XXX X
-  5 X:X X.X   XZ  X
-  6 X X X X XXXXX X
-  7 X             X
-  8 XXXXX X X XXX X
-  9 X     X X  ZX X
-  0 X XXX X X XXXXX
-  1 X   X X!X   X X
-  2 XXX X XXXXX X X
-  3 X   X     X   X
-  4 XXXXXXXXXXXXXXX
+ 0  XXXXXXXXXXXXXXXXXXX
+ 1  X!  X X+X.      X X
+ 2  XXX X X XXX XXXXX X
+ 3  XZX X X XZ  X:X X X
+ 4  X X X X XXX X X X X
+ 5  X   X X         X X
+ 6  X XXX XXX XXXXXXX X
+ 7  X                 X
+ 8  X X XXXXX XXX XXXXX
+ 9  X X X X X  +X     X
+10  X XXX XXX XXX XXXXX
+11  X X         X     X
+12  X X X X XXX XXXXX X
+13  X X+X X+X    ZX   X
+14  XXXXXXXXXXXXXXXXXXX
 
 */
+
   const Game g{CreateTestGame1()};
   //Wall in maze
   {
@@ -85,7 +86,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   }
   //Road
   {
-    const auto measured = g.GetSprites(1, 1);
+    const auto measured = g.GetSprites(2, 1);
     const auto expected = { Sprite::empty };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -94,7 +95,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   }
   //Sword
   {
-    const auto measured = g.GetSprites(3, 1);
+    const auto measured = g.GetSprites(7, 1);
     const auto expected = { Sprite::sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -103,8 +104,8 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   }
   //Start should not be visible, but player on it is
   {
-    assert(g.GetMaze().Get(5, 5) == MazeSquare::msStart);
-    const auto measured = g.GetSprites(5, 5);
+    assert(g.GetMaze().Get(9, 1) == MazeSquare::msStart);
+    const auto measured = g.GetSprites(9, 1);
     const auto expected = { Sprite::player_look_down_sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -113,8 +114,8 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   }
   //Exit
   {
-    assert(g.GetMaze().Get(7, 11) == MazeSquare::msExit);
-    const auto measured = g.GetSprites(7, 11);
+    assert(g.GetMaze().Get(1, 1) == MazeSquare::msExit);
+    const auto measured = g.GetSprites(1, 1);
     const auto expected = { Sprite::exit };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -125,7 +126,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   {
     const int enemy_frame{0};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(1, 5, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(13, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::prisoner1 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -136,7 +137,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   {
     const int enemy_frame{0};
     const int prisoner_frame{1};
-    const auto measured = g.GetSprites(1, 5, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(13, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::prisoner2 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -147,7 +148,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   {
     const int enemy_frame{0};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(5, 3, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(1, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::enemy1 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -158,7 +159,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   {
     const int enemy_frame{1};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(5, 3, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(1, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::enemy2 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -174,23 +175,23 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
 BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
 {
 /*
+    0123456789012345678
 
-    012345678901234
-  0 XXXXXXXXXXXXXXX
-  1 X  +X+    X+  X
-  2 X XXXXX XXXXX X
-  3 X    ZX X  +X X
-  4 XXX XXX X XXX X
-  5 X:X X.X   XZ  X
-  6 X X X.X XXXXX X
-  7 X    ...      X
-  8 XXXXX X.X XXX X
-  9 X     X.X  ZX X
-  0 X XXX X.X XXXXX
-  1 X   X X!X   X X
-  2 XXX X XXXXX X X
-  3 X   X     X   X
-  4 XXXXXXXXXXXXXXX
+ 0  XXXXXXXXXXXXXXXXXXX
+ 1  X!  X X+X.      X X
+ 2  XXX X X XXX XXXXX X
+ 3  XZX X X XZ  X:X X X
+ 4  X X X X XXX X X X X
+ 5  X   X X         X X
+ 6  X XXX XXX XXXXXXX X
+ 7  X                 X
+ 8  X X XXXXX XXX XXXXX
+ 9  X X X X X  +X     X
+10  X XXX XXX XXX XXXXX
+11  X X         X     X
+12  X X X X XXX XXXXX X
+13  X X+X X+X    ZX   X
+14  XXXXXXXXXXXXXXXXXXX
 
 */
   Game g{CreateTestGame1()};
@@ -216,7 +217,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   }
   //Road, not solution
   {
-    const auto measured = g.GetSprites(1, 1);
+    const auto measured = g.GetSprites(5, 1);
     const auto expected = { Sprite::empty };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -225,7 +226,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   }
   //Road, solution
   {
-    const auto measured = g.GetSprites(6, 7);
+    const auto measured = g.GetSprites(2, 1);
     const auto expected = { Sprite::path };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -234,7 +235,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   }
   //Sword
   {
-    const auto measured = g.GetSprites(3, 1);
+    const auto measured = g.GetSprites(7, 1);
     const auto expected = { Sprite::sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -244,8 +245,8 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   //Start should not be visible, but solution should be shown, would not
   //the player stand on it
   {
-    assert(g.GetMaze().Get(5, 5) == MazeSquare::msStart);
-    const auto measured = g.GetSprites(5, 5);
+    assert(g.GetMaze().Get(9, 1) == MazeSquare::msStart);
+    const auto measured = g.GetSprites(9, 1);
     const auto expected = { Sprite::player_look_down_sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -254,8 +255,8 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   }
   //Exit
   {
-    assert(g.GetMaze().Get(7, 11) == MazeSquare::msExit);
-    const auto measured = g.GetSprites(7, 11);
+    assert(g.GetMaze().Get(1, 1) == MazeSquare::msExit);
+    const auto measured = g.GetSprites(1, 1);
     const auto expected = { Sprite::exit };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -266,7 +267,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   {
     const int enemy_frame{0};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(1, 5, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(13, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::prisoner1 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -277,7 +278,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   {
     const int enemy_frame{0};
     const int prisoner_frame{1};
-    const auto measured = g.GetSprites(1, 5, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(13, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::prisoner2 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -288,7 +289,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   {
     const int enemy_frame{0};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(5, 3, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(1, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::enemy1 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),
@@ -299,7 +300,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   {
     const int enemy_frame{1};
     const int prisoner_frame{0};
-    const auto measured = g.GetSprites(5, 3, enemy_frame, prisoner_frame);
+    const auto measured = g.GetSprites(1, 3, enemy_frame, prisoner_frame);
     const auto expected = { Sprite::enemy2 };
     BOOST_CHECK_EQUAL_COLLECTIONS(
       std::begin(expected), std::end(expected),

@@ -274,9 +274,12 @@ std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
 
 ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
 {
-  const auto sz = 15;
-  const int rng_seed{145};
-  return Maze{sz, sz, rng_seed};
+  const int n_cols = 19;
+  const int n_rows = 15;
+  const int rng_seed{2};
+  static_assert(IsValidSize(n_cols), "");
+  static_assert(IsValidSize(n_rows), "");
+  return Maze{n_cols, n_rows, rng_seed};
 }
 
 std::pair<int,int> ribi::maziak::FindExit(const Maze& m)
