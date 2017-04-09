@@ -31,6 +31,7 @@ ribi::maziak::QtMenuDialog::QtMenuDialog(
 ) :
     QDialog(parent),
     ui(new Ui::QtMaziakMenuDialog),
+    m_allow_popups{true},
     m_difficulty(Difficulty::easy),
     m_rng_seed{rng_seed}
 {
@@ -97,25 +98,25 @@ void ribi::maziak::QtMenuDialog::keyPressEvent(QKeyEvent * event)
 {
   switch (event->key())
   {
-    case Qt::Key_Up: case Qt::Key_Left:
+    case Qt::Key_Up:
     {
       switch (m_difficulty)
       {
         case Difficulty::easy: return;
         case Difficulty::medium: m_difficulty = Difficulty::easy; repaint(); return;
         case Difficulty::hard: m_difficulty = Difficulty::medium; repaint(); return;
-        default: assert(!"Should not get here");
       }
+      assert(!"Should not get here"); //!OCLINT accepted idiom
     }
-    case Qt::Key_Down: case Qt::Key_Right:
+    case Qt::Key_Down:
     {
       switch (m_difficulty)
       {
         case Difficulty::easy: m_difficulty = Difficulty::medium; repaint(); return;
         case Difficulty::medium: m_difficulty = Difficulty::hard; repaint(); return;
         case Difficulty::hard: return;
-        default: assert(!"Should not get here");
       }
+      assert(!"Should not get here"); //!OCLINT accepted idiom
     }
     case Qt::Key_S: OnStart(); break;
     case Qt::Key_I: OnInstructions(); break;
@@ -250,7 +251,14 @@ void ribi::maziak::QtMenuDialog::OnAbout()
   d->setStyleSheet(
     "background: url(:/images/MaziakBackground.png) repeat center center fixed;"
   );
-  d->exec();
+  if (m_allow_popups)
+  {
+    d->exec();
+  }
+  else
+  {
+    d->show();
+  }
   this->show();
 }
 

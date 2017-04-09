@@ -11,9 +11,12 @@ class QtMenuDialog_test : public QObject
     Q_OBJECT //!OCLINT
 
 private slots:
+  void about_is_triggered_by_a();
   void display();
+  void set_difficulty_to_easy_with_keyboard();
   void set_difficulty_to_hard_with_keyboard();
   void set_difficulty_to_medium_with_keyboard();
+  void set_difficulty_to_easy_with_mouse();
   void set_difficulty_to_hard_with_mouse();
   void set_difficulty_to_medium_with_mouse();
 };

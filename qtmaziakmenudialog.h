@@ -34,12 +34,14 @@ public:
   auto GetRngSeed() const noexcept { return m_rng_seed; }
 
   #ifndef NDEBUG
+  void DisablePopups() noexcept { m_allow_popups = false; }
   const auto& GetUi() const noexcept { return *ui; }
   #endif // NDEBUG
 
 private:
   Ui::QtMaziakMenuDialog *ui;
 
+  bool m_allow_popups;
   Difficulty m_difficulty;
   const int m_rng_seed;
 
