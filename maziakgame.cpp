@@ -17,7 +17,6 @@ ribi::maziak::Game::Game(
   :
     m_distances(maze, FindExit(maze)),
     m_do_show_solution{false},
-    m_fighting_frame(0),
     m_maze{maze},
     m_player{},
     m_rng_engine{42},
@@ -47,21 +46,7 @@ void ribi::maziak::Game::AnimateEnemiesAndPrisoners(
 
 void ribi::maziak::Game::AnimateFighting() noexcept
 {
-  if (m_fighting_frame > 0)
-  {
-    ++m_fighting_frame;
-    if (m_fighting_frame == 13)
-    {
-      if (!GetPlayerHasSword())
-      {
-        m_state = GameState::game_over;
-        return;
-      }
-      m_fighting_frame = 0;
-      m_player.SetHasSword(false);
-
-    }
-  }
+  m_state = m_player.AnimateFighting();
 }
 
 bool ribi::maziak::Game::CanGet(const int x, const int y) const noexcept
@@ -194,7 +179,7 @@ ribi::maziak::Sprite ribi::maziak::Game::GetSpritePlayer() const
     GetPlayer().GetDirection(),
     GetPlayer().GetMove(),
     GetPlayer().HasSword(),
-    m_fighting_frame
+    GetPlayer().GetFightingFrame()
   );
 }
 
@@ -352,48 +337,10 @@ ribi::maziak::Game::GetSprites(
   return v;
 }
 
-void ribi::maziak::Game::PressKey(const Key key)
-{
-  switch (key)
-  {
-    case Key::left : PressKeyLeft(); break;
-    case Key::right: PressKeyRight(); break;
-    case Key::up   : PressKeyUp(); break;
-    case Key::down : PressKeyDown(); break;
-    case Key::quit :
-    case Key::none : m_player.Stop(); break;
-  }
-}
-
-void ribi::maziak::Game::PressKeyDown()
-{
-  m_player.MoveDown(m_maze, m_do_show_solution);
-}
-
-void ribi::maziak::Game::PressKeyLeft()
-{
-  m_player.MoveLeft(m_maze, m_do_show_solution);
-}
-
-void ribi::maziak::Game::PressKeyRight()
-{
-  m_player.MoveRight(m_maze, m_do_show_solution);
-}
-
-void ribi::maziak::Game::PressKeyUp()
-{
-  m_player.MoveUp(m_maze, m_do_show_solution);
-}
 
 void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 {
-  if (m_fighting_frame > 0) return;
-  if (keys.empty()) { m_player.Stop(); return; }
-
-  for(const Key key: keys)
-  {
-    PressKey(key);
-  }
+  m_player.PressKeys(keys, m_maze, m_do_show_solution);
 }
 
 void ribi::maziak::Game::RespondToCurrentSquare()
@@ -409,7 +356,7 @@ void ribi::maziak::Game::RespondToCurrentSquare()
       assert(!"Should not get here"); //!OCLINT accepted idiom
       return;
     case MazeSquare::enemy:
-      m_fighting_frame = 1;
+      m_player.SetFightingFrame(1);
       m_maze.Set(c, MazeSquare::empty);
       return;
     case MazeSquare::prisoner:
@@ -499,7 +446,6 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Game& d) noexcept
   os
     << "distances: " << d.m_distances << '\n'
     << "do_show_solution: " << d.m_do_show_solution << '\n'
-    << "fighting_frame: " << d.m_fighting_frame << '\n'
     << "maze: " << d.m_maze << '\n'
     << "solution: " << d.m_solution << '\n'
     << "state: " << d.m_state << '\n'

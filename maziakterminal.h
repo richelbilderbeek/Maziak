@@ -34,7 +34,7 @@ struct Terminal
   int GetViewWidth() const noexcept { return 20; }
 
   ///Press a key
-  void PressKey(const Key key) { m_game.PressKey(key); }
+  void PressKey(const Key key) { m_game.PressKeys( { key } ); }
 
   std::set<Key> RequestKeys();
 

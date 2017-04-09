@@ -6,10 +6,29 @@
 ribi::maziak::Player::Player(const Coordinat c)
   : m_coordinat{c},
     m_direction{PlayerDirection::pdDown},
+    m_fighting_frame{0},
     m_has_sword{true},
     m_move_now(PlayerMove::none)
 {
 
+}
+
+ribi::maziak::GameState ribi::maziak::Player::AnimateFighting() noexcept
+{
+  if (m_fighting_frame > 0)
+  {
+    ++m_fighting_frame;
+    if (m_fighting_frame == 13)
+    {
+      if (!HasSword())
+      {
+        return GameState::game_over;
+      }
+      m_fighting_frame = 0;
+      SetHasSword(false);
+    }
+  }
+  return GameState::playing;
 }
 
 int ribi::maziak::get_col(const Player& p) noexcept { return get_col(p.GetCoordinat()); }
@@ -89,6 +108,36 @@ void ribi::maziak::Player::MoveUp(
   m_coordinat = target;
 }
 
+void ribi::maziak::Player::PressKey(const Key key, const Maze& m, const bool do_show_solution)
+{
+  switch (key)
+  {
+    case Key::left : MoveLeft(m, do_show_solution); break;
+    case Key::right: MoveRight(m, do_show_solution); break;
+    case Key::up   : MoveUp(m, do_show_solution); break;
+    case Key::down : MoveDown(m, do_show_solution); break;
+    case Key::quit :
+    case Key::none : Stop(); break;
+  }
+}
+
+void ribi::maziak::Player::PressKeys(
+  const std::set<Key>& keys,
+  const Maze& m,
+  const bool do_show_solution)
+{
+  //Do not respond when fighting
+  if (m_fighting_frame > 0) return;
+
+  //Take waiting stance when no input
+  if (keys.empty()) { Stop(); return; }
+
+  for(const Key key: keys)
+  {
+    PressKey(key, m, do_show_solution);
+  }
+}
+
 std::ostream& ribi::maziak::operator<<(std::ostream& os, const Player& p) noexcept
 {
   os
@@ -96,6 +145,7 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Player& p) noexce
       << get_x(p.m_coordinat) << ", "
       << get_y(p.m_coordinat) << ')' << '\n'
     << "direction: " << p.m_direction << '\n'
+    << "fighting_frame: " << p.m_fighting_frame << '\n'
     << "has_sword: " << p.m_has_sword << '\n'
     << "move_now: " << p.m_move_now << '\n'
   ;

@@ -45,7 +45,7 @@ struct Game
   const auto& GetPlayer() const noexcept { return m_player; }
 
   PlayerDirection GetPlayerDirection() const noexcept { return GetPlayer().GetDirection(); }
-  int GetPlayerFightingFrame() const noexcept { return m_fighting_frame; }
+  int GetPlayerFightingFrame() const noexcept { return GetPlayer().GetFightingFrame(); }
   bool GetPlayerHasSword() const noexcept { return GetPlayer().HasSword(); }
   PlayerMove GetPlayerMove() const noexcept { return GetPlayer().GetMove(); }
   MazeSquare GetPlayerSquare() const noexcept { return Get(m_player.GetCoordinat()); }
@@ -120,7 +120,6 @@ struct Game
   ///as it determines if a player can or cannot walk upon a prisoner square
   bool m_do_show_solution;
 
-  int m_fighting_frame;
   Maze m_maze;
   Player m_player;
   std::mt19937 m_rng_engine;

@@ -138,8 +138,8 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
       for (int col=0; col!=m_view_width; ++col)
       {
         //col_maze and row_maze are the indices in the true/'non-visual' maze
-        const int col_maze{m_game.GetX() - (m_view_width  / 2) + col};
-        const int row_maze{m_game.GetY() - (m_view_height / 2) + row};
+        const int col_maze{get_player_x(m_game) - (m_view_width  / 2) + col};
+        const int row_maze{get_player_y(m_game) - (m_view_height / 2) + row};
         const auto sprites = m_game.GetSprites(
           col_maze,
           row_maze,
