@@ -32,9 +32,6 @@ struct Terminal
   ///The width of the view displayed, in number of blocks
   int GetViewWidth() const noexcept { return 20; }
 
-  ///Every turn, the animation must take place
-  bool MustAnimateEnemiesAndPrisoners() noexcept { return true; }
-
   ///Press a key
   void PressKey(const Key key) { m_game.PressKey(key); }
 
