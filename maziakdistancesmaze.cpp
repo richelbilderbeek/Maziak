@@ -157,15 +157,19 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   return distances;
 }
 
-bool ribi::maziak::DistancesMaze::CanGet(const int x, const int y) const noexcept
+bool ribi::maziak::DistancesMaze::CanGet(const Coordinat c) const noexcept
 {
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   return x >= 0 && x < GetSize()
       && y >= 0 && y < GetSize();
 }
 
-int ribi::maziak::DistancesMaze::Get(const int x, const int y) const noexcept
+int ribi::maziak::DistancesMaze::Get(const Coordinat c) const noexcept
 {
-  assert(CanGet(x,y));
+  assert(CanGet(c));
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   return m_distances[y][x];
 }
 

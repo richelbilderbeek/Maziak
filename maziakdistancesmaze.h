@@ -43,11 +43,9 @@ public:
     const Coordinat goal
   );
 
-
-
-  bool CanGet(const int x, const int y) const noexcept;
+  bool CanGet(const Coordinat c) const noexcept;
   const auto& Get() const noexcept { return m_distances; }
-  int Get(const int x, const int y) const noexcept;
+  int Get(const Coordinat c) const noexcept;
 
   //TODO: make obsolete
   int GetSize() const noexcept;

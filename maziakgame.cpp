@@ -61,8 +61,7 @@ ribi::maziak::Game ribi::maziak::CreateTestGame1()
 
 ribi::maziak::SolutionMaze ribi::maziak::Game::CreateNewSolution() noexcept
 {
-  SolutionMaze solution(m_distances,get_x(GetPlayer()),get_y(GetPlayer()));
-  return solution;
+  return SolutionMaze(m_distances, GetPlayer().GetCoordinat());
 }
 
 int ribi::maziak::get_n_cols(const Game& g) noexcept

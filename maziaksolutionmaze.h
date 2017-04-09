@@ -34,8 +34,7 @@ public:
   SolutionMaze();
   SolutionMaze(
     const DistancesMaze& maze,
-    const int x,
-    const int y
+    const Coordinat c
   );
 
   int Get(const int x, const int y) const noexcept;
@@ -48,8 +47,7 @@ private:
 
 IntMaze CreateSolution(
   const DistancesMaze& maze,
-  const int x,
-  const int y
+  const Coordinat& source
 );
 
 int get_n_rows(const SolutionMaze& m) noexcept;
