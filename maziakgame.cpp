@@ -1,7 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include "maziakgame.h"
 
 #include <cassert>
@@ -13,30 +9,24 @@
 #include "maziakmaze.h"
 #include "maziakintmaze.h"
 #include "maziakdistancesmaze.h"
-
+#include "maziakplayer.h"
 #include "maziaksolutionmaze.h"
-
-#pragma GCC diagnostic pop
 
 ribi::maziak::Game::Game(
   const Maze& maze)
-  : m_direction(PlayerDirection::pdDown),
+  :
     m_distances(maze, FindExit(maze)),
     m_do_show_solution{false},
     m_fighting_frame(0),
-    m_has_sword(true),
     m_maze{maze},
-    m_move_now(PlayerMove::none),
+    m_player{},
     m_rng_engine{42},
     m_solution{},
-    m_state{GameState::playing},
-    m_x(-1),
-    m_y(-1)
+    m_state{GameState::playing}
 {
   {
     const Coordinat start = FindStart(m_maze);
-    m_x = start.first;
-    m_y = start.second;
+    m_player = Player(start);
   }
   m_solution = CreateNewSolution();
 }
@@ -47,8 +37,8 @@ void ribi::maziak::Game::AnimateEnemiesAndPrisoners(
 ) noexcept
 {
   m_maze.AnimateEnemiesAndPrisoners(
-    m_x,
-    m_y,
+    get_x(GetPlayer()),
+    get_y(GetPlayer()),
     view_width,
     view_height,
     m_rng_engine
@@ -62,13 +52,14 @@ void ribi::maziak::Game::AnimateFighting() noexcept
     ++m_fighting_frame;
     if (m_fighting_frame == 13)
     {
-      if (!m_has_sword)
+      if (!GetPlayerHasSword())
       {
         m_state = GameState::game_over;
         return;
       }
       m_fighting_frame = 0;
-      m_has_sword = false;
+      m_player.SetHasSword(false);
+
     }
   }
 }
@@ -85,7 +76,7 @@ ribi::maziak::Game ribi::maziak::CreateTestGame1()
 
 ribi::maziak::SolutionMaze ribi::maziak::Game::CreateNewSolution() noexcept
 {
-  SolutionMaze solution(m_distances,m_x,m_y);
+  SolutionMaze solution(m_distances,get_x(GetPlayer()),get_y(GetPlayer()));
   return solution;
 }
 
@@ -97,6 +88,21 @@ int ribi::maziak::get_n_cols(const Game& g) noexcept
 int ribi::maziak::get_n_rows(const Game& g) noexcept
 {
   return get_n_rows(g.GetMaze());
+}
+
+ribi::maziak::Coordinat ribi::maziak::get_player_coordinat(const Game& g)
+{
+  return g.GetPlayer().GetCoordinat();
+}
+
+int ribi::maziak::get_player_x(const Game& g)
+{
+  return get_x(g.GetPlayer());
+}
+
+int ribi::maziak::get_player_y(const Game& g)
+{
+  return get_y(g.GetPlayer());
 }
 
 ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
@@ -185,9 +191,9 @@ ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
 ribi::maziak::Sprite ribi::maziak::Game::GetSpritePlayer() const
 {
   return ::ribi::maziak::GetSpritePlayer(
-    m_direction,
-    m_move_now,
-    m_has_sword,
+    GetPlayer().GetDirection(),
+    GetPlayer().GetMove(),
+    GetPlayer().HasSword(),
     m_fighting_frame
   );
 }
@@ -338,7 +344,7 @@ ribi::maziak::Game::GetSprites(
   //Out of screen
   if (!CanGet(x, y)) { return { Sprite::wall }; }
   //Player is always on top
-  if (this->m_x == x && this->m_y == y) { return { GetSpritePlayer() }; }
+  if (get_player_x(*this) == x && get_player_y(*this) == y) { return { GetSpritePlayer() }; }
   v.push_back(this->GetSpriteFloor(x,y));
   v.push_back(this->GetSpriteAboveFloor(x, y, enemy_frame, prisoner_frame));
   if (v.size() >= 2 && v[0] == Sprite::empty) v.erase(std::begin(v));
@@ -355,66 +361,34 @@ void ribi::maziak::Game::PressKey(const Key key)
     case Key::up   : PressKeyUp(); break;
     case Key::down : PressKeyDown(); break;
     case Key::quit :
-    case Key::none : m_move_now = PlayerMove::none; break;
+    case Key::none : m_player.Stop(); break;
   }
 }
 
 void ribi::maziak::Game::PressKeyDown()
 {
-  m_direction = PlayerDirection::pdDown;
-  if (!m_maze.CanMoveTo(m_x,m_y+1,m_has_sword,m_do_show_solution))
-  {
-    m_move_now = PlayerMove::none;
-    return;
-  }
-  m_move_now = (m_move_now == PlayerMove::down1
-    ? PlayerMove::down2 : PlayerMove::down1);
-  ++m_y;
+  m_player.MoveDown(m_maze, m_do_show_solution);
 }
 
 void ribi::maziak::Game::PressKeyLeft()
 {
-  m_direction = PlayerDirection::pdLeft;
-  if (!m_maze.CanMoveTo(m_x-1,m_y,m_has_sword,m_do_show_solution))
-  {
-    m_move_now = PlayerMove::none;
-    return;
-  }
-  m_move_now = (m_move_now == PlayerMove::left1
-    ? PlayerMove::left2 : PlayerMove::left1);
-  --m_x;
+  m_player.MoveLeft(m_maze, m_do_show_solution);
 }
 
 void ribi::maziak::Game::PressKeyRight()
 {
-  m_direction = PlayerDirection::pdRight;
-  if (!m_maze.CanMoveTo(m_x+1,m_y,m_has_sword,m_do_show_solution))
-  {
-    m_move_now = PlayerMove::none;
-    return;
-  }
-  m_move_now = (m_move_now == PlayerMove::right1
-    ? PlayerMove::right2 : PlayerMove::right1);
-  ++m_x;
+  m_player.MoveRight(m_maze, m_do_show_solution);
 }
 
 void ribi::maziak::Game::PressKeyUp()
 {
-  m_direction = PlayerDirection::pdUp;
-  if (!m_maze.CanMoveTo(m_x,m_y-1,m_has_sword,m_do_show_solution))
-  {
-    m_move_now = PlayerMove::none;
-    return;
-  }
-  m_move_now = (m_move_now == PlayerMove::up1
-    ? PlayerMove::up2 : PlayerMove::up1);
-  --m_y;
+  m_player.MoveUp(m_maze, m_do_show_solution);
 }
 
 void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 {
   if (m_fighting_frame > 0) return;
-  if (keys.empty()) { m_move_now = PlayerMove::none; return; }
+  if (keys.empty()) { m_player.Stop(); return; }
 
   for(const Key key: keys)
   {
@@ -424,8 +398,9 @@ void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 
 void ribi::maziak::Game::RespondToCurrentSquare()
 {
-  assert(m_maze.CanGet(m_x,m_y));
-  switch (m_maze.Get(m_x,m_y))
+  const auto c = GetPlayer().GetCoordinat();
+  assert(m_maze.CanGet(c));
+  switch (m_maze.Get(c))
   {
     case MazeSquare::start:
     case MazeSquare::empty:
@@ -435,15 +410,15 @@ void ribi::maziak::Game::RespondToCurrentSquare()
       return;
     case MazeSquare::enemy:
       m_fighting_frame = 1;
-      m_maze.Set(m_x,m_y,MazeSquare::empty);
+      m_maze.Set(c, MazeSquare::empty);
       return;
     case MazeSquare::prisoner:
-      m_maze.Set(m_x,m_y,MazeSquare::empty);
+      m_maze.Set(c, MazeSquare::empty);
       SetDoShowSolution(true);
       return;
     case MazeSquare::sword:
-      m_maze.Set(m_x,m_y,MazeSquare::empty);
-      m_has_sword = true;
+      m_maze.Set(c, MazeSquare::empty);
+      m_player.SetHasSword(true);
       return;
     case MazeSquare::exit:
     {
@@ -465,8 +440,7 @@ void ribi::maziak::Game::SetDoShowSolution(const bool do_show) noexcept
 
 void ribi::maziak::Game::SetPlayerPosition(const Coordinat p)
 {
-  m_x = p.first;
-  m_y = p.second;
+  m_player.SetCoordinat(p);
 }
 
 /*
@@ -523,17 +497,13 @@ std::string ribi::maziak::to_str(const Game& d) noexcept
 std::ostream& ribi::maziak::operator<<(std::ostream& os, const Game& d) noexcept
 {
   os
-    << "direction: " << d.m_direction << '\n'
     << "distances: " << d.m_distances << '\n'
     << "do_show_solution: " << d.m_do_show_solution << '\n'
     << "fighting_frame: " << d.m_fighting_frame << '\n'
-    << "has_sword: " << d.m_has_sword << '\n'
     << "maze: " << d.m_maze << '\n'
-    << "move_now: " << d.m_move_now << '\n'
     << "solution: " << d.m_solution << '\n'
     << "state: " << d.m_state << '\n'
-    << "x: " << d.m_x << '\n'
-    << "y: " << d.m_y << '\n'
+    << "player: " << d.m_player << '\n'
   ;
   return os;
 }

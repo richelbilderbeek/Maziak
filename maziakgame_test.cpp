@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(maziak_Game_construction)
   BOOST_CHECK_EQUAL(n_rows, get_n_rows(g));
 }
 
-BOOST_AUTO_TEST_CASE(maziak_MainDialog_stream_out)
+BOOST_AUTO_TEST_CASE(maziak_game_stream_out)
 {
   const Game g{CreateTestMaze1()};
   std::stringstream s;

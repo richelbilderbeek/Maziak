@@ -11,6 +11,7 @@
 #include "maziakmaze.h"
 #include "maziakgamestate.h"
 #include "maziaksolutionmaze.h"
+#include "maziakplayer.h"
 #include "maziakplayerdirection.h"
 #include "maziakplayermove.h"
 #include "maziaksprite.h"
@@ -38,14 +39,16 @@ struct Game
   bool CanGet(const int x, const int y) const noexcept;
 
   const Maze& GetMaze() const noexcept { return m_maze; }
-  MazeSquare Get(const int x, const int y) const noexcept { return m_maze.Get(x, y); }
+  MazeSquare Get(const Coordinat c) const noexcept { return m_maze.Get(c); }
   bool GetDoShowSolution() const noexcept { return m_do_show_solution; }
 
-  PlayerDirection GetPlayerDirection() const noexcept { return m_direction; }
+  const auto& GetPlayer() const noexcept { return m_player; }
+
+  PlayerDirection GetPlayerDirection() const noexcept { return GetPlayer().GetDirection(); }
   int GetPlayerFightingFrame() const noexcept { return m_fighting_frame; }
-  bool GetPlayerHasSword() const noexcept { return m_has_sword; }
-  PlayerMove GetPlayerMove() const noexcept { return m_move_now; }
-  MazeSquare GetPlayerSquare() const noexcept { return Get(m_x, m_y); }
+  bool GetPlayerHasSword() const noexcept { return GetPlayer().HasSword(); }
+  PlayerMove GetPlayerMove() const noexcept { return GetPlayer().GetMove(); }
+  MazeSquare GetPlayerSquare() const noexcept { return Get(m_player.GetCoordinat()); }
 
   const SolutionMaze& GetSolution() const noexcept { return m_solution; }
 
@@ -91,9 +94,6 @@ struct Game
   /// Get the state of the game
   GameState GetState() const noexcept { return m_state; }
 
-  int GetX() const noexcept { return m_x; }
-  int GetY() const noexcept { return m_y; }
-
   ///Press a key and move the player directly if possible
   ///Call 'RespondToCurrentSquare' to let the player respond to the current square
   void PressKey(const Key keys);
@@ -114,7 +114,6 @@ struct Game
 
   private:
 
-  PlayerDirection m_direction;
   DistancesMaze m_distances;
 
   ///Shows the solution. This really is a member variable of this class,
@@ -122,19 +121,11 @@ struct Game
   bool m_do_show_solution;
 
   int m_fighting_frame;
-  bool m_has_sword;
   Maze m_maze;
-  PlayerMove m_move_now;
-
+  Player m_player;
   std::mt19937 m_rng_engine;
   SolutionMaze m_solution;
   GameState m_state;
-
-  ///The player its x coordinat
-  int m_x;
-
-  ///The player its y coordinat
-  int m_y;
 
   SolutionMaze CreateNewSolution() noexcept;
 
@@ -158,6 +149,10 @@ Game CreateTestGame1();
 
 int get_n_cols(const Game& g) noexcept;
 int get_n_rows(const Game& g) noexcept;
+
+Coordinat get_player_coordinat(const Game& g);
+int get_player_x(const Game& g);
+int get_player_y(const Game& g);
 
 
 /// Get the sprite above the floor, e.g. Enemy

@@ -30,6 +30,11 @@ void ribi::maziak::Terminal::Execute()
   }
 }
 
+ribi::maziak::Coordinat ribi::maziak::get_player_coordinat(const Terminal& t)
+{
+  return get_player_coordinat(t.GetGame());
+}
+
 std::set<ribi::maziak::Key> ribi::maziak::Terminal::RequestKeys()
 {
   std::set<Key> keys;
@@ -122,8 +127,9 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
       for (int x=0; x!=view_width; ++x)
       {
         //xVector and yVector are the indices in the non-visual maze 2D std::vector
-        const int xVector = t.GetGame().GetX() - (view_width  / 2) + x;
-        const int yVector = t.GetGame().GetY() - (view_height / 2) + y;
+        const auto player_coordinat = get_player_coordinat(t);
+        const int xVector = get_x(player_coordinat) - (view_width  / 2) + x;
+        const int yVector = get_y(player_coordinat) - (view_height / 2) + y;
         os << to_char(t.GetGame().GetSprites(
           xVector, yVector, t.GetPrisonerFrame(), t.GetPrisonerFrame())
         );

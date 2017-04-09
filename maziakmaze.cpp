@@ -52,16 +52,16 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
       //Only msEnemy2 moves, after moving turning to msEnemy1
       assert(col >= 0);
       assert(col < get_n_rows(*this));
-      const MazeSquare s = Get(col,row);
+      const MazeSquare s = Get(Coordinat(col,row));
 
       if (s == MazeSquare::enemy)
       {
         //msEnemy 2 tries to walk and becomes msEnemy1
         std::vector<Coordinat > moves;
-        if (row > y && row >        1 && Get(col,row-1) == MazeSquare::empty) moves.push_back(std::make_pair(col,row-1));
-        if (col < x && col < maxx - 1 && Get(col+1,row) == MazeSquare::empty) moves.push_back(std::make_pair(col+1,row));
-        if (row < y && row < maxy - 1 && Get(col,row+1) == MazeSquare::empty) moves.push_back(std::make_pair(col,row+1));
-        if (col > x && col >        1 && Get(col-1,row) == MazeSquare::empty) moves.push_back(std::make_pair(col-1,row));
+        if (row > y && row >        1 && Get(Coordinat(col,row-1)) == MazeSquare::empty) moves.push_back(std::make_pair(col,row-1));
+        if (col < x && col < maxx - 1 && Get(Coordinat(col+1,row)) == MazeSquare::empty) moves.push_back(std::make_pair(col+1,row));
+        if (row < y && row < maxy - 1 && Get(Coordinat(col,row+1)) == MazeSquare::empty) moves.push_back(std::make_pair(col,row+1));
+        if (col > x && col >        1 && Get(Coordinat(col-1,row)) == MazeSquare::empty) moves.push_back(std::make_pair(col-1,row));
         //Pick a random move
         if (!moves.empty())
         {
@@ -102,10 +102,7 @@ bool ribi::maziak::Maze::CanMoveTo(
   return true;
 }
 
-bool ribi::maziak::Maze::CanSet(const int x, const int y) const noexcept
-{
-  return CanGet(x,y);
-}
+
 
 std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::ConvertMaze(
   const IntMaze& int_maze

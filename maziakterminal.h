@@ -61,6 +61,8 @@ struct Terminal
 
 Terminal create_test_terminal1();
 
+Coordinat get_player_coordinat(const Terminal& t);
+
 ///Teleport to the closest maze square of the desired type
 ///by walking there without updating
 void teleport_to(Terminal& t, const MazeSquare& s);

@@ -18,7 +18,8 @@ SOURCES += \
     $$PWD/maziakspritegrid.cpp \
     $$PWD/maziakintgrid.cpp \
     $$PWD/maziakgame.cpp \
-    $$PWD/maziakcoordinat.cpp
+    $$PWD/maziakcoordinat.cpp \
+    $$PWD/maziakplayer.cpp
 
 HEADERS  += \
     $$PWD/maziakmenudialog.h \
@@ -39,4 +40,5 @@ HEADERS  += \
     $$PWD/maziakspritegrid.h \
     $$PWD/maziakintgrid.h \
     $$PWD/maziakgame.h \
-    $$PWD/maziakcoordinat.h
+    $$PWD/maziakcoordinat.h \
+    $$PWD/maziakplayer.h
