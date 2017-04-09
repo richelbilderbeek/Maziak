@@ -110,6 +110,8 @@ struct Game
   ///Start showing the solution from the player's current square
   void SetDoShowSolution(const bool do_show) noexcept;
 
+  void SetPlayerPosition(const std::pair<int, int> p);
+
   private:
 
   PlayerDirection m_direction;
@@ -213,6 +215,9 @@ Sprite GetSpritePlayerFighting(
   const int fighting_frame,
   const bool has_sword
 );
+
+///Teleport player to a maze square with the desired content
+void teleport_to(Game& g, const MazeSquare s);
 
 std::string to_str(const Game& d) noexcept;
 

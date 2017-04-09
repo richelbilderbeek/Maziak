@@ -19,7 +19,8 @@ struct Terminal
 
   bool GetDoShowSolution() { --m_do_show_solution_cnt; return m_do_show_solution_cnt > 0; }
 
-  const Game& GetGame() const noexcept { return m_game; }
+  const auto& GetGame() const noexcept { return m_game; }
+  auto& GetGame() noexcept { return m_game; }
 
   MazeSquare GetPlayerSquare() const noexcept { return m_game.GetPlayerSquare(); }
 
@@ -58,7 +59,11 @@ struct Terminal
   int m_t;
 };
 
-Terminal CreateTestTerminal1();
+Terminal create_test_terminal1();
+
+///Teleport to the closest maze square of the desired type
+///by walking there without updating
+void teleport_to(Terminal& t, const MazeSquare& s);
 
 std::string to_str(const Terminal& t);
 

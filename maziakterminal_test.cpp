@@ -8,13 +8,13 @@ using namespace ribi::maziak;
 
 BOOST_AUTO_TEST_CASE(maziak_SolutionMaze_size)
 {
-  const Terminal t{CreateTestTerminal1()};
+  const Terminal t{create_test_terminal1()};
   BOOST_CHECK(!to_str(t).empty());
 }
 
 BOOST_AUTO_TEST_CASE(terminal_TogglePrisoners_must_animate)
 {
-  Terminal t{CreateTestTerminal1()};
+  Terminal t{create_test_terminal1()};
   const auto before = to_str(t);
   t.TogglePrisoners();
   const auto after = to_str(t);
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
 
 */
 
-  Terminal t{CreateTestTerminal1()};
+  Terminal t{create_test_terminal1()};
   BOOST_CHECK(!t.GetDoShowSolution());
   t.PressKey(Key::right);
   t.PressKey(Key::right);
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
 
 BOOST_AUTO_TEST_CASE(terminal_solution_must_reveal_temporarily)
 {
-  Terminal t{CreateTestTerminal1()};
+  Terminal t{create_test_terminal1()};
   t.PressKey(Key::right);
   t.PressKey(Key::right);
   t.PressKey(Key::down);
@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(terminal_AnimateFighting_must_animate)
 
 */
 
-  Terminal t{CreateTestTerminal1()};
+  Terminal t{create_test_terminal1()};
   //Walk to enemy
   t.PressKey(Key::right);
   t.PressKey(Key::right);

@@ -463,6 +463,12 @@ void ribi::maziak::Game::SetDoShowSolution(const bool do_show) noexcept
   }
 }
 
+void ribi::maziak::Game::SetPlayerPosition(const std::pair<int, int> p)
+{
+  m_x = p.first;
+  m_y = p.second;
+}
+
 
 /*
 void ribi::maziak::Game::Tick()
@@ -500,6 +506,12 @@ void ribi::maziak::Game::Tick()
   }
 }
 */
+
+void ribi::maziak::teleport_to(Game& g, const MazeSquare s)
+{
+  const auto target_coordinat = FindFirst(g.GetMaze(), s);
+  g.SetPlayerPosition(target_coordinat);
+}
 
 
 std::string ribi::maziak::to_str(const Game& d) noexcept

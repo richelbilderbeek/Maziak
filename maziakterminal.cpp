@@ -13,7 +13,7 @@ ribi::maziak::Terminal::Terminal(const Game& game)
 
 }
 
-ribi::maziak::Terminal ribi::maziak::CreateTestTerminal1()
+ribi::maziak::Terminal ribi::maziak::create_test_terminal1()
 {
   return Terminal{CreateTestGame1()};
 }
@@ -77,6 +77,11 @@ void ribi::maziak::Terminal::RespondToCurrentSquare()
   {
     m_do_show_solution_cnt = 20;
   }
+}
+
+void ribi::maziak::teleport_to(Terminal& t, const MazeSquare& s)
+{
+  teleport_to(t.GetGame(), s);
 }
 
 void ribi::maziak::Terminal::Tick()

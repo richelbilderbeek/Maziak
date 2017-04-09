@@ -108,8 +108,12 @@ DistancesMaze CreateDistancesMaze(
   const std::pair<int, int>& target
 );
 
+///Find a first maze square of the desired type
+std::pair<int,int> FindFirst(const Maze& m, const MazeSquare s);
+
 std::pair<int,int> FindExit(const Maze& m);
 std::pair<int,int> FindStart(const Maze& m);
+
 
 int get_n_cols(const Maze& m) noexcept;
 int get_n_rows(const Maze& m) noexcept;

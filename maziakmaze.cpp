@@ -284,20 +284,11 @@ ribi::maziak::Maze ribi::maziak::CreateTestMaze1() noexcept
 
 std::pair<int,int> ribi::maziak::FindExit(const Maze& m)
 {
-  const int n_cols{get_n_cols(m)};
-  const int n_rows{get_n_rows(m)};
-  for (int row{1}; row<n_rows; row+=2)
-  {
-    for (int col{1}; col<n_cols; col+=2)
-    {
-      if (m.Get(col,row) == MazeSquare::exit) return { col, row};
-    }
-  }
-  assert(!"Maze guarantees to have an exit");
-  return {0, 0};
+  return FindFirst(m, MazeSquare::exit);
 }
 
-std::pair<int,int> ribi::maziak::FindStart(const Maze& m)
+///Find a first maze square of the desired type
+std::pair<int,int> ribi::maziak::FindFirst(const Maze& m, const MazeSquare s)
 {
   const int n_cols{get_n_cols(m)};
   const int n_rows{get_n_rows(m)};
@@ -305,11 +296,15 @@ std::pair<int,int> ribi::maziak::FindStart(const Maze& m)
   {
     for (int col{1}; col<n_cols; col+=2)
     {
-      if (m.Get(col,row) == MazeSquare::start) return { col, row};
+      if (m.Get(col,row) == s) return { col, row};
     }
   }
-  assert(!"Maze guarantees to have a start");
-  return {0, 0};
+  throw std::invalid_argument("Could not find first maze square");
+}
+
+std::pair<int,int> ribi::maziak::FindStart(const Maze& m)
+{
+  return FindFirst(m, MazeSquare::start);
 }
 
 ribi::maziak::MazeSquare ribi::maziak::Maze::Get(
