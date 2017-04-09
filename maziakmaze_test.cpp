@@ -34,10 +34,10 @@ BOOST_AUTO_TEST_CASE(maziak_Maze_get_and_set_must_be_symmetrical)
   const auto rng_seed = 42;
   Maze m(sz, sz, rng_seed);
   assert(m.CanSet(3,4));
-  m.Set(3,4,MazeSquare::msEmpty);
-  BOOST_CHECK_EQUAL(m.Get(3,4), MazeSquare::msEmpty);
-  m.Set(3,4,MazeSquare::msWall);
-  BOOST_CHECK_EQUAL(m.Get(3,4), MazeSquare::msWall);
+  m.Set(3,4,MazeSquare::empty);
+  BOOST_CHECK_EQUAL(m.Get(3,4), MazeSquare::empty);
+  m.Set(3,4,MazeSquare::wall);
+  BOOST_CHECK_EQUAL(m.Get(3,4), MazeSquare::wall);
 }
 
 BOOST_AUTO_TEST_CASE(maziak_Maze_stream_out)
@@ -60,18 +60,18 @@ BOOST_AUTO_TEST_CASE(maziak_ConvertMaze)
   // msEmpty,
   // msWall,
   const auto n = ConvertMaze(m);
-  BOOST_CHECK_EQUAL(Count(0, m), Count(MazeSquare::msEmpty, n));
-  BOOST_CHECK_EQUAL(Count(1, m), Count(MazeSquare::msWall, n));
+  BOOST_CHECK_EQUAL(Count(0, m), Count(MazeSquare::empty, n));
+  BOOST_CHECK_EQUAL(Count(1, m), Count(MazeSquare::wall, n));
 }
 
 BOOST_AUTO_TEST_CASE(maziak_CreateTestMaze1)
 {
   const Maze m{CreateTestMaze1()};
-  BOOST_CHECK(Count(MazeSquare::msPrisoner, m) > 0);
-  BOOST_CHECK(Count(MazeSquare::msSword, m) > 0);
-  BOOST_CHECK(Count(MazeSquare::msEnemy, m) > 0);
-  BOOST_CHECK_EQUAL(Count(MazeSquare::msStart, m), 1);
-  BOOST_CHECK_EQUAL(Count(MazeSquare::msExit, m), 1);
+  BOOST_CHECK(Count(MazeSquare::prisoner, m) > 0);
+  BOOST_CHECK(Count(MazeSquare::sword, m) > 0);
+  BOOST_CHECK(Count(MazeSquare::enemy, m) > 0);
+  BOOST_CHECK_EQUAL(Count(MazeSquare::start, m), 1);
+  BOOST_CHECK_EQUAL(Count(MazeSquare::exit, m), 1);
   const std::string measured{to_str(m.Get())};
   const std::string expected{
     "XXXXXXXXXXXXXXXXXXX\n"

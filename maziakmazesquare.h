@@ -10,31 +10,44 @@ namespace maziak {
 
 enum class MazeSquare
 {
-  msEmpty,
-  msWall,
-  msEnemy,
-  msPrisoner,
-  msSword,
-  msExit,
-  msStart //Initial starting position
+  empty,
+  wall,
+  enemy,
+  prisoner,
+  sword,
+  exit,
+  start //Initial starting position
 };
 
 constexpr std::initializer_list<MazeSquare> get_all_maze_squares()
 {
   return
   {
-    MazeSquare::msEmpty,
-    MazeSquare::msWall,
-    MazeSquare::msEnemy,
-    MazeSquare::msPrisoner,
-    MazeSquare::msSword,
-    MazeSquare::msExit,
-    MazeSquare::msStart
+    MazeSquare::empty,
+    MazeSquare::wall,
+    MazeSquare::enemy,
+    MazeSquare::prisoner,
+    MazeSquare::sword,
+    MazeSquare::exit,
+    MazeSquare::start
   };
 }
 
 ///ASCII art
-char to_char(const MazeSquare s) noexcept;
+constexpr char to_char(const MazeSquare s) noexcept
+{
+  switch (s)
+  {
+    case MazeSquare::empty: return ' ';
+    case MazeSquare::wall: return 'X';
+    case MazeSquare::enemy: return 'Z';
+    case MazeSquare::prisoner: return ':';
+    case MazeSquare::sword: return '+';
+    case MazeSquare::exit: return '!';
+    case MazeSquare::start: return '.';
+  }
+  return '?';
+}
 
 std::string to_str(const MazeSquare s) noexcept;
 

@@ -54,20 +54,20 @@ void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
       assert(col < get_n_rows(*this));
       const MazeSquare s = Get(col,row);
 
-      if (s == MazeSquare::msEnemy)
+      if (s == MazeSquare::enemy)
       {
         //msEnemy 2 tries to walk and becomes msEnemy1
         std::vector<std::pair<int,int> > moves;
-        if (row > y && row >        1 && Get(col,row-1) == MazeSquare::msEmpty) moves.push_back(std::make_pair(col,row-1));
-        if (col < x && col < maxx - 1 && Get(col+1,row) == MazeSquare::msEmpty) moves.push_back(std::make_pair(col+1,row));
-        if (row < y && row < maxy - 1 && Get(col,row+1) == MazeSquare::msEmpty) moves.push_back(std::make_pair(col,row+1));
-        if (col > x && col >        1 && Get(col-1,row) == MazeSquare::msEmpty) moves.push_back(std::make_pair(col-1,row));
+        if (row > y && row >        1 && Get(col,row-1) == MazeSquare::empty) moves.push_back(std::make_pair(col,row-1));
+        if (col < x && col < maxx - 1 && Get(col+1,row) == MazeSquare::empty) moves.push_back(std::make_pair(col+1,row));
+        if (row < y && row < maxy - 1 && Get(col,row+1) == MazeSquare::empty) moves.push_back(std::make_pair(col,row+1));
+        if (col > x && col >        1 && Get(col-1,row) == MazeSquare::empty) moves.push_back(std::make_pair(col-1,row));
         //Pick a random move
         if (!moves.empty())
         {
           std::shuffle(std::begin(moves),std::end(moves), rng_engine);
-          Set(moves[0].first,moves[0].second,MazeSquare::msEnemy);
-          Set(col,row,MazeSquare::msEmpty);
+          Set(moves[0].first,moves[0].second,MazeSquare::enemy);
+          Set(col,row,MazeSquare::empty);
         }
       }
     }
@@ -93,11 +93,11 @@ bool ribi::maziak::Maze::CanMoveTo(
   if (x >= static_cast<int>(m_maze[y].size())) return false;
   const MazeSquare s = m_maze[y][x];
   //Bump into wall
-  if (s == MazeSquare::msWall) return false;
+  if (s == MazeSquare::wall) return false;
   //Bump into sword
-  if (s == MazeSquare::msSword && hasSword) return false;
+  if (s == MazeSquare::sword && hasSword) return false;
   //Bump into prisoner
-  if (showSolution && s == MazeSquare::msPrisoner) return false;
+  if (showSolution && s == MazeSquare::prisoner) return false;
   //Bump into empty/enemy/exit, so player can move there
   return true;
 }
@@ -198,15 +198,15 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   {
     const int x = dead_ends[0].first;
     const int y = dead_ends[0].second;
-    assert(maze[y][x] == MazeSquare::msEmpty);
-    maze[y][x] = MazeSquare::msStart;
+    assert(maze[y][x] == MazeSquare::empty);
+    maze[y][x] = MazeSquare::start;
   }
   //Set exit
   {
     const int x = dead_ends[1].first;
     const int y = dead_ends[1].second;
-    assert(maze[y][x] == MazeSquare::msEmpty);
-    maze[y][x] = MazeSquare::msExit;
+    assert(maze[y][x] == MazeSquare::empty);
+    maze[y][x] = MazeSquare::exit;
   }
 
 
@@ -219,8 +219,8 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
       assert(deadEndIterator != dead_ends.end());
       const int x = (*deadEndIterator).first;
       const int y = (*deadEndIterator).second;
-      assert(maze[y][x] == MazeSquare::msEmpty);
-      maze[y][x] = MazeSquare::msSword;
+      assert(maze[y][x] == MazeSquare::empty);
+      maze[y][x] = MazeSquare::sword;
       ++deadEndIterator;
     }
     //Place prisoners in maze, only in dead ends
@@ -229,8 +229,8 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
       assert(deadEndIterator != dead_ends.end());
       const int x = (*deadEndIterator).first;
       const int y = (*deadEndIterator).second;
-      assert(maze[y][x] == MazeSquare::msEmpty);
-      maze[y][x] = MazeSquare::msPrisoner;
+      assert(maze[y][x] == MazeSquare::empty);
+      maze[y][x] = MazeSquare::prisoner;
       ++deadEndIterator;
     }
 
@@ -239,8 +239,8 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
       assert(deadEndIterator != dead_ends.end());
       const int x = (*deadEndIterator).first;
       const int y = (*deadEndIterator).second;
-      assert(maze[y][x] == MazeSquare::msEmpty);
-      maze[y][x] = MazeSquare::msEnemy;
+      assert(maze[y][x] == MazeSquare::empty);
+      maze[y][x] = MazeSquare::enemy;
       ++deadEndIterator;
     }
   }
@@ -258,13 +258,13 @@ std::vector<std::pair<int,int>> ribi::maziak::CollectDeadEnds(
   {
     for (int x=1; x!=size-1; ++x)
     {
-      if (m.Get(x, y) == MazeSquare::msWall) continue;
+      if (m.Get(x, y) == MazeSquare::wall) continue;
       //if (m[y][x] != 0) continue; //Continue if here is a wall
       const int nWalls
-        = (m.Get(x    , y + 1) == MazeSquare::msWall ? 1 : 0)
-        + (m.Get(x    , y - 1) == MazeSquare::msWall ? 1 : 0)
-        + (m.Get(x + 1, y    ) == MazeSquare::msWall ? 1 : 0)
-        + (m.Get(x - 1, y    ) == MazeSquare::msWall ? 1 : 0);
+        = (m.Get(x    , y + 1) == MazeSquare::wall ? 1 : 0)
+        + (m.Get(x    , y - 1) == MazeSquare::wall ? 1 : 0)
+        + (m.Get(x + 1, y    ) == MazeSquare::wall ? 1 : 0)
+        + (m.Get(x - 1, y    ) == MazeSquare::wall ? 1 : 0);
       if (nWalls == 3) dead_ends.push_back( { x,y } );
 
     }
@@ -290,7 +290,7 @@ std::pair<int,int> ribi::maziak::FindExit(const Maze& m)
   {
     for (int col{1}; col<n_cols; col+=2)
     {
-      if (m.Get(col,row) == MazeSquare::msExit) return { col, row};
+      if (m.Get(col,row) == MazeSquare::exit) return { col, row};
     }
   }
   assert(!"Maze guarantees to have an exit");
@@ -305,7 +305,7 @@ std::pair<int,int> ribi::maziak::FindStart(const Maze& m)
   {
     for (int col{1}; col<n_cols; col+=2)
     {
-      if (m.Get(col,row) == MazeSquare::msStart) return { col, row};
+      if (m.Get(col,row) == MazeSquare::start) return { col, row};
     }
   }
   assert(!"Maze guarantees to have a start");

@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   }
   //Start should not be visible, but player on it is
   {
-    assert(g.GetMaze().Get(9, 1) == MazeSquare::msStart);
+    assert(g.GetMaze().Get(9, 1) == MazeSquare::start);
     const auto measured = g.GetSprites(9, 1);
     const auto expected = { Sprite::player_look_down_sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_no_path)
   }
   //Exit
   {
-    assert(g.GetMaze().Get(1, 1) == MazeSquare::msExit);
+    assert(g.GetMaze().Get(1, 1) == MazeSquare::exit);
     const auto measured = g.GetSprites(1, 1);
     const auto expected = { Sprite::exit };
     BOOST_CHECK_EQUAL_COLLECTIONS(
@@ -245,7 +245,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   //Start should not be visible, but solution should be shown, would not
   //the player stand on it
   {
-    assert(g.GetMaze().Get(9, 1) == MazeSquare::msStart);
+    assert(g.GetMaze().Get(9, 1) == MazeSquare::start);
     const auto measured = g.GetSprites(9, 1);
     const auto expected = { Sprite::player_look_down_sword };
     BOOST_CHECK_EQUAL_COLLECTIONS(
@@ -255,7 +255,7 @@ BOOST_AUTO_TEST_CASE(maziak_game_can_get_sprites_path_visible)
   }
   //Exit
   {
-    assert(g.GetMaze().Get(1, 1) == MazeSquare::msExit);
+    assert(g.GetMaze().Get(1, 1) == MazeSquare::exit);
     const auto measured = g.GetSprites(1, 1);
     const auto expected = { Sprite::exit };
     BOOST_CHECK_EQUAL_COLLECTIONS(

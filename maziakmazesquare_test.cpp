@@ -11,6 +11,13 @@ BOOST_AUTO_TEST_CASE(maziak_maze_square_to_char)
   {
     BOOST_CHECK_NO_THROW(to_char(i));
   }
+  static_assert(to_char(MazeSquare::empty   ) == ' ', "");
+  static_assert(to_char(MazeSquare::wall    ) == 'X', "");
+  static_assert(to_char(MazeSquare::enemy   ) == 'Z', "");
+  static_assert(to_char(MazeSquare::prisoner) == ':', "");
+  static_assert(to_char(MazeSquare::sword   ) == '+', "");
+  static_assert(to_char(MazeSquare::exit    ) == '!', "");
+  static_assert(to_char(MazeSquare::start   ) == '.', "");
 }
 
 BOOST_AUTO_TEST_CASE(maziak_maze_square_to_str)

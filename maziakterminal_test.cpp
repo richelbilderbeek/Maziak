@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(terminal_stepping_on_prisoner_must_reveal_solution)
   t.PressKey(Key::up);
   t.PressKey(Key::up);
   BOOST_CHECK(!t.GetDoShowSolution());
-  assert(t.GetPlayerSquare() == MazeSquare::msPrisoner);
+  assert(t.GetPlayerSquare() == MazeSquare::prisoner);
   t.RespondToCurrentSquare();
   BOOST_CHECK(t.GetDoShowSolution());
 }

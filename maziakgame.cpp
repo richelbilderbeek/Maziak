@@ -118,9 +118,9 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   //Show golden road
   if (do_show_solution
     && solution.Get(x,y) == 1
-    && ( s == MazeSquare::msEmpty
-      || s == MazeSquare::msEnemy
-      || s == MazeSquare::msStart)
+    && ( s == MazeSquare::empty
+      || s == MazeSquare::enemy
+      || s == MazeSquare::start)
     )
   {
     return Sprite::path;
@@ -141,15 +141,15 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
   //What else here?
   switch(maze.Get(x,y))
   {
-    case MazeSquare::msStart:
-    case MazeSquare::msEmpty: return Sprite::empty;
-    case MazeSquare::msWall: return Sprite::wall;
-    case MazeSquare::msEnemy:
+    case MazeSquare::start:
+    case MazeSquare::empty: return Sprite::empty;
+    case MazeSquare::wall: return Sprite::wall;
+    case MazeSquare::enemy:
       return enemy_frame % 2 == 0 ? Sprite::enemy1 : Sprite::enemy2;
-    case MazeSquare::msPrisoner:
+    case MazeSquare::prisoner:
       return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
-    case MazeSquare::msSword: return Sprite::sword;
-    case MazeSquare::msExit: return Sprite::exit;
+    case MazeSquare::sword: return Sprite::sword;
+    case MazeSquare::exit: return Sprite::exit;
   }
   assert(!"Should not get here"); //!OCLINT accepted idiom
   return Sprite::empty;
@@ -427,25 +427,25 @@ void ribi::maziak::Game::RespondToCurrentSquare()
   assert(m_maze.CanGet(m_x,m_y));
   switch (m_maze.Get(m_x,m_y))
   {
-    case MazeSquare::msStart:
-    case MazeSquare::msEmpty:
+    case MazeSquare::start:
+    case MazeSquare::empty:
       return;
-    case MazeSquare::msWall:
+    case MazeSquare::wall:
       assert(!"Should not get here"); //!OCLINT accepted idiom
       return;
-    case MazeSquare::msEnemy:
+    case MazeSquare::enemy:
       m_fighting_frame = 1;
-      m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
+      m_maze.Set(m_x,m_y,MazeSquare::empty);
       return;
-    case MazeSquare::msPrisoner:
-      m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
+    case MazeSquare::prisoner:
+      m_maze.Set(m_x,m_y,MazeSquare::empty);
       SetDoShowSolution(true);
       return;
-    case MazeSquare::msSword:
-      m_maze.Set(m_x,m_y,MazeSquare::msEmpty);
+    case MazeSquare::sword:
+      m_maze.Set(m_x,m_y,MazeSquare::empty);
       m_has_sword = true;
       return;
-    case MazeSquare::msExit:
+    case MazeSquare::exit:
     {
       m_state = GameState::has_won;
       return;
