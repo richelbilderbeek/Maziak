@@ -49,9 +49,9 @@ void ribi::maziak::Game::AnimateFighting() noexcept
   m_state = m_player.AnimateFighting();
 }
 
-bool ribi::maziak::Game::CanGet(const int x, const int y) const noexcept
+bool ribi::maziak::Game::CanGet(const Coordinat c) const noexcept
 {
-  return GetMaze().CanGet(x, y);
+  return GetMaze().CanGet(c);
 }
 
 ribi::maziak::Game ribi::maziak::CreateTestGame1()
@@ -91,8 +91,7 @@ int ribi::maziak::get_player_y(const Game& g)
 
 ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   const Maze& maze,
-  const int x,
-  const int y,
+  const Coordinat c,
   const bool do_show_solution,
   const SolutionMaze& solution
 )
@@ -100,14 +99,14 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
   assert(do_show_solution == false || get_n_rows(solution) == get_n_rows(maze));
 
   //Outside of the maze are only walls
-  if (!maze.CanGet(x,y))
+  if (!maze.CanGet(c))
   {
     return Sprite::wall;
   }
-  const MazeSquare s{maze.Get(x,y)};
+  const MazeSquare s{maze.Get(c)};
   //Show golden road
   if (do_show_solution
-    && solution.Get(x,y) == 1
+    && solution.Get(c) == 1
     && ( s == MazeSquare::empty
       || s == MazeSquare::enemy
       || s == MazeSquare::start)
@@ -120,16 +119,15 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteFloor(
 }
 
 ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
-  const int x,
-  const int y,
+  const Coordinat c,
   const Maze& maze,
   const int enemy_frame,
   const int prisoner_frame
 )
 {
-  if (!maze.CanGet(x,y)) { return Sprite::wall; }
+  if (!maze.CanGet(c)) { return Sprite::wall; }
   //What else here?
-  switch(maze.Get(x,y))
+  switch(maze.Get(c))
   {
     case MazeSquare::start:
     case MazeSquare::empty: return Sprite::empty;
@@ -146,26 +144,23 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpriteFloor(
-  const int x, const int y) const
+  const Coordinat c) const
 {
   return ::ribi::maziak::GetSpriteFloor(
     m_maze,
-    x,
-    y,
+    c,
     m_do_show_solution,
     m_solution);
 }
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
-  const int x,
-  const int y,
+  const Coordinat c,
   const int enemy_frame,
   const int prisoner_frame
 ) const
 {
   return ribi::maziak::GetSpriteAboveFloor(
-    x,
-    y,
+    c,
     m_maze,
     enemy_frame,
     prisoner_frame
@@ -318,19 +313,18 @@ ribi::maziak::Sprite ribi::maziak::GetSpritePlayerFighting( //!OCLINT cannot low
 
 std::vector<ribi::maziak::Sprite>
 ribi::maziak::Game::GetSprites(
-  const int x,
-  const int y,
+  const Coordinat c,
   const int enemy_frame,
   const int prisoner_frame
 ) const
 {
   std::vector<Sprite> v;
   //Out of screen
-  if (!CanGet(x, y)) { return { Sprite::wall }; }
+  if (!CanGet(c)) { return { Sprite::wall }; }
   //Player is always on top
-  if (get_player_x(*this) == x && get_player_y(*this) == y) { return { GetSpritePlayer() }; }
-  v.push_back(this->GetSpriteFloor(x,y));
-  v.push_back(this->GetSpriteAboveFloor(x, y, enemy_frame, prisoner_frame));
+  if (get_player_coordinat(*this) == c) { return { GetSpritePlayer() }; }
+  v.push_back(this->GetSpriteFloor(c));
+  v.push_back(this->GetSpriteAboveFloor(c, enemy_frame, prisoner_frame));
   if (v.size() >= 2 && v[0] == Sprite::empty) v.erase(std::begin(v));
   if (v.size() >= 2 && v[0] == Sprite::path && v[1] == Sprite::empty) v.erase(std::begin(v) + 1);
   return v;

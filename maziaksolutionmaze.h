@@ -37,7 +37,7 @@ public:
     const Coordinat c
   );
 
-  int Get(const int x, const int y) const noexcept;
+  int Get(const Coordinat c) const noexcept;
 
   const auto& Get() const noexcept { return m_maze; }
 

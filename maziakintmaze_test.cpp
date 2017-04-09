@@ -21,12 +21,12 @@ BOOST_AUTO_TEST_CASE(maziak_IntMaze_CanGet)
   const auto sz = 11;
   const int rng_seed{42};
   const auto m = CreateIntMaze(sz, sz, rng_seed);
-  BOOST_CHECK( m.CanGet(0,0));
-  BOOST_CHECK( m.CanGet(10,10));
-  BOOST_CHECK(!m.CanGet( 0,11));
-  BOOST_CHECK(!m.CanGet(11, 0));
-  BOOST_CHECK(!m.CanGet(-1, 0));
-  BOOST_CHECK(!m.CanGet( 0,-1));
+  BOOST_CHECK( m.CanGet(Coordinat( 0, 0)));
+  BOOST_CHECK( m.CanGet(Coordinat(10,10)));
+  BOOST_CHECK(!m.CanGet(Coordinat( 0,11)));
+  BOOST_CHECK(!m.CanGet(Coordinat(11, 0)));
+  BOOST_CHECK(!m.CanGet(Coordinat(-1, 0)));
+  BOOST_CHECK(!m.CanGet(Coordinat( 0,-1)));
 }
 
 BOOST_AUTO_TEST_CASE(maziak_CreateIntMaze)

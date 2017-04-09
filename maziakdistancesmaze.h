@@ -28,8 +28,7 @@ public:
 
   DistancesMaze(
     const IntMaze& maze,
-    const int goal_x,
-    const int goal_y
+    const Coordinat target
   );
 
   DistancesMaze(
@@ -57,8 +56,7 @@ private:
 
 std::vector<std::vector<int>> CalculateDistances(
   const IntMaze& maze,
-  const int x,
-  const int y
+  const Coordinat c
 ) noexcept;
 
 std::vector<std::vector<int>> CalculateDistances(

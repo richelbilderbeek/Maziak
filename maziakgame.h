@@ -36,7 +36,7 @@ struct Game
 
   ///Is the coordinat in range of the maze?
   ///If not, this usually ends up in a wall being drawn
-  bool CanGet(const int x, const int y) const noexcept;
+  bool CanGet(const Coordinat c) const noexcept;
 
   const Maze& GetMaze() const noexcept { return m_maze; }
   MazeSquare Get(const Coordinat c) const noexcept { return m_maze.Get(c); }
@@ -61,15 +61,14 @@ struct Game
   /// @param prisoner_frame index in the prisoner animation. Prisoners have two
   ///   sprites, so any odd number gives one sprite, any even number the other
   Sprite GetSpriteAboveFloor(
-    const int x,
-    const int y,
+    const Coordinat c,
     const int enemy_frame,
     const int prisoner_frame
   ) const;
 
   /// @param x column index of the maze
   /// @param y row index of the maze
-  Sprite GetSpriteFloor(const int x, const int y) const;
+  Sprite GetSpriteFloor(const Coordinat c) const;
 
   /// @param x column index of the maze
   /// @param y row index of the maze
@@ -85,8 +84,7 @@ struct Game
   /// @param prisoner_frame index in the prisoner animation. Prisoners have two
   ///   sprites, so any odd number gives one sprite, any even number the other
   std::vector<Sprite> GetSprites(
-    const int x,
-    const int y,
+    const Coordinat c,
     const int enemy_frame = 0,
     const int prisoner_frame = 0
   ) const;
@@ -163,8 +161,7 @@ int get_player_y(const Game& g);
 /// @param prisoner_frame index in the prisoner animation. Prisoners have two
 ///   sprites, so any odd number gives one sprite, any even number the other
 Sprite GetSpriteAboveFloor(
-  const int x,
-  const int y,
+  const Coordinat c,
   const Maze& maze,
   const int enemy_frame,
   const int prisoner_frame
@@ -172,8 +169,7 @@ Sprite GetSpriteAboveFloor(
 
 Sprite GetSpriteFloor(
   const Maze& maze,
-  const int x,
-  const int y,
+  const Coordinat c,
   const bool show_solution,
   const SolutionMaze& solution
 );

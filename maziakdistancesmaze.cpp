@@ -17,10 +17,9 @@ ribi::maziak::DistancesMaze::DistancesMaze()
 
 ribi::maziak::DistancesMaze::DistancesMaze(
   const IntMaze& maze,
-  const int x,
-  const int y
-  )
-  : m_distances(CalculateDistances(maze,x,y))
+  const Coordinat c
+)
+  : m_distances(CalculateDistances(maze,c))
 {
 
 }
@@ -46,9 +45,10 @@ ribi::maziak::DistancesMaze::DistancesMaze(
 
 std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   const IntMaze& maze,
-  const int x, const int y) noexcept
+  const Coordinat c
+  ) noexcept
 {
-  assert(maze.Get(x,y) == 0); //Assume starting point is no wall
+  assert(maze.Get(c) == 0); //Assume starting point is no wall
 
   const int size = get_n_rows(maze);
   const int area = size * size;
@@ -57,34 +57,29 @@ std::vector<std::vector<int>> ribi::maziak::CalculateDistances(
   {
     //Calculate the distances
     int distance = 0;
+    const auto x = get_x(c);
+    const auto y = get_y(c);
     distances[y][x] = 0; //Set final point
     std::vector<Coordinat> found = { {x,y} };
 
     while(!found.empty())
     {
       ++distance;
-      std::vector< Coordinat > newFound;
+      std::vector<Coordinat> newFound;
 
       for (const auto& p: found)
       {
-        const int x_here{p.first};
-        const int y_here{p.second};
-        const std::vector<Coordinat> deltas = {
-          {  0, +1 },
-          { +1,  0 },
-          {  0, -1 },
-          { -1,  0 }
-        };
-        for (const auto& d: deltas)
+        const auto adjacent = get_adjacent_4(c);
+        for (const auto& d: adjacent)
         {
           //No wall and
           //not already in solution
-          if (maze.Get(x_here + d.first,y_here + d.second) == 0
-            && distances[y_here + d.second][x_here + d.first] == maxDistance)
+          if (maze.Get(d) == 0
+            && distances[get_y(d)][get_x(d)] == maxDistance)
 
           {
-            distances[y_here + d.second][x_here + d.first] = distance;
-            newFound.push_back(std::make_pair(x_here + d.first,y_here + d.second));
+            distances[get_y(d)][get_x(d)] = distance;
+            newFound.push_back(d);
           }
         }
       }

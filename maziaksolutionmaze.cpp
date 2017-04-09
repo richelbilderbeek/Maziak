@@ -49,9 +49,9 @@ ribi::maziak::IntMaze ribi::maziak::CreateSolution(
   return maze;
 }
 
-int ribi::maziak::SolutionMaze::Get(const int x, const int y) const noexcept
+int ribi::maziak::SolutionMaze::Get(const Coordinat c) const noexcept
 {
-  return m_maze.Get(x,y);
+  return m_maze.Get(c);
 }
 
 int ribi::maziak::get_n_rows(const SolutionMaze& m) noexcept

@@ -25,10 +25,10 @@ struct IntMaze
   explicit IntMaze(const IntGrid& int_grid);
 
   ///Can I access this coordinat?
-  bool CanGet(const int x, const int y) const noexcept;
+  bool CanGet(const Coordinat c) const noexcept;
 
   ///Read the coordinat
-  int Get(const int x, const int y) const noexcept;
+  int Get(const Coordinat c) const noexcept;
 
   ///Read the raw grid
   const auto& Get() const noexcept { return m_int_grid; }
@@ -48,16 +48,9 @@ std::vector<Coordinat> CollectDeadEnds(const IntMaze& maze) noexcept;
 ///Count the occurance of i in the IntMaze
 int Count(const int i, const IntMaze& m);
 
-///Find the distances to (x,y) in walking squared
 DistancesMaze CreateDistancesMaze(
   const IntMaze& m,
-  const int x,
-  const int y
-);
-
-DistancesMaze CreateDistancesMaze(
-  const IntMaze& m,
-  const Coordinat& target
+  const Coordinat target
 );
 
 IntMaze CreateIntMaze(

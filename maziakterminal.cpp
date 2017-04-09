@@ -130,8 +130,9 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
         const auto player_coordinat = get_player_coordinat(t);
         const int xVector = get_x(player_coordinat) - (view_width  / 2) + x;
         const int yVector = get_y(player_coordinat) - (view_height / 2) + y;
+        const Coordinat there(xVector, yVector);
         os << to_char(t.GetGame().GetSprites(
-          xVector, yVector, t.GetPrisonerFrame(), t.GetPrisonerFrame())
+          there, t.GetPrisonerFrame(), t.GetPrisonerFrame())
         );
       }
       os << '\n';

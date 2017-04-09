@@ -34,8 +34,10 @@ ribi::maziak::IntMaze::IntMaze(
   //m_dead_ends = CollectDeadEnds(m_int_grid);
 }
 
-bool ribi::maziak::IntMaze::CanGet(const int x, const int y) const noexcept
+bool ribi::maziak::IntMaze::CanGet(const Coordinat c) const noexcept
 {
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   return x >= 0 && x < get_n_rows(*this)
       && y >= 0 && y < get_n_rows(*this);
 }
@@ -87,27 +89,20 @@ ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(
   return IntMaze{n_cols, n_rows, seed};
 }
 
-int ribi::maziak::IntMaze::Get(const int x, const int y) const noexcept
+int ribi::maziak::IntMaze::Get(const Coordinat c) const noexcept
 {
-  assert(CanGet(x,y));
+  assert(CanGet(c));
+  const auto x = get_x(c);
+  const auto y = get_y(c);
   return m_int_grid[y][x];
 }
 
 ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
   const IntMaze& m,
-  const int x,
-  const int y
+  const Coordinat target
   )
 {
-  return DistancesMaze{m,x,y};
-}
-
-ribi::maziak::DistancesMaze ribi::maziak::CreateDistancesMaze(
-  const IntMaze& m,
-  const Coordinat& target
-)
-{
-  return CreateDistancesMaze(m, target.first, target.second);
+  return DistancesMaze{m,target};
 }
 
 int ribi::maziak::get_n_cols(const IntMaze& m) noexcept
