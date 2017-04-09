@@ -12,6 +12,10 @@ class QtMenuDialog_test : public QObject
 
 private slots:
   void display();
+  void set_difficulty_to_hard_with_keyboard();
+  void set_difficulty_to_medium_with_keyboard();
+  void set_difficulty_to_hard_with_mouse();
+  void set_difficulty_to_medium_with_mouse();
 };
 
 } //~namespace maziak

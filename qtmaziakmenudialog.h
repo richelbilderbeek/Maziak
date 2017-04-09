@@ -23,17 +23,27 @@ public:
   /// @param rng_seed Random number generator seed. Use a negative value for
   ///   a random seed, use a positive value to set the seed
   explicit QtMenuDialog(
-    const int rng_seed,
+    const int rng_seed = -1,
     QWidget *parent = 0
   );
   QtMenuDialog(const QtMenuDialog&) = delete;
   QtMenuDialog& operator=(const QtMenuDialog&) = delete;
   ~QtMenuDialog() noexcept;
 
+  auto GetDifficulty() const noexcept { return m_difficulty; }
+  auto GetRngSeed() const noexcept { return m_rng_seed; }
+
+  #ifndef NDEBUG
+  const auto& GetUi() const noexcept { return *ui; }
+  #endif // NDEBUG
+
 private:
   Ui::QtMaziakMenuDialog *ui;
-  int GetMazeSize() const;
+
   Difficulty m_difficulty;
+  const int m_rng_seed;
+
+  int GetMazeSize() const;
   void keyPressEvent(QKeyEvent * event);
   void mousePressEvent(QMouseEvent * event);
   void paintEvent(QPaintEvent*);
@@ -41,7 +51,6 @@ private:
   void OnInstructions();
   void OnAbout();
 
-  const int m_rng_seed;
 };
 
 } //~namespace maziak
