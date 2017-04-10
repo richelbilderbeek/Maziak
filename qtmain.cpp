@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   using namespace ribi::maziak;
   if (argc == 2 && std::string(argv[1]) == "--profile")
   {
-    const int maze_sz{403};
+    const int maze_sz{999};
     static_assert(IsValidSize(maze_sz), "");
     QtDisplay d(maze_sz, maze_sz, 42, 31, 31);
     QTimer::singleShot(10000, &d, SLOT(close()));
