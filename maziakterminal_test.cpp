@@ -53,8 +53,11 @@ BOOST_AUTO_TEST_CASE(terminal_AnimateFighting_must_animate)
 {
   Terminal t{create_test_terminal1()};
   teleport_to(t, MazeSquare::enemy);
-  const auto before = to_str(t);
-  t.RespondToCurrentSquare();
-  const auto after = to_str(t);
-  BOOST_CHECK_NE(before, after);
+  for (int i=0; i!=7; ++i)
+  {
+    const auto before = to_str(t);
+    t.RespondToCurrentSquare();
+    const auto after = to_str(t);
+    BOOST_CHECK_NE(before, after);
+  }
 }
