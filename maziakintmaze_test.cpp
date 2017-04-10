@@ -1,7 +1,6 @@
 #include "maziakintmaze.h"
 
 #include <iostream>
-#include <boost/timer/timer.hpp>
 #include <boost/test/unit_test.hpp>
 
 using namespace ribi::maziak;
@@ -70,38 +69,4 @@ BOOST_AUTO_TEST_CASE(maziak_CollectDeadEnds)
   const int rng_seed{145};
   const IntMaze m{CreateIntMaze(sz, sz, rng_seed)};
   BOOST_CHECK(!CollectDeadEnds(m).empty());
-}
-
-BOOST_AUTO_TEST_CASE(maziak_CollectDeadEndsImpls_give_same_result)
-{
-  const auto sz = 7;
-  static_assert(IsValidSize(sz), "");
-  const int rng_seed{145};
-  const IntMaze m{CreateIntMaze(sz, sz, rng_seed)};
-  const auto v = CollectDeadEndsImpl1(m.Get());
-  const auto w = CollectDeadEndsImpl2(m.Get());
-  BOOST_CHECK(v == w);
-}
-
-BOOST_AUTO_TEST_CASE(maziak_CollectDeadEndsImpls_speed)
-{
-  const auto sz = 107;
-  static_assert(IsValidSize(sz), "");
-  const int rng_seed{145};
-  const IntMaze m{CreateIntMaze(sz, sz, rng_seed)};
-
-  double t1_sec{0.0};
-  {
-    boost::timer::cpu_timer timer;
-    CollectDeadEndsImpl1(m.Get());
-    t1_sec = static_cast<double>(timer.elapsed().user) / 1'000'000'000.0;
-  }
-  double t2_sec{0.0};
-  {
-    boost::timer::cpu_timer timer;
-    CollectDeadEndsImpl2(m.Get());
-    t2_sec = static_cast<double>(timer.elapsed().user) / 1'000'000'000.0;
-  }
-  std::clog << "CollectDeadEndsImpls: " << t1_sec << " and " << t2_sec << " (sec)\n";
-  BOOST_CHECK(t2_sec < 0.5 * t1_sec);
 }

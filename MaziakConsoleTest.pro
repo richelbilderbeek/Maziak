@@ -66,7 +66,7 @@ QMAKE_CXXFLAGS += -fext-numeric-literals
 LIBS += -lboost_unit_test_framework
 
 # Boost.Timer
-LIBS += -lboost_timer -lboost_system
+# LIBS += -lboost_timer -lboost_system
 
 message(Host name: $$QMAKE_HOST.name)
 contains(QMAKE_HOST.name,pc-157-103) {

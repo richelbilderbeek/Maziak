@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <boost/test/unit_test.hpp>
-#include <boost/timer/timer.hpp>
 
 #include "maziakhelper.h"
 
@@ -42,25 +41,4 @@ BOOST_AUTO_TEST_CASE(maziak_IsValidSize)
   BOOST_CHECK( IsValidSize( 7));
   BOOST_CHECK( IsValidSize(11));
   BOOST_CHECK( IsValidSize(15));
-}
-
-BOOST_AUTO_TEST_CASE(maziak_CreateIntGridImpls_speed)
-{
-  const auto sz = 403;
-  static_assert(IsValidSize(sz), "");
-  const int rng_seed{145};
-  double t1_sec{0.0};
-  {
-    boost::timer::cpu_timer timer;
-    CreateIntGridImpl1(sz, sz, rng_seed);
-    t1_sec = static_cast<double>(timer.elapsed().user) / 1'000'000'000.0;
-  }
-  double t2_sec{0.0};
-  {
-    boost::timer::cpu_timer timer;
-    CreateIntGridImpl2(sz, sz, rng_seed);
-    t2_sec = static_cast<double>(timer.elapsed().user) / 1'000'000'000.0;
-  }
-  //std::clog << "Maze algorithm times: " << t1_sec << " and " << t2_sec << " (sec)\n";
-  BOOST_CHECK_CLOSE(t1_sec, t2_sec, 10.0);
 }

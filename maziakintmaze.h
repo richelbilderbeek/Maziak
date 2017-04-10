@@ -40,8 +40,6 @@ struct IntMaze
 
 ///Collect all dead ends
 std::vector<Coordinat> CollectDeadEnds(const IntGrid& grid) noexcept;
-std::vector<Coordinat> CollectDeadEndsImpl1(const IntGrid& grid) noexcept;
-std::vector<Coordinat> CollectDeadEndsImpl2(const IntGrid& grid) noexcept;
 
 ///Collect all dead ends
 std::vector<Coordinat> CollectDeadEnds(const IntMaze& maze) noexcept;

@@ -51,46 +51,6 @@ std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
 std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const std::vector<std::vector<int>>& grid) noexcept
 {
-  return CollectDeadEndsImpl2(grid);
-}
-
-std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEndsImpl1(
-  const std::vector<std::vector<int>>& grid) noexcept
-{
-  const auto n_rows = get_n_rows(grid);
-  const auto n_cols = get_n_cols(grid);
-
-  std::vector<Coordinat> dead_ends;
-
-  for (int y=1; y!=n_rows-1; ++y)
-  {
-    for (int x=1; x!=n_cols-1; ++x)
-    {
-      if (grid[y][x] != 0) continue; //Continue if here is a wall
-      const auto adjacent = get_adjacent_4(Coordinat(x, y));
-      const auto n =
-        std::count_if(std::begin(adjacent), std::end(adjacent),
-        [grid](const Coordinat c)
-        {
-          assert(get_y(c) >= 0);
-          assert(get_x(c) >= 0);
-          assert(!grid.empty());
-          assert(get_y(c) < static_cast<int>(grid.size()));
-          assert(get_x(c) < static_cast<int>(grid[0].size()));
-          return grid[get_y(c)][get_x(c)] == 1;
-        }
-      );
-
-      if (n == 3) dead_ends.push_back(Coordinat(x,y));
-
-    }
-  }
-  return dead_ends;
-}
-
-std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEndsImpl2(
-  const std::vector<std::vector<int>>& grid) noexcept
-{
   const auto n_rows = get_n_rows(grid);
   const auto n_cols = get_n_cols(grid);
 
@@ -98,29 +58,23 @@ std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEndsImpl2(
 
   for (int y=1; y < n_rows-1; y+=2)
   {
+    const auto& row_above = grid[y-1];
+    const auto& row = grid[y];
+    const auto& row_below = grid[y+1];
     for (int x=1; x < n_cols-1; x+=2)
     {
-      if (grid[y][x] != 0) continue; //Continue if here is a wall
-      const auto adjacent = get_adjacent_4(Coordinat(x, y));
-      const auto n =
-        std::count_if(std::begin(adjacent), std::end(adjacent),
-        [grid](const Coordinat c)
-        {
-          assert(get_y(c) >= 0);
-          assert(get_x(c) >= 0);
-          assert(!grid.empty());
-          assert(get_y(c) < static_cast<int>(grid.size()));
-          assert(get_x(c) < static_cast<int>(grid[0].size()));
-          return grid[get_y(c)][get_x(c)] == 1;
-        }
-      );
-
+      assert(row[x] == 0);
+      int n{0};
+      if (row_above[x] == 1) ++n;
+      if (row_below[x] == 1) ++n;
+      if (row[x+1] == 1) ++n;
+      if (row[x-1] == 1) ++n;
       if (n == 3) dead_ends.push_back(Coordinat(x,y));
-
     }
   }
   return dead_ends;
 }
+
 
 
 int ribi::maziak::Count(const int i, const IntMaze& m)
