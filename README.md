@@ -1,6 +1,6 @@
 # Maziak
 
-Branch|[![Travis CI logo](TravisCI.png)](https://travis-ci.org)|AppVeyor|[![Codecov logo](Codecov.png)](https://www.codecov.io)
+Branch|[![Travis CI logo](TravisCI.png)](https://travis-ci.org)|[![AppVeyor logo](AppVeyor.png)](https://ci.appveyor.com)|[![Codecov logo](Codecov.png)](https://www.codecov.io)
 ---|---|---|---
 master|[![Build Status](https://travis-ci.org/richelbilderbeek/Maziak.svg?branch=master)](https://travis-ci.org/richelbilderbeek/Maziak)|[![Build status](https://ci.appveyor.com/api/projects/status/6fagvemftjv3fena/branch/master?svg=true)](https://ci.appveyor.com/project/richelbilderbeek/maziak/branch/master)|[![codecov.io](https://codecov.io/github/richelbilderbeek/Maziak/coverage.svg?branch=master)](https://codecov.io/github/richelbilderbeek/Maziak/branch/master)
 develop|[![Build Status](https://travis-ci.org/richelbilderbeek/Maziak.svg?branch=develop)](https://travis-ci.org/richelbilderbeek/Maziak)|[![Build status](https://ci.appveyor.com/api/projects/status/6fagvemftjv3fena/branch/master?svg=true)](https://ci.appveyor.com/project/richelbilderbeek/maziak/branch/develop)|[![codecov.io](https://codecov.io/github/richelbilderbeek/Maziak/coverage.svg?branch=develop)](https://codecov.io/github/richelbilderbeek/Maziak/branch/develop)
