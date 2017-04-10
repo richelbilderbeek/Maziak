@@ -4,6 +4,8 @@ install:
   # qmake
   - set QTDIR=C:\Qt\5.5\mingw492_32
   - set PATH=%PATH%;%QTDIR%\bin
+  # Boost
+  - set PATH=%PATH%;C:\Libraries\boost_1_63_0
 
 build_script:
   - cd ..

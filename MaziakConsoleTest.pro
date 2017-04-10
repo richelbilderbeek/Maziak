@@ -62,6 +62,11 @@ QMAKE_CXXFLAGS += -Wno-unused-variable
 #   ^
 QMAKE_CXXFLAGS += -fext-numeric-literals
 
+# Boost
+win32 {
+  INCLUDEPATH += C:\Libraries\boost_1_63_0
+}
+
 # Boost.Test
 LIBS += -lboost_unit_test_framework
 
