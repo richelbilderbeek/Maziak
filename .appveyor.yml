@@ -10,6 +10,7 @@ install:
 build_script:
   - cd ..
   - git clone https://github.com/richelbilderbeek/RibiClasses
+  - git clone https://github.com/Microsoft/GSL
   - dir
   - cd Maziak
   # Console test
