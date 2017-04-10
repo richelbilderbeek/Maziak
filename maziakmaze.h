@@ -20,10 +20,10 @@ struct Maze
     const int rng_seed
   );
 
-  ///Animate the enemies and prisoners in sight
+  ///Make the enemies in sight move
   ///(all others are just standing still)
   ///Need RNG engine for movement of the enemies
-  void AnimateEnemiesAndPrisoners(
+  void MakeEnemiesMove(
     const int x,
     const int y,
     const int view_width,

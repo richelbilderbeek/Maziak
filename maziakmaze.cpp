@@ -19,7 +19,7 @@ ribi::maziak::Maze::Maze(
   Ensures(FindStart(*this).first >= 0);
 }
 
-void ribi::maziak::Maze::AnimateEnemiesAndPrisoners(
+void ribi::maziak::Maze::MakeEnemiesMove(
   const int x,
   const int y,
   const int view_width,

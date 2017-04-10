@@ -30,8 +30,6 @@ struct Game
 {
   Game(const Maze& maze);
 
-  void AnimateEnemiesAndPrisoners(const int view_width, const int view_height) noexcept;
-
   void AnimateFighting() noexcept;
 
   ///Is the coordinat in range of the maze?
@@ -91,6 +89,9 @@ struct Game
 
   /// Get the state of the game
   GameState GetState() const noexcept { return m_state; }
+
+  ///Make the enemies move
+  void MakeEnemiesMove(const int view_width, const int view_height) noexcept;
 
   ///Press a key and move the player directly if possible
   ///Call 'RespondToCurrentSquare' to let the player respond to the current square

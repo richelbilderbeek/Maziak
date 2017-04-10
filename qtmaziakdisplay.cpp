@@ -41,7 +41,7 @@ ribi::maziak::QtDisplay::QtDisplay(
     m_game(Maze(n_cols, n_rows, rng_seed)),
     m_keys{},
     m_sprites{},
-    m_timer_animate_enemies_and_prisoners{},
+    m_timer_animate_prisoners{},
     m_timer_show_solution{},
     m_view_height{view_height},
     m_view_width{view_width}
@@ -114,14 +114,24 @@ void ribi::maziak::QtDisplay::keyReleaseEvent(QKeyEvent * e)
   }
 }
 
-int ribi::maziak::QtDisplay::GetEnemiesAndPrisonersFrame() noexcept
+int ribi::maziak::QtDisplay::GetEnemiesFrame() noexcept
 {
   static int frame = 0;
-  if (m_timer_animate_enemies_and_prisoners.GetElapsedSecs() > 0.9)
+  if (m_timer_animate_enemies.GetElapsedSecs() > 0.9)
   {
     ++frame;
-    m_timer_animate_enemies_and_prisoners = Stopwatch();
-    m_game.AnimateEnemiesAndPrisoners(m_view_width,m_view_height);
+    m_timer_animate_enemies = Stopwatch();
+    m_game.MakeEnemiesMove(m_view_width,m_view_height);
+  }
+  return frame;
+}
+
+int ribi::maziak::QtDisplay::GetPrisonersFrame() noexcept
+{
+  static int frame = 0;
+  if (m_timer_animate_prisoners.GetElapsedSecs() > 0.8)
+  {
+    ++frame;
   }
   return frame;
 }
@@ -142,8 +152,8 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
         const int row_maze{get_player_y(m_game) - (m_view_height / 2) + row};
         const auto sprites = m_game.GetSprites(
           Coordinat(col_maze, row_maze),
-          GetEnemiesAndPrisonersFrame(),
-          GetEnemiesAndPrisonersFrame()
+          GetPrisonersFrame(),
+          GetPrisonersFrame()
         );
         const QRect target_rect(
           col * block_width,

@@ -30,20 +30,6 @@ ribi::maziak::Game::Game(
   m_solution = CreateNewSolution();
 }
 
-void ribi::maziak::Game::AnimateEnemiesAndPrisoners(
-  const int view_width,
-  const int view_height
-) noexcept
-{
-  m_maze.AnimateEnemiesAndPrisoners(
-    get_x(GetPlayer()),
-    get_y(GetPlayer()),
-    view_width,
-    view_height,
-    m_rng_engine
-  );
-}
-
 void ribi::maziak::Game::AnimateFighting() noexcept
 {
   assert(m_state != GameState::game_over);
@@ -341,6 +327,19 @@ ribi::maziak::Game::GetSprites(
   return v;
 }
 
+void ribi::maziak::Game::MakeEnemiesMove(
+  const int view_width,
+  const int view_height
+) noexcept
+{
+  m_maze.MakeEnemiesMove(
+    get_x(GetPlayer()),
+    get_y(GetPlayer()),
+    view_width,
+    view_height,
+    m_rng_engine
+  );
+}
 
 void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 {
@@ -406,49 +405,11 @@ void ribi::maziak::Game::SetPlayerPosition(const Coordinat p)
   m_player.SetCoordinat(p);
 }
 
-/*
-void ribi::maziak::Game::Tick()
-{
-  if (this->GetState() == GameState::game_over) return;
-  if (this->GetState() == GameState::has_won) return;
-
-  //HACK: let the player move less often than the framerate
-  {
-    static boost::timer t;
-    if (t.elapsed() > 0.05)
-    {
-      const auto keys = m_display->RequestKeys();
-      PressKeys(keys);
-      t.restart();
-    }
-  }
-
-  if (m_display) m_do_show_solution = m_display->GetDoShowSolution();
-
-  RespondToCurrentSquare();
-
-  if (m_display)
-  {
-    const int view_width  = m_display->GetViewWidth(); //Was 20
-    const int view_height = m_display->GetViewHeight(); //Was 20
-    if (m_display->MustAnimateEnemiesAndPrisoners())
-    {
-      AnimateEnemiesAndPrisoners(view_width,view_height);
-    }
-  }
-  if(m_fighting_frame > 0)
-  {
-    AnimateFighting();
-  }
-}
-*/
-
 void ribi::maziak::teleport_to(Game& g, const MazeSquare s)
 {
   const auto target_coordinat = FindFirst(g.GetMaze(), s);
   g.SetPlayerPosition(target_coordinat);
 }
-
 
 std::string ribi::maziak::to_str(const Game& d) noexcept
 {

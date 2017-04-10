@@ -74,7 +74,8 @@ private:
   std::set<Key> m_keys;
 
   const Sprites m_sprites;
-  Stopwatch m_timer_animate_enemies_and_prisoners;
+  Stopwatch m_timer_animate_enemies;
+  Stopwatch m_timer_animate_prisoners;
   Stopwatch m_timer_show_solution;
 
   ///The number of blocks the player can view, vertically
@@ -84,7 +85,8 @@ private:
   const int m_view_width;
 
   bool GetDoShowSolution();
-  int GetEnemiesAndPrisonersFrame() noexcept;
+  int GetEnemiesFrame() noexcept;
+  int GetPrisonersFrame() noexcept;
 
   void OnGameOver();
   void OnGameWon();
