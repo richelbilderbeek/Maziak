@@ -46,7 +46,10 @@ void ribi::maziak::Game::AnimateEnemiesAndPrisoners(
 
 void ribi::maziak::Game::AnimateFighting() noexcept
 {
+  const auto old_state = m_state;
   m_state = m_player.AnimateFighting();
+  const auto new_state = m_state;
+  assert(!(old_state == GameState::game_over && new_state == GameState::playing));
 }
 
 bool ribi::maziak::Game::CanGet(const Coordinat c) const noexcept
@@ -347,6 +350,9 @@ void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 
 void ribi::maziak::Game::RespondToCurrentSquare()
 {
+  if (m_state == GameState::game_over) return;
+  if (m_state == GameState::has_won) return;
+
   //Will do nothing if not fighting
   m_state = m_player.AnimateFighting();
 

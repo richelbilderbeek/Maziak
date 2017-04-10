@@ -61,3 +61,35 @@ BOOST_AUTO_TEST_CASE(terminal_AnimateFighting_must_animate)
     BOOST_CHECK_NE(before, after);
   }
 }
+
+BOOST_AUTO_TEST_CASE(terminal_game_will_continue_after_fight_with_sword)
+{
+  Terminal t{create_test_terminal1()};
+  BOOST_CHECK_EQUAL(t.GetGame().GetState(), GameState::playing);
+  teleport_to(t, MazeSquare::enemy);
+  BOOST_CHECK_EQUAL(t.GetGame().GetState(), GameState::playing);
+  for (int i=0; i!=20; ++i)
+  {
+    t.RespondToCurrentSquare(); //Fight
+  }
+  BOOST_CHECK_EQUAL(t.GetGame().GetState(), GameState::playing);
+}
+
+BOOST_AUTO_TEST_CASE(terminal_game_will_end_after_fight_without_sword)
+{
+  Terminal t{create_test_terminal1()};
+  //First enemy
+  teleport_to(t, MazeSquare::enemy);
+  for (int i=0; i!=20; ++i)
+  {
+    t.RespondToCurrentSquare(); //Fight
+  }
+  //Second enemy
+  teleport_to(t, MazeSquare::enemy);
+  BOOST_CHECK_EQUAL(t.GetGame().GetState(), GameState::playing);
+  for (int i=0; i!=20; ++i)
+  {
+    t.RespondToCurrentSquare(); //Fight
+  }
+  BOOST_CHECK_EQUAL(t.GetGame().GetState(), GameState::game_over);
+}
