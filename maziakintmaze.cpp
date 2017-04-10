@@ -51,7 +51,7 @@ std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
 std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEnds(
   const std::vector<std::vector<int>>& grid) noexcept
 {
-  return CollectDeadEndsImpl1(grid);
+  return CollectDeadEndsImpl2(grid);
 }
 
 std::vector<ribi::maziak::Coordinat> ribi::maziak::CollectDeadEndsImpl1(
