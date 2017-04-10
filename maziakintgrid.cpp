@@ -20,7 +20,7 @@ ribi::maziak::IntGrid
   std::mt19937 rng_engine{rng_seed};
 
   //Start with a wall-only maze
-  std::vector<std::vector<int> > maze(n_rows, std::vector<int>(n_cols,1));
+  std::vector<std::vector<int>> maze(n_rows, std::vector<int>(n_cols,1));
 
   //Prepare maze, remove paths
   // XXXXXXX    1111111
