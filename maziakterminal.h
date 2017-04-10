@@ -19,6 +19,9 @@ struct Terminal
 
   bool GetDoShowSolution() { --m_do_show_solution_cnt; return m_do_show_solution_cnt > 0; }
 
+  /// 0: first animation frame, 1: second animation frame
+  int GetEnemyFrame() const noexcept { return m_enemy_frame; }
+
   const auto& GetGame() const noexcept { return m_game; }
   auto& GetGame() noexcept { return m_game; }
 
@@ -48,6 +51,9 @@ struct Terminal
 
   private:
   int m_do_show_solution_cnt;
+
+  /// 0: first animation frame, 1: second animation frame at which movement occurs
+  int m_enemy_frame;
 
   ///The game logic
   Game m_game;

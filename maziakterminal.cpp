@@ -6,7 +6,9 @@
 #include "maziakgame.h"
 
 ribi::maziak::Terminal::Terminal(const Game& game)
-  : m_do_show_solution_cnt{0}, m_game{game},
+  : m_do_show_solution_cnt{0},
+    m_enemy_frame{0},
+    m_game{game},
     m_prisoner_frame{0},
     m_t{0}
 {
@@ -132,7 +134,9 @@ std::ostream& ribi::maziak::operator<<(std::ostream& os, const Terminal& t)
         const int yVector = get_y(player_coordinat) - (view_height / 2) + y;
         const Coordinat there(xVector, yVector);
         os << to_char(t.GetGame().GetSprites(
-          there, t.GetPrisonerFrame(), t.GetPrisonerFrame())
+          there,
+          t.GetEnemyFrame(),
+          t.GetPrisonerFrame())
         );
       }
       os << '\n';
