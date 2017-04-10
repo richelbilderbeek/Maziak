@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(maziak_CollectDeadEndsImpls_give_same_result)
 
 BOOST_AUTO_TEST_CASE(maziak_CollectDeadEndsImpls_speed)
 {
-  const auto sz = 87;
+  const auto sz = 107;
   static_assert(IsValidSize(sz), "");
   const int rng_seed{145};
   const IntMaze m{CreateIntMaze(sz, sz, rng_seed)};
@@ -103,5 +103,5 @@ BOOST_AUTO_TEST_CASE(maziak_CollectDeadEndsImpls_speed)
     t2_sec = static_cast<double>(timer.elapsed().user) / 1'000'000'000.0;
   }
   std::clog << "CollectDeadEndsImpls: " << t1_sec << " and " << t2_sec << " (sec)\n";
-  BOOST_CHECK_CLOSE(t1_sec, t2_sec, 10.0);
+  BOOST_CHECK(t2_sec < 0.5 * t1_sec);
 }
