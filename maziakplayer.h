@@ -28,11 +28,15 @@ public:
 
   auto HasSword() const noexcept { return m_has_sword; }
 
+  bool IsFighting() const noexcept { return m_fighting_frame > 0; }
+
   void PressKeys(const std::set<Key>& keys, const Maze& m, const bool do_show_solution);
 
   void SetCoordinat(const Coordinat c) noexcept { m_coordinat = c; }
   void SetHasSword(const bool b) noexcept { m_has_sword = b; }
-  void SetFightingFrame(const int i) noexcept { m_fighting_frame = i; }
+
+  ///Player starts fighting, with or without sword
+  void StartFighting() noexcept { m_fighting_frame = 1; }
 
   ///The player stops moving and starts a waiting stance
   void Stop() noexcept { m_move_now = PlayerMove::none; }

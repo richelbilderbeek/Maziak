@@ -46,10 +46,9 @@ void ribi::maziak::Game::AnimateEnemiesAndPrisoners(
 
 void ribi::maziak::Game::AnimateFighting() noexcept
 {
-  const auto old_state = m_state;
+  assert(m_state != GameState::game_over);
+  assert(m_state != GameState::has_won);
   m_state = m_player.AnimateFighting();
-  const auto new_state = m_state;
-  assert(!(old_state == GameState::game_over && new_state == GameState::playing));
 }
 
 bool ribi::maziak::Game::CanGet(const Coordinat c) const noexcept
@@ -353,38 +352,44 @@ void ribi::maziak::Game::RespondToCurrentSquare()
   if (m_state == GameState::game_over) return;
   if (m_state == GameState::has_won) return;
 
-  //Will do nothing if not fighting
-  m_state = m_player.AnimateFighting();
+  if (m_player.IsFighting())
+  {
+    AnimateFighting();
+    assert(m_state == GameState::playing || m_state == GameState::game_over);
+    return;
+  }
+
+  assert(m_state == GameState::playing);
 
   const auto c = GetPlayer().GetCoordinat();
   assert(m_maze.CanGet(c));
-  switch (m_maze.Get(c))
+  switch (m_maze.Get(c)) //Common encounters first
   {
-    case MazeSquare::start:
     case MazeSquare::empty:
-      return;
-    case MazeSquare::wall:
-      assert(!"Should not get here"); //!OCLINT accepted idiom
-      return;
-    case MazeSquare::enemy:
-      m_player.SetFightingFrame(1);
-      m_maze.Set(c, MazeSquare::empty);
-      return;
+      break;
     case MazeSquare::prisoner:
       m_maze.Set(c, MazeSquare::empty);
       SetDoShowSolution(true);
-      return;
+      break;
     case MazeSquare::sword:
       m_maze.Set(c, MazeSquare::empty);
       m_player.SetHasSword(true);
-      return;
+      break;
+    case MazeSquare::enemy:
+      m_player.StartFighting();
+      m_maze.Set(c, MazeSquare::empty); //Remove the enemy
+      break;
+    case MazeSquare::start:
+      break;
     case MazeSquare::exit:
     {
       m_state = GameState::has_won;
-      return;
+      break;
     }
+    case MazeSquare::wall:
+      assert(!"Should not get here"); //!OCLINT accepted idiom
+      break;
   }
-  assert(!"Should not get here"); //!OCLINT accepted idiom
 }
 
 void ribi::maziak::Game::SetDoShowSolution(const bool do_show) noexcept
