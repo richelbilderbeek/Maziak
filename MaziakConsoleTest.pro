@@ -65,6 +65,9 @@ QMAKE_CXXFLAGS += -fext-numeric-literals
 # Boost.Test
 LIBS += -lboost_unit_test_framework
 
+# Boost.Timer
+LIBS += -lboost_timer
+
 message(Host name: $$QMAKE_HOST.name)
 contains(QMAKE_HOST.name,pc-157-103) {
   message("Host is university computer in the canteen")

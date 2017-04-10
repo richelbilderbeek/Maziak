@@ -17,6 +17,18 @@ ribi::maziak::IntGrid
 {
   Expects(IsValidSize(n_cols));
   Expects(IsValidSize(n_rows));
+  return CreateIntGridImpl1(n_cols, n_rows, rng_seed);
+}
+
+ribi::maziak::IntGrid
+  ribi::maziak::CreateIntGridImpl1(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed
+)
+{
+  Expects(IsValidSize(n_cols));
+  Expects(IsValidSize(n_rows));
   std::mt19937 rng_engine{rng_seed};
 
   //Start with a wall-only maze
@@ -88,6 +100,16 @@ ribi::maziak::IntGrid
     v.push_back(std::make_pair(nextX,nextY));
   }
   return maze;
+}
+
+ribi::maziak::IntGrid
+  ribi::maziak::CreateIntGridImpl2(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed
+)
+{
+  return CreateIntGridImpl1(n_cols, n_rows, rng_seed);
 }
 
 int ribi::maziak::get_n_cols(const IntGrid& g) noexcept

@@ -1,8 +1,5 @@
 #include "maziakintmaze.h"
 
-// Boost.Test does not play well with -Weffc++
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
 
 using namespace ribi::maziak;
@@ -72,8 +69,3 @@ BOOST_AUTO_TEST_CASE(maziak_CollectDeadEnds)
   const IntMaze m{CreateIntMaze(sz, sz, rng_seed)};
   BOOST_CHECK(!CollectDeadEnds(m).empty());
 }
-
-
-
-#pragma GCC diagnostic pop
-

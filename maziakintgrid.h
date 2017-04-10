@@ -18,6 +18,20 @@ IntGrid CreateIntGrid(
   const int rng_seed
 );
 
+///Classic implementation
+IntGrid CreateIntGridImpl1(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed
+);
+
+///Newer implementation
+IntGrid CreateIntGridImpl2(
+  const int n_cols,
+  const int n_rows,
+  const int rng_seed
+);
+
 int get_n_cols(const IntGrid& g) noexcept;
 int get_n_rows(const IntGrid& g) noexcept;
 

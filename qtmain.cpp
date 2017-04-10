@@ -1,7 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #include <QApplication>
 #include <QTimer>
 #include <gsl/gsl_assert>
@@ -10,9 +6,9 @@
 
 #include "qtmaziakinstructionsdialog.h"
 #include "qtaboutdialog.h"
+#include "maziakintgrid.h"
 #include "maziakmenudialog.h"
 #include "qtmaziakdisplay.h"
-#pragma GCC diagnostic pop
 
 int main(int argc, char *argv[])
 {
@@ -24,10 +20,12 @@ int main(int argc, char *argv[])
   //Expects(1 == 2);
   //Ensures(1 == 2);
   #endif
-
+  using namespace ribi::maziak;
   if (argc == 2 && std::string(argv[1]) == "--profile")
   {
-    ribi::maziak::QtDisplay d(11, 11, 42, 31, 31);
+    const int maze_sz{403};
+    static_assert(IsValidSize(maze_sz), "");
+    QtDisplay d(maze_sz, maze_sz, 42, 31, 31);
     QTimer::singleShot(10000, &d, SLOT(close()));
     d.showFullScreen();
     d.exec();

@@ -4,11 +4,8 @@
 #include <iosfwd>
 #include <vector>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
 #include "maziakintmaze.h"
 #include "maziakfwd.h"
-#pragma GCC diagnostic pop
 
 namespace ribi {
 namespace maziak {
