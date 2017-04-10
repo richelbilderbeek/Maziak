@@ -6,6 +6,10 @@ install:
   - set PATH=%PATH%;%QTDIR%\bin
 
 build_script:
+  - cd ..
+  - git clone https://github.com/richelbilderbeek/RibiClasses
+  - dir
+  - cd Maziak
   # Console test
   - qmake MaziakConsoleTest.pro
   - mingw32-make debug
