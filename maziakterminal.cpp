@@ -95,7 +95,14 @@ void ribi::maziak::Terminal::Tick()
 {
   ++m_t;
   if (m_t % 4 == 1) this->TogglePrisoners();
+  if (m_t % 4 == 1)
+  {
+    this->ToggleEnemies();
+    assert(m_enemy_frame == 1); //Enemies only move at their second animation
+    m_game.MakeEnemiesMove(GetViewWidth(), GetViewHeight());
+  }
   if (m_t % 4 == 2) this->TogglePrisoners();
+  if (m_t % 4 == 3) this->ToggleEnemies();
   --m_do_show_solution_cnt;
   m_game.SetDoShowSolution(m_do_show_solution_cnt >= 0);
 }

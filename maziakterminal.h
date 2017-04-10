@@ -46,6 +46,9 @@ struct Terminal
   ///Wait one turn
   void Tick();
 
+  ///Toggles the enemy animation
+  void ToggleEnemies() { m_enemy_frame = (m_enemy_frame + 1) % 2;  }
+
   ///Toggles the prisoner animation
   void TogglePrisoners() { m_prisoner_frame = (m_prisoner_frame + 1) % 2;  }
 

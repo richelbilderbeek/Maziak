@@ -132,6 +132,7 @@ int ribi::maziak::QtDisplay::GetPrisonersFrame() noexcept
   if (m_timer_animate_prisoners.GetElapsedSecs() > 0.8)
   {
     ++frame;
+    m_timer_animate_prisoners = Stopwatch();
   }
   return frame;
 }
@@ -152,7 +153,7 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
         const int row_maze{get_player_y(m_game) - (m_view_height / 2) + row};
         const auto sprites = m_game.GetSprites(
           Coordinat(col_maze, row_maze),
-          GetPrisonersFrame(),
+          GetEnemiesFrame(),
           GetPrisonersFrame()
         );
         const QRect target_rect(

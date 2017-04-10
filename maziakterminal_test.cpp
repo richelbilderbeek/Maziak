@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(terminal_solution_must_reveal_temporarily)
   assert(!t.GetDoShowSolution());
 }
 
-BOOST_AUTO_TEST_CASE(terminal_AnimateFighting_must_animate)
+BOOST_AUTO_TEST_CASE(terminal_fight_must_have_an_animation)
 {
   Terminal t{create_test_terminal1()};
   teleport_to(t, MazeSquare::enemy);
