@@ -181,21 +181,18 @@ ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
 
 ribi::maziak::Sprite ribi::maziak::Game::GetSpritePlayer() const
 {
-  return ::ribi::maziak::GetSpritePlayer(
-    GetPlayer().GetDirection(),
-    GetPlayer().GetMove(),
-    GetPlayer().HasSword(),
-    GetPlayer().GetFightingFrame()
-  );
+  return ::ribi::maziak::GetSpritePlayer(GetPlayer());
 }
 
 ribi::maziak::Sprite ribi::maziak::GetSpritePlayer(
-  const PlayerDirection direction,
-  const PlayerMove move,
-  const bool has_sword,
-  const int fighting_frame
+  const Player& p
 )
 {
+  const PlayerDirection direction = p.GetDirection();
+  const PlayerMove move = p.GetMove();
+  const bool has_sword = p.HasSword();
+  const int fighting_frame = p.GetFightingFrame();
+
   if (fighting_frame != 0) return GetSpritePlayerFighting(fighting_frame, has_sword);
   assert(fighting_frame == 0);
   switch (direction)

@@ -176,12 +176,7 @@ Sprite GetSpriteFloor(
   const SolutionMaze& solution
 );
 
-Sprite GetSpritePlayer(
-  const PlayerDirection direction,
-  const PlayerMove moveNow,
-  const bool has_sword,
-  const int fighting_frame
-);
+Sprite GetSpritePlayer(const Player& p);
 
 Sprite GetSpritePlayerDown(
   const PlayerMove moveNow,
