@@ -348,7 +348,7 @@ void ribi::maziak::Game::PressKeys(const std::set<Key>& keys)
 void ribi::maziak::Game::RespondToCurrentSquare()
 {
   //Will do nothing if not fighting
-  m_player.AnimateFighting();
+  m_state = m_player.AnimateFighting();
 
   const auto c = GetPlayer().GetCoordinat();
   assert(m_maze.CanGet(c));

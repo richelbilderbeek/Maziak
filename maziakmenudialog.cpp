@@ -22,15 +22,9 @@ int ribi::maziak::MenuDialog::ExecuteSpecific(const std::vector<std::string>& ar
     return 0;
   }
 
-  //Game dialog{7 + (4 * 2)};
   Terminal terminal{CreateTestGame1()};
   terminal.Execute();
-  //std::cout << terminal << '\n';
-  //dialog.Tick();
-
-  //std::cout << terminal << '\n';
   return 0;
-
 }
 
 ribi::About ribi::maziak::MenuDialog::GetAbout() const noexcept
