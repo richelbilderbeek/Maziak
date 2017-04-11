@@ -18,7 +18,7 @@ build_script:
   - dir
   - cd Maziak
   # Console test
-  - qmake MaziakConsoleTest.pro
+  - qmake -qt=qt5 MaziakConsoleTest.pro
   - mingw32-make debug
   - MaziakConsoleTest.exe
   # Console
