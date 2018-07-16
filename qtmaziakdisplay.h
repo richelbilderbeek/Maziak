@@ -6,8 +6,8 @@
 #include <set>
 #include <vector>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+
+
 #include <boost/shared_ptr.hpp>
 #include "qthideandshowdialog.h"
 #include "maziakmazesquare.h"
@@ -19,7 +19,7 @@
 #include "maziakplayerdirection.h"
 #include "maziakplayermove.h"
 #include "stopwatch.h"
-#pragma GCC diagnostic pop
+
 
 struct QPixmap;
 struct QTimer;

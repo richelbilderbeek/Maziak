@@ -1,7 +1,7 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
+
+
+
+
 #include "qtmaziakdisplay.h"
 
 #include <algorithm>
@@ -28,7 +28,7 @@
 #include "qtmaziakgamewondialog.h"
 #include "maziaksolutionmaze.h"
 
-#pragma GCC diagnostic pop
+
 
 ribi::maziak::QtDisplay::QtDisplay(
   const int n_cols,

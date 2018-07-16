@@ -4,11 +4,11 @@
 #include <vector>
 #include <map>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+
+
 #include <QImage>
 #include "maziaksprite.h"
-#pragma GCC diagnostic pop
+
 
 struct QPixmap;
 

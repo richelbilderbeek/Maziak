@@ -1,5 +1,5 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+
+
 #include "qtmaziakgameoverdialog.h"
 
 #include <cassert>
@@ -10,7 +10,7 @@
 #include <QTimer>
 
 #include "ui_qtmaziakgameoverdialog.h"
-#pragma GCC diagnostic pop
+
 
 ribi::maziak::QtGameOverDialog::QtGameOverDialog(QWidget *parent) :
   QDialog(parent),

@@ -1,5 +1,5 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+
+
 #include "qtmaziakmenudialog.h"
 
 #include <cassert>
@@ -23,7 +23,7 @@
 
 #include "ui_qtmaziakmenudialog.h"
 
-#pragma GCC diagnostic pop
+
 
 ribi::maziak::QtMenuDialog::QtMenuDialog(
   const int rng_seed,

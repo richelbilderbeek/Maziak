@@ -1,5 +1,5 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+
+
 #include "qtmaziakgamewondialog.h"
 
 #include <cassert>
@@ -13,7 +13,7 @@
 
 #include "ui_qtmaziakgamewondialog.h"
 
-#pragma GCC diagnostic pop
+
 
 ribi::maziak::QtGameWonDialog::QtGameWonDialog(QWidget *parent) :
   QDialog(parent),

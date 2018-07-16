@@ -3,15 +3,15 @@
 #ifdef USE_QTCANVAS
 
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+
+
 #include <QKeyEvent>
 #include <QTimer>
 
 #include "qtcanvas.h"
  
 #include "maziakmaindialog.h"
-#pragma GCC diagnostic pop
+
 
 ribi::maziak::QtMaziakCanvas::QtMaziakCanvas(
   const int size)
