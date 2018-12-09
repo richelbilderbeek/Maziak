@@ -133,7 +133,7 @@ void ribi::maziak::QtMenuDialog::paintEvent(QPaintEvent*)
 {
   QPainter painter(this);
   {
-    QPixmap background(":/images/MaziakBackground.png");
+    QPixmap background(":/maziak/pics/MaziakBackground.png");
     painter.drawPixmap(rect(),background);
   }
 
@@ -143,13 +143,13 @@ void ribi::maziak::QtMenuDialog::paintEvent(QPaintEvent*)
     switch (m_difficulty)
     {
       case Difficulty::easy:
-        pixmap = QPixmap(":/images/PlayerWon1.png");
+        pixmap = QPixmap(":/maziak/pics/PlayerWon1.png");
         break;
       case Difficulty::medium:
-        pixmap = QPixmap(":/images/PlayerLookDown.png");
+        pixmap = QPixmap(":/maziak/pics/PlayerLookDown.png");
         break;
       case Difficulty::hard:
-        pixmap = QPixmap(":/images/PlayerScared.png");
+        pixmap = QPixmap(":/maziak/pics/PlayerScared.png");
         break;
       default:
         assert(!"Should not get here");
@@ -163,13 +163,13 @@ void ribi::maziak::QtMenuDialog::paintEvent(QPaintEvent*)
     switch (m_difficulty)
     {
       case Difficulty::easy:
-        pixmap = QPixmap(":/images/Fight2.png");
+        pixmap = QPixmap(":/maziak/pics/Fight2.png");
         break;
       case Difficulty::medium:
-        pixmap = QPixmap(":/images/Fight3.png");
+        pixmap = QPixmap(":/maziak/pics/Fight3.png");
         break;
       case Difficulty::hard:
-        pixmap = QPixmap(":/images/Fight4.png");
+        pixmap = QPixmap(":/maziak/pics/Fight4.png");
         break;
       default:
         assert(!"Should not get here");
@@ -180,16 +180,16 @@ void ribi::maziak::QtMenuDialog::paintEvent(QPaintEvent*)
   {
     //Easy
     QPixmap pixmap(m_difficulty == Difficulty::easy
-      ? ":/images/Easy_selected.png"
-      : ":/images/Easy_not_selected.png");
+      ? ":/maziak/pics/Easy_selected.png"
+      : ":/maziak/pics/Easy_not_selected.png");
     assert(!pixmap.isNull());
     painter.drawPixmap(ui->widget_easy->geometry(),pixmap);
   }
   {
     //Medium
     QPixmap pixmap(m_difficulty == Difficulty::medium
-      ? ":/images/Medium_selected.png"
-      : ":/images/Medium_not_selected.png");
+      ? ":/maziak/pics/Medium_selected.png"
+      : ":/maziak/pics/Medium_not_selected.png");
     assert(!pixmap.isNull());
 
     painter.drawPixmap(ui->widget_medium->geometry(),pixmap);
@@ -197,32 +197,32 @@ void ribi::maziak::QtMenuDialog::paintEvent(QPaintEvent*)
   {
     //Hard
     QPixmap pixmap(m_difficulty == Difficulty::hard
-      ? ":/images/Hard_selected.png"
-      : ":/images/Hard_not_selected.png");
+      ? ":/maziak/pics/Hard_selected.png"
+      : ":/maziak/pics/Hard_not_selected.png");
     assert(!pixmap.isNull());
     painter.drawPixmap(ui->widget_hard->geometry(),pixmap);
   }
   {
     //Start
-    QPixmap pixmap(":/images/Start.png");
+    QPixmap pixmap(":/maziak/pics/Start.png");
     assert(!pixmap.isNull());
     painter.drawPixmap(ui->widget_start->geometry(),pixmap);
   }
   {
     //Instructions
-    QPixmap pixmap(":/images/Instructions.png");
+    QPixmap pixmap(":/maziak/pics/Instructions.png");
     assert(!pixmap.isNull());
     painter.drawPixmap(ui->widget_instructions->geometry(),pixmap);
   }
   {
     //About
-    QPixmap pixmap(":/images/About.png");
+    QPixmap pixmap(":/maziak/pics/About.png");
     assert(!pixmap.isNull());
     painter.drawPixmap(ui->widget_about->geometry(),pixmap);
   }
   {
     //Quit
-    QPixmap pixmap(":/images/Quit.png");
+    QPixmap pixmap(":/maziak/pics/Quit.png");
     assert(!pixmap.isNull());
     painter.drawPixmap(ui->widget_quit->geometry(),pixmap);
   }
@@ -249,7 +249,7 @@ void ribi::maziak::QtMenuDialog::OnAbout()
   About a = MenuDialog().GetAbout();
   std::unique_ptr<QtAboutDialog> d(new QtAboutDialog(a));
   d->setStyleSheet(
-    "background: url(:/images/MaziakBackground.png) repeat center center fixed;"
+    "background: url(:/maziak/pics/MaziakBackground.png) repeat center center fixed;"
   );
   if (m_allow_popups)
   {

@@ -15,10 +15,10 @@
   </property>
   <property name="windowIcon">
    <iconset resource="Maziak.qrc">
-    <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
+    <normaloff>:/maziak/pics/R.png</normaloff>:/maziak/pics/R.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: url(:/images/MaziakBackground.png) repeat center center fixed;</string>
+   <string notr="true">background: url(:/maziak/pics/MaziakBackground.png) repeat center center fixed;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -33,7 +33,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="Maziak.qrc">:/images/InstructionScreen.png</pixmap>
+      <pixmap resource="Maziak.qrc">:/maziak/pics/InstructionScreen.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

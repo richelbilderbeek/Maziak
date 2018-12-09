@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="Maziak.qrc">
-    <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
+    <normaloff>:/maziak/pics/R.png</normaloff>:/maziak/pics/R.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

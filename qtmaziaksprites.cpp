@@ -32,7 +32,7 @@ std::map<ribi::maziak::Sprite,QPixmap> ribi::maziak::CreateSprites() noexcept
     spritename = CamelCasify(spritename);
 
     const std::string filename {
-      ":/images/" + spritename + ".png"
+      ":/maziak/pics/" + spritename + ".png"
     };
     QPixmap pixmap{filename.c_str()};
     m.insert( { sprite,pixmap });

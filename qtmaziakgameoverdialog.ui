@@ -15,10 +15,10 @@
   </property>
   <property name="windowIcon">
    <iconset resource="Maziak.qrc">
-    <normaloff>:/images/R.png</normaloff>:/images/R.png</iconset>
+    <normaloff>:/maziak/pics/R.png</normaloff>:/maziak/pics/R.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: url(:/images/MaziakBackground.png) no-repeat center center fixed;</string>
+   <string notr="true">background: url(:/maziak/pics/MaziakBackground.png) no-repeat center center fixed;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -27,7 +27,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="Maziak.qrc">:/images/GameOver.png</pixmap>
+      <pixmap resource="Maziak.qrc">:/maziak/pics/GameOver.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -40,7 +40,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="Maziak.qrc">:/images/Rip.png</pixmap>
+      <pixmap resource="Maziak.qrc">:/maziak/pics/Rip.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

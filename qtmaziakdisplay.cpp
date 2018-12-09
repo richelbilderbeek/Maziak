@@ -164,6 +164,8 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
         );
         for (const auto& s: sprites)
         {
+          //painter.setBackgroundMode(Qt::BGMode::TransparentMode);
+          painter.setBackgroundMode(Qt::BGMode::OpaqueMode);
           painter.drawPixmap(
             target_rect,
             m_sprites.Get(s)
