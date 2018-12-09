@@ -1,5 +1,4 @@
 include(../RibiClasses/CppAbout/CppAbout.pri)
-include(../RibiClasses/CppFileIo/CppFileIo.pri)
 include(../RibiClasses/CppHelp/CppHelp.pri)
 include(../RibiClasses/CppMenuDialog/CppMenuDialog.pri)
 include(../RibiClasses/CppQtAboutDialog/CppQtAboutDialog.pri)
@@ -7,10 +6,9 @@ include(../RibiClasses/CppQtHideAndShowDialog/CppQtHideAndShowDialog.pri)
 include(gsl.pri)
 include(../RibiClasses/CppStopwatch/CppStopwatch.pri)
 include(MaziakConsole.pri)
-include(MaziakDesktop.pri)
-include(MaziakDesktopTest.pri)
+include(MaziakDesktopQt.pri)
 
-SOURCES += qtmain_test.cpp
+SOURCES += qtmain.cpp
 
 # C++14
 CONFIG += c++14
@@ -76,9 +74,6 @@ QMAKE_CXXFLAGS += -fext-numeric-literals
 
 # Boost.Timer
 LIBS += -lboost_timer -lboost_system
-
-# QTest
-QT += testlib
 
 message(Host name: $$QMAKE_HOST.name)
 contains(QMAKE_HOST.name,pc-157-103) {

@@ -65,22 +65,22 @@ script:
   # Do not do below: Travis will not be able to handle this
   # - ./MaziakConsole & 
   # Desktop debug run
-  - qmake -qt=qt5 MaziakDesktopTest.pro
+  - qmake -qt=qt5 MaziakDesktopQtTest.pro
   - make debug
-  - ./MaziakDesktopTest
+  - ./MaziakDesktopQtTest
   # Desktop debug profile run
-  - qmake -qt=qt5 MaziakDesktop.pro
+  - qmake -qt=qt5 MaziakDesktopQt.pro
   - make debug
-  - ./MaziakDesktop --profile
+  - ./MaziakDesktopQt --profile
   # Get code coverage
   - ./get_code_cov >/dev/null
   - codecov >/dev/null
   # Desktop release profile run
   - make clean
-  - qmake -qt=qt5 MaziakDesktop.pro
+  - qmake -qt=qt5 MaziakDesktopQt.pro
   - make release
-  - time ./MaziakDesktop --profile
-  - gprof MaziakDesktop > gprof.log
+  - time ./MaziakDesktopQt --profile
+  - gprof MaziakDesktopQt > gprof.log
   - head gprof.log -n 100
   # cppcheck
   - cppcheck --quiet --error-exitcode=1 . 
