@@ -17,3 +17,9 @@
 
 RESOURCES += \
     $$PWD/Maziak.qrc
+
+HEADERS += \
+    $$PWD/sfmlmaziakgamedialog.h
+
+SOURCES += \
+    $$PWD/sfmlmaziakgamedialog.cpp
