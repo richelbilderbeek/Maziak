@@ -4,3 +4,8 @@ ribi::maziak::SfmlGameDialog::SfmlGameDialog()
 {
 
 }
+
+void ribi::maziak::SfmlGameDialog::Exec()
+{
+
+}

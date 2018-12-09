@@ -8,6 +8,9 @@ class SfmlGameDialog
 {
 public:
   SfmlGameDialog();
+
+  ///Run the dialog, until the user closes it
+  void Exec();
 };
 
 } //~namespace maziak

@@ -14,6 +14,6 @@ int main(int, char *[])
   #endif
   using namespace ribi::maziak;
   ribi::maziak::SfmlGameDialog w;
-  //w.exec();
+  w.Exec();
 }
 
