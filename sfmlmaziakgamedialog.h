@@ -24,6 +24,14 @@ private:
 
   /// Display the maze, enemies, player
   void DisplayGame();
+
+  Stopwatch m_timer_animate_enemies;
+  Stopwatch m_timer_animate_prisoners;
+  Stopwatch m_timer_show_solution;
+
+  const int m_view_width = 11;
+  const int m_view_height = 11;
+
 };
 
 } //~namespace maziak
