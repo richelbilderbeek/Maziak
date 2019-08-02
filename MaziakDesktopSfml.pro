@@ -13,9 +13,9 @@ SOURCES += main_sfml.cpp
 ################################################################################
 # Compiling, linking and tools
 ################################################################################
-# C++14
-CONFIG += c++14
-QMAKE_CXXFLAGS += -std=c++14
+# C++17
+CONFIG += c++17
+QMAKE_CXXFLAGS += -std=c++17
 
 # High warning levels
 # SFML goes bad with -Weffc++
@@ -23,11 +23,6 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Wnon-virtual-dtor -pedantic -Werror
 
 !macx{
   QMAKE_CXXFLAGS += -Wshadow
-}
-
-unix:!macx {
-  # Fix error: unrecognized option '--push-state--no-as-needed'
-  QMAKE_LFLAGS += -fuse-ld=gold
 }
 
 # Debug and release settings
