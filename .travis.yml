@@ -13,7 +13,6 @@ install:
   # cppcheck
   - sudo apt-get install -qq cppcheck
   # Codecov
-  - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 90
   - sudo pip install codecov
   # OCLint
   - ./install_oclint
