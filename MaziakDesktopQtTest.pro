@@ -79,19 +79,3 @@ LIBS += -lboost_timer -lboost_system
 
 # QTest
 QT += testlib
-
-message(Host name: $$QMAKE_HOST.name)
-contains(QMAKE_HOST.name,pc-157-103) {
-  message("Host is university computer in the canteen")
-  QMAKE_CXX = g++-5
-  QMAKE_LINK = g++-5
-  QMAKE_CC = gcc-5
-}
-
-message(Host name: $$QMAKE_HOST.name)
-contains(QMAKE_HOST.name,fwn-biol-132-102) {
-  message("Host is university computer in my office")
-  QMAKE_CXX = g++-5
-  QMAKE_LINK = g++-5
-  QMAKE_CC = gcc-5
-}
