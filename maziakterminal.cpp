@@ -107,6 +107,12 @@ void ribi::maziak::Terminal::Tick()
   m_game.SetDoShowSolution(m_do_show_solution_cnt >= 0);
 }
 
+void ribi::maziak::Terminal::TogglePrisoners() noexcept
+{
+  m_prisoner_frame = (m_prisoner_frame + 1) % 2;
+  assert(m_prisoner_frame == 0 || m_prisoner_frame == 1);
+}
+
 std::string ribi::maziak::to_str(const Terminal& t)
 {
   std::stringstream s;

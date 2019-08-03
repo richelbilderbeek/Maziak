@@ -15,7 +15,7 @@ struct Terminal
   Terminal(const Game& game);
 
   ///Start the game in a terminal, until the game is over or quit
-  void Execute();
+  [[noreturn]] void Execute();
 
   bool GetDoShowSolution() { --m_do_show_solution_cnt; return m_do_show_solution_cnt > 0; }
 
@@ -47,10 +47,10 @@ struct Terminal
   void Tick();
 
   ///Toggles the enemy animation
-  void ToggleEnemies() { m_enemy_frame = (m_enemy_frame + 1) % 2;  }
+  void ToggleEnemies() noexcept { m_enemy_frame = (m_enemy_frame + 1) % 2;  }
 
   ///Toggles the prisoner animation
-  void TogglePrisoners() { m_prisoner_frame = (m_prisoner_frame + 1) % 2;  }
+  void TogglePrisoners() noexcept;
 
   private:
   int m_do_show_solution_cnt;

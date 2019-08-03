@@ -135,7 +135,10 @@ ribi::maziak::Sprite ribi::maziak::GetSpriteAboveFloor(
     case MazeSquare::enemy:
       return enemy_frame % 2 == 0 ? Sprite::enemy1 : Sprite::enemy2;
     case MazeSquare::prisoner:
+    {
+      assert(prisoner_frame == 0 || prisoner_frame == 1);
       return prisoner_frame % 2 == 0 ? Sprite::prisoner1 : Sprite::prisoner2;
+    }
     case MazeSquare::sword: return Sprite::sword;
     case MazeSquare::exit: return Sprite::exit;
   }
