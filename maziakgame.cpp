@@ -162,6 +162,7 @@ ribi::maziak::Sprite ribi::maziak::Game::GetSpriteAboveFloor(
   const int prisoner_frame
 ) const
 {
+  assert(prisoner_frame == 0 || prisoner_frame == 1);
   return ribi::maziak::GetSpriteAboveFloor(
     c,
     m_maze,
@@ -324,6 +325,7 @@ ribi::maziak::Game::GetSprites(
   //Player is always on top
   if (get_player_coordinat(*this) == c) { return { GetSpritePlayer() }; }
   v.push_back(this->GetSpriteFloor(c));
+  assert(prisoner_frame == 0 || prisoner_frame == 1);
   v.push_back(this->GetSpriteAboveFloor(c, enemy_frame, prisoner_frame));
   if (v.size() >= 2 && v[0] == Sprite::empty) v.erase(std::begin(v));
   if (v.size() >= 2 && v[0] == Sprite::path && v[1] == Sprite::empty) v.erase(std::begin(v) + 1);

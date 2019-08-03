@@ -131,9 +131,11 @@ int ribi::maziak::QtDisplay::GetPrisonersFrame() noexcept
   static int frame = 0;
   if (m_timer_animate_prisoners.GetElapsedSecs() > 0.8)
   {
-    ++frame;
+    frame = (frame + 1) % 2;
     m_timer_animate_prisoners = Stopwatch();
   }
+  //The prisoners have two frames
+  assert(frame == 0 || frame == 1);
   return frame;
 }
 
@@ -151,6 +153,7 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
         //col_maze and row_maze are the indices in the true/'non-visual' maze
         const int col_maze{get_player_x(m_game) - (m_view_width  / 2) + col};
         const int row_maze{get_player_y(m_game) - (m_view_height / 2) + row};
+        assert(GetPrisonersFrame() == 0 || GetPrisonersFrame() == 1);
         const auto sprites = m_game.GetSprites(
           Coordinat(col_maze, row_maze),
           GetEnemiesFrame(),
