@@ -50,8 +50,6 @@ void ribi::maziak::SfmlGameDialog::DisplayGame()
       }
     }
   }
-
-  */
   mWindow.clear(sf::Color::Black); // Clear the window with black color
   for (int y = 0; y != get_n_rows(mGame); ++y)
   {
