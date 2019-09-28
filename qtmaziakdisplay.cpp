@@ -153,11 +153,12 @@ void ribi::maziak::QtDisplay::paintEvent(QPaintEvent *)
         //col_maze and row_maze are the indices in the true/'non-visual' maze
         const int col_maze{get_player_x(m_game) - (m_view_width  / 2) + col};
         const int row_maze{get_player_y(m_game) - (m_view_height / 2) + row};
-        assert(GetPrisonersFrame() == 0 || GetPrisonersFrame() == 1);
+        const int prisoners_frame{GetPrisonersFrame()};
+        assert(prisoners_frame  == 0 || prisoners_frame  == 1);
         const auto sprites = m_game.GetSprites(
           Coordinat(col_maze, row_maze),
           GetEnemiesFrame(),
-          GetPrisonersFrame()
+          prisoners_frame
         );
         const QRect target_rect(
           col * block_width,
