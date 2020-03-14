@@ -88,8 +88,8 @@ ribi::maziak::IntMaze ribi::maziak::CreateIntMaze(
   const int seed
 )
 {
-  Expects(IsValidSize(n_cols));
-  Expects(IsValidSize(n_rows));
+  if (!IsValidSize(n_cols)) throw std::logic_error("Invalid number of columns");
+  if (!IsValidSize(n_rows)) throw std::logic_error("Invalid number of columns");
   return IntMaze{n_cols, n_rows, seed};
 }
 

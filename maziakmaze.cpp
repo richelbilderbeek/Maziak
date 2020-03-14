@@ -95,7 +95,7 @@ bool ribi::maziak::Maze::CanMoveTo(
   if (y < 0) return false;
   if (y >= get_n_rows(*this)) return false;
   if (x >= get_n_cols(*this)) return false;
-  const MazeSquare s = m_maze[y][x];
+  const auto& s = m_maze[y][x];
   //Bump into wall
   if (s == MazeSquare::wall) return false;
   //Bump into sword
@@ -146,7 +146,8 @@ std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulated
   const int rng_seed
 )
 {
-  std::mt19937 rng_engine{rng_seed};
+  assert(rng_seed >= 0);
+  std::mt19937 rng_engine{static_cast<long unsigned int>(rng_seed)};
   return CreatePopulatedMaze(int_maze, rng_engine);
 }
 std::vector<std::vector<ribi::maziak::MazeSquare>> ribi::maziak::CreatePopulatedMaze(

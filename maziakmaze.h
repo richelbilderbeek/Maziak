@@ -12,8 +12,9 @@
 namespace ribi {
 namespace maziak {
 
-struct Maze
+class Maze
 {
+  public:
   Maze(
     const int n_cols,
     const int n_rows,

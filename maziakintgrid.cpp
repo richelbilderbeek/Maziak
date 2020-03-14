@@ -17,7 +17,8 @@ ribi::maziak::IntGrid
 {
   Expects(IsValidSize(n_cols));
   Expects(IsValidSize(n_rows));
-  std::mt19937 rng_engine{rng_seed};
+  assert(rng_seed >= 0);
+  std::mt19937 rng_engine{static_cast<long unsigned int>(rng_seed)};
 
   //Start with a wall-only maze
   std::vector<std::vector<int>> maze(n_rows, std::vector<int>(n_cols,1));
