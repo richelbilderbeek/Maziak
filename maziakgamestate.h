@@ -1,7 +1,7 @@
 #ifndef MAZIAKGAMESTATE_H
 #define MAZIAKGAMESTATE_H
 
-#include <initializer_list>
+#include <array>
 #include <iosfwd>
 #include <string>
 
@@ -15,7 +15,7 @@ enum class GameState
   game_over
 };
 
-constexpr std::initializer_list<GameState> get_all_game_states()
+constexpr std::array<GameState, 3> get_all_game_states()
 {
   return
   {

@@ -1,7 +1,7 @@
 #ifndef MAZIAKPLAYERMOVE_H
 #define MAZIAKPLAYERMOVE_H
 
-#include <initializer_list>
+#include <array>
 #include <iosfwd>
 #include <string>
 
@@ -20,7 +20,7 @@ enum class PlayerMove {
   down2
 };
 
-constexpr std::initializer_list<PlayerMove> get_all_player_moves()
+constexpr std::array<PlayerMove, 9> get_all_player_moves()
 {
   return
   {

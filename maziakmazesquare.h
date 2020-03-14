@@ -1,8 +1,8 @@
 #ifndef MAZIAKMAZESQUARE_H
 #define MAZIAKMAZESQUARE_H
 
+#include <array>
 #include <iosfwd>
-#include <initializer_list>
 #include <string>
 
 namespace ribi {
@@ -19,7 +19,7 @@ enum class MazeSquare
   start //Initial starting position
 };
 
-constexpr std::initializer_list<MazeSquare> get_all_maze_squares()
+constexpr std::array<MazeSquare, 7> get_all_maze_squares()
 {
   return
   {

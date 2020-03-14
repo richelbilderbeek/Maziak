@@ -1,10 +1,10 @@
 #ifndef MAZIAKSPRITE_H
 #define MAZIAKSPRITE_H
 
+#include <array>
 #include <iosfwd>
 #include <string>
 #include <vector>
-#include <initializer_list>
 
 namespace ribi {
 namespace maziak {
@@ -61,7 +61,7 @@ enum class Sprite
   exit
 };
 
-constexpr std::initializer_list<Sprite> get_all_sprites() noexcept
+constexpr std::array<Sprite, 44> get_all_sprites() noexcept
 {
   return
   {

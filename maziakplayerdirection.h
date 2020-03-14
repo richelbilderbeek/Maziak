@@ -1,9 +1,9 @@
 #ifndef MAZIAKPLAYERDIRECTION_H
 #define MAZIAKPLAYERDIRECTION_H
 
+#include <array>
 #include <iosfwd>
 #include <string>
-#include <initializer_list>
 
 namespace ribi {
 namespace maziak {
@@ -16,7 +16,7 @@ enum class PlayerDirection
   pdDown
 };
 
-constexpr std::initializer_list<PlayerDirection> get_all_player_directions()
+constexpr std::array<PlayerDirection, 4> get_all_player_directions()
 {
   return
   {
