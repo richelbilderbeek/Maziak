@@ -283,7 +283,7 @@ void ribi::maziak::QtMenuDialog::OnStart()
   QtDisplay d(
     GetMazeSize(),
     GetMazeSize(),
-    m_rng_seed >= 0 ? m_rng_seed : std::random_device()(),
+    std::abs(m_rng_seed), //m_rng_seed may be any number.
     11,
     11
   );

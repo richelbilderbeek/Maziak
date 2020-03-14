@@ -50,7 +50,10 @@ ribi::maziak::IntGrid
   v.push_back(std::make_pair(mid_x,mid_y));
   while (!v.empty())
   {
-    std::uniform_int_distribution<int> d_next_explorer(0, v.size() - 1); //-1 as this is inclusive
+    std::uniform_int_distribution<int> d_next_explorer(
+      0,
+      v.size() - 1 //-1 as this is inclusive
+    );
 
     //Set a random explorer square at the back
     //std::swap(v.back(),v[ std::rand() % static_cast<int>(v.size())]);
